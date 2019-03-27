@@ -1,3 +1,97 @@
-<p>
-  zacebuk-signup works!
-</p>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+  <!--onSubmit is the callback function, emits an ngSubmit event to a callback function -->
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Sign up!</h3>
+    </div>
+
+    <div class="panel-body">
+      <div class="form-group" [ngClass]="{'has-error' : employeeForm.get('fullName').errors &&
+     ( employeeForm.get('fullName').touched ||employeeForm.get('fullName').dirty)}" >
+     
+     <!--dirty when user changes value in UI, touched when a user has clicked on text area, errors when 
+    any validation failed-->
+
+        <label class="col-sm-2 control-label" for="fullName">Full Name</label>
+        <div class="col-sm-8">
+          <input id="fullName" formControlName="fullName" type="text" class="form-control" required>
+          <span class="help-block" *ngIf="employeeForm.get('fullName').errors &&
+          ( employeeForm.get('fullName').touched ||employeeForm.get('fullName').dirty)">
+          <span *ngIf="employeeForm.get('fullName').errors.required">
+            Full Name is required
+          </span>
+          <span *ngIf="employeeForm.get('fullName').errors.minlength || employeeForm.get('fullName').errors.maxlength">
+              Full Name must be greater than 2 characters and less than 15 characters
+          </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        
+        <label class="col-sm-2 control-label" for="pass">Password</label>
+        <div class="col-sm-8">
+           <input id="password" formControlName="password" type="password" class="form-control" required>
+           <span class="help-block" *ngIf="employeeForm.get('password').errors &&
+           ( employeeForm.get('password').touched ||employeeForm.get('password').dirty)">
+           <span *ngIf="employeeForm.get('password').errors.required">
+             Password is required
+           </span>
+           <span *ngIf="employeeForm.get('password').errors.minlength || employeeForm.get('password').errors.maxlength">
+               Password must be greater than 2 characters and less than 15 characters
+           </span>
+           </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        
+        <label class="col-sm-2 control-label" for="email">Email</label>
+        <div class="col-sm-8">
+           <input id="email" formControlName="email" type="text" class="form-control" required>
+           <span class="help-block" *ngIf="employeeForm.get('email').errors &&
+           ( employeeForm.get('email').touched ||employeeForm.get('emits').dirty)">
+           <span *ngIf="employeeForm.get('email').errors.required">
+             Email is required
+           </span>
+           </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <label class="col-sm-2 control-label" for="number">Mobile no.</label>
+          <div class="col-sm-8">
+             <input id="number" formControlName="number" type="text" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label class="col-md-2 control-label">Gender</label>
+          <div class="col-md-8">
+            <label class="radio-inline">
+              <input id="male" type="radio" value="none"
+              formControlName="male">Male
+            </label>
+
+            <label class="radio-inline">
+                <input id="female" type="radio" value="female"
+                formControlName="female">Female
+            </label>
+            
+          </div>
+        </div>
+    </div>
+    <div class="button">
+ <button class="btn btn-primary" type="submit" [disabled]="!employeeForm.valid" style="align-content: center">Sign up</button>
+    </div>
+      <!--button disabled until form is valid-->
+    </div>
+  </form>
+
+
+
+      
+    
