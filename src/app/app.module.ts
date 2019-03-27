@@ -9,6 +9,7 @@ import { ZacebukLoginComponent } from './zacebuk-login/zacebuk-login.component';
 import { ZacebukFooterComponent } from './zacebuk-footer/zacebuk-footer.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ZacebukUsrProfileComponent } from './zacebuk-usr-profile/zacebuk-usr-profile.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   { path: '', component: ZacebukWallComponent },
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
