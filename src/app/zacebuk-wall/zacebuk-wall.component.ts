@@ -9,15 +9,17 @@ import { FetchJsonDataService } from '../fetch-json-data.service';
 })
 export class ZacebukWallComponent implements OnInit {
  postdata;
-  constructor(private _postsData: FetchJsonDataService) { }
+  constructor(private _postsData: FetchJsonDataService) {
+    localStorage.removeItem('users');
+   }
 
   ngOnInit() {
-    // this._postsData.getJsonData()
-    //   .subscribe(data => {
+    this._postsData.getPost()
+      .subscribe(data => {
 
-    //     this.postdata = data;
-    //     console.log(this.postdata);
-    //     });
+        // this.postdata = data;
+        console.log(data);
+        });
   }
   // to get json data. anyone who changes kindly change the function name.
   // samplefn(){

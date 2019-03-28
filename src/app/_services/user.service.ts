@@ -8,10 +8,6 @@ export class UserService {
     id = 1;
     constructor(private http: HttpClient) { }
 
-    getAll() {
-        return this.http.get<User[]>(`/users`);
-    }
-
     getById() {
         return this.id++;
     }
