@@ -12,12 +12,12 @@ export class ZacebukWallComponent implements OnInit {
   constructor(private _postsData: FetchJsonDataService) { }
 
   ngOnInit() {
-    this._postsData.getJsonData()
-      .subscribe(data => {
+    // this._postsData.getJsonData()
+    //   .subscribe(data => {
 
-        this.postdata = data;
-        console.log(this.postdata);
-        });
+    //     this.postdata = data;
+    //     console.log(this.postdata);
+    //     });
   }
   // to get json data. anyone who changes kindly change the function name.
   // samplefn(){

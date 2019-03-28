@@ -41,8 +41,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
             password: ['', Validators.required]
         });
 
-        this.subscription = this.fetchData.getJsonData().pipe().subscribe(val => {
-
+        this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
             const userKey = Object.keys(val);
             userKey.map((ele, index) => {
                 this.userNameData[index] = val[ele].email;
@@ -60,8 +59,8 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
 
     // convenience getter for easy access to form fields
     get values() { return this.loginForm.controls; }
-
     onSubmit() {
+        const passwordHash = btoa(this.values.password.value);
         this.submitted = true;
 
         // stop here if form is invalid
@@ -70,7 +69,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
         }
 
         this.loading = true;
-        this.authenticationService.login(this.values.username.value, this.values.password.value)
+        this.authenticationService.login(this.values.username.value, passwordHash )
             .pipe(first())
             .subscribe(
                 data => {

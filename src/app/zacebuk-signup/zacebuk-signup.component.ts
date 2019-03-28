@@ -38,8 +38,8 @@ export class ZacebukSignupComponent implements OnInit {
   }
   onSubmit(): void {
     console.log(this.employeeForm.value);
-    const {fullName, email, password, phone, gender} = this.employeeForm.value;
-    console.log(fullName);
+    let {fullName, email, password, phone, gender} = this.employeeForm.value;
+    password = btoa(password);
     if (gender === 'male') {
       const formRequest = {fullName, email, password, phone, gender};
       this.postData.addUser(formRequest)
