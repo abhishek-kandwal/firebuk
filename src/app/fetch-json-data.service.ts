@@ -18,7 +18,7 @@ export class FetchJsonDataService {
     return this.http.get(this.apiUrl);
   }
 
-  putData(data) {
-    this.userList = data;
+  postData(data) {
+    return this.http.post(this.apiUrl, data);
   }
 }

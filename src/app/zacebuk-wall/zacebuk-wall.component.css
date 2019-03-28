@@ -1,0 +1,47 @@
+.wall_style{
+    margin-top: 50px;
+}
+.card_box{
+margin-top: 10px;
+height: auto;
+background-color:#fff;
+border: 1px solid black;
+}
+
+.user_name_area{
+    width: 100%;
+    height: auto;
+    background-color: cadetblue;
+    padding-left:10px;
+    padding-top:5px;
+    padding-bottom:5px; 
+}
+
+.post_area_content{
+    width: 100%;
+    height: auto;
+    background-color:#fff;
+    padding-left:10px;
+    padding-top:5px;
+
+
+}
+
+.post_option_area{
+    height: auto;
+    color: black;
+}
+
+.button_option_here{
+    
+    margin-left: 2px;
+    margin-bottom: 2px;
+}
+
+.button_styles{
+    height: 22px;
+    padding: 0;
+    margin: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+}
