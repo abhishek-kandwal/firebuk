@@ -1,18 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FetchJsonDataService {
+  userList = [];
+  userNameData = [];
+  userPassData = [];
+  subscription: Subscription;
+  constructor(private http: HttpClient) { }
 
-  constructor(private http:HttpClient) { }
+  urlUser = 'https://example-81cdf.firebaseio.com/Users.json';
+  urlPost = 'https://example-81cdf.firebaseio.com/Posts.json';
 
-  apiUrl : string = 'https://example-81cdf.firebaseio.com/.json';
+  getUser() {
+    return this.http.get(this.urlUser);
+  }
 
-  getJsonData(){
-    return this.http.get(this.apiUrl);
+  getPost() {
+    return this.http.get(this.urlPost);
+  }
+
+  putData(data) {
+    this.userList = data;
   }
 }

@@ -8,18 +8,24 @@ import { FetchJsonDataService } from '../fetch-json-data.service';
   styleUrls: ['./zacebuk-wall.component.css']
 })
 export class ZacebukWallComponent implements OnInit {
-
-  constructor(private _postsData:FetchJsonDataService) { }
+ postdata;
+  constructor(private _postsData: FetchJsonDataService) { }
 
   public testData:any;
   ngOnInit() {
-    this._postsData.getJsonData()
-      .subscribe(data=>(console.log(data)))
+    // this._postsData.getJsonData()
+    //   .subscribe(data => {
+
+    //     this.postdata = data;
+    //     console.log(this.postdata);
+    //     });
   }
-  //to get json data. anyone who changes kindly change the function name.
+  // to get json data. anyone who changes kindly change the function name.
   // samplefn(){
   // this._postsData.getJsonData()
   //     .subscribe(data=>(console.log(data)))
   // }
+
+
 
 }
