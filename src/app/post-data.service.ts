@@ -18,7 +18,7 @@ const httpOptions = {
 
 export class PostdataService {
   Users: any;
-  url = 'https://reactiveform-ffa7e.firebaseio.com/Users.json';  // URL to web api
+  url = 'https://example-81cdf.firebaseio.com/Users.json';  // URL to web api
   private handleError: HandleError;
   constructor(
     private http: HttpClient,

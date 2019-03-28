@@ -10,24 +10,26 @@ import { Routes, RouterModule } from '@angular/router';
 import { ZacebukUsrProfileComponent } from './zacebuk-usr-profile/zacebuk-usr-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostdataService } from './post-data.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { fakeBackendProvider, ErrorInterceptor, JwtInterceptor } from './_helpers';
+import { AuthGuard } from './_guards';
 
 const appRoutes: Routes = [
-  { path: '', component: ZacebukWallComponent },
+  { path: '', component: ZacebukWallComponent, canActivate: [AuthGuard] },
   { path: 'app-zacebuk-login', component: ZacebukLoginComponent },
   { path: 'app-zacebuk-signup', component: ZacebukSignupComponent }
-]
+];
 
 export const firebaseConfig = {
-  apiKey: 'AIzaSyCoBKG6stqxU9KwS5EsMqDrppApRYW6X20',
-  authDomain: 'reactiveform-ffa7e.firebaseapp.com',
-  databaseURL: 'https://reactiveform-ffa7e.firebaseio.com',
-  projectId: 'reactiveform-ffa7e',
-  storageBucket: 'reactiveform-ffa7e.appspot.com',
-  messagingSenderId: '236575886616'
+  apiKey: 'AIzaSyC97Es6nksal1bccXYMKdpfL6ujz0PXIJY',
+  authDomain: 'example-81cdf.firebaseapp.com',
+  databaseURL: 'https://example-81cdf.firebaseio.com',
+  projectId: 'example-81cdf',
+  storageBucket: 'example-81cdf.appspot.com',
+  messagingSenderId: '736016132542'
 };
 
 @NgModule({
@@ -47,7 +49,13 @@ export const firebaseConfig = {
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule, BrowserAnimationsModule
   ],
-  providers: [PostdataService, HttpErrorHandler, MessageService],
+  providers: [PostdataService, HttpErrorHandler, MessageService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+    // provider used to create fake backend
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
