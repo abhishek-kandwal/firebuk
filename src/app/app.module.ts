@@ -20,8 +20,9 @@ import { FetchJsonDataService } from './fetch-json-data.service';
 import { AlertComponent } from './_components';
 import { AuthenticationService, AlertService, UserService } from './_services';
 
+
 const appRoutes: Routes = [
-  { path: '', component: ZacebukWallComponent, canActivate: [AuthGuard] },
+  { path: '', component: ZacebukWallComponent },
   { path: 'app-zacebuk-login', component: ZacebukLoginComponent },
   { path: 'app-zacebuk-signup', component: ZacebukSignupComponent }
 ];
