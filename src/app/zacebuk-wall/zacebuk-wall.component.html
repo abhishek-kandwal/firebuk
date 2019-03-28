@@ -4,16 +4,16 @@
   <!-- all post code here -->
   <div>
     <!-- in this div we will use the *ngFor  -->
-    <div class="row">
+    <div class="row" *ngFor='let el of postList;index as i' >
       <div class="col-sm-12 ">
         <div class="card_box">
           <!-- post user name here -->
           <div class="user_name_area">
-            <h4>{{postdata.Posts.testPost1.post_content}}</h4>
+           
           </div>
           <!-- post area here -->
           <div class="post_area_content">
-            <p>this is a post</p>
+            <h4>{{postValue[i]}}</h4>
           </div>
 
           <div class="post_option_area">
