@@ -15,4 +15,8 @@ export class FetchJsonDataService {
   getJsonData(){
     return this.http.get(this.apiUrl);
   }
+
+  postData(data){
+    return this.http.post(this.apiUrl,data)
+  }
 }
