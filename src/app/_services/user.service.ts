@@ -5,10 +5,9 @@ import { User } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-    id = 1;
     constructor(private http: HttpClient) { }
 
-    getById() {
-        return this.id++;
+    register(user: User) {
+        return this.http.post(`/users/register`, user);
     }
 }

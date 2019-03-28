@@ -3,16 +3,18 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError} from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize} from 'rxjs/operators';
 import { FetchJsonDataService } from '../fetch-json-data.service';
+import { User } from '../_models';
+import { PostdataService } from '../post-data.service';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor  {
-    constructor(private fetchData: FetchJsonDataService) {
+    constructor(private fetchData: FetchJsonDataService,
+                private addUser: PostdataService) {
      }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // array in database for registered users
         const users = ( this.fetchData.userList || []);
-        console.log(users);
         // wrap in delayed observable to simulate server api call
         return of(null).pipe(mergeMap(() => {
 
@@ -30,7 +32,9 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
                         id: user.id,
                         username: user.username,
                         email: user.email,
-                        token: 'fake-jwt-token'
+                        name: user.name,
+                        gender: user.gender,
+                        phone: user.phone
                     };
 
                     return of(new HttpResponse({ status: 200, body }));
@@ -40,30 +44,22 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
                 }
             }
 
-            // get users
-            if (request.url.endsWith('/users') && request.method === 'GET') {
-                if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
-                    return of(new HttpResponse({ status: 200, body: users }));
-                } else {
-                    // return 401 not authorised if token is null or invalid
-                    return throwError({ status: 401, error: { message: 'Unauthorised' } });
+            // register user
+            if (request.url.endsWith('/users/register') && request.method === 'POST') {
+                // get new user object from post body
+                const newUser = request.body;
+                console.log(newUser);
+                // validation
+                const duplicateUser = users.filter(user => user.username === newUser.email).length;
+                if (duplicateUser) {
+                    return throwError({ error: { message: 'Username "' + newUser.email + '" is already taken' } });
                 }
-            }
-
-            // get user by id
-            if (request.url.match(/\/users\/\d+$/) && request.method === 'GET') {
-                if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
-                    // find user by id in users array
-                    const urlParts = request.url.split('/');
-                    const id = parseInt(urlParts[urlParts.length - 1]);
-                    const matchedUsers = users.filter(user => user.id === id);
-                    const user = matchedUsers.length ? matchedUsers[0] : null;
-
-                    return of(new HttpResponse({ status: 200, body: user }));
-                } else {
-                    // return 401 not authorised if token is null or invalid
-                    return throwError({ status: 401, error: { message: 'Unauthorised' } });
-                }
+                // save new user
+                newUser.id = users.length + 1;
+                this.addUser.addUser(newUser)
+                .subscribe(user => users.push(user));
+                // respond 200 OK
+                return of(new HttpResponse({ status: 200 }));
             }
 
             // pass through any requests not handled above

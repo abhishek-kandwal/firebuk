@@ -28,7 +28,6 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
         private router: Router,
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
-        private fetchData: FetchJsonDataService
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
@@ -41,17 +40,6 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
-
-        this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
-            const userKey = Object.keys(val);
-            userKey.map((ele, index) => {
-                this.userNameData[index] = val[ele].email;
-                this.userPassData[index] = val[ele].password;
-                this.userIdData[index] = val[ele].id;
-                this.userList.push({ id: this.userIdData[index], username: this.userNameData[index], password: this.userPassData[index] });
-            });
-        });
-        this.fetchData.putData(this.userList);
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     }
@@ -79,6 +67,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
                 },
                 error => {
                     this.alertService.error(error);
+                    console.log(error);
                     this.loading = false;
                 });
     }
