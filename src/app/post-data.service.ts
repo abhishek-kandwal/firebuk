@@ -23,7 +23,7 @@ export class PostdataService {
   constructor(
     private http: HttpClient,
     httpErrorHandler: HttpErrorHandler) {
-    this.handleError = httpErrorHandler.createHandleError('HeroesService');
+    this.handleError = httpErrorHandler.createHandleError('');
   }
 
   addUser(user: Users): Observable<Users> {

@@ -16,6 +16,9 @@ import { MessageService } from './message.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fakeBackendProvider, ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { AuthGuard } from './_guards';
+import { FetchJsonDataService } from './fetch-json-data.service';
+import { AlertComponent } from './_components';
+import { AuthenticationService, AlertService, UserService } from './_services';
 
 const appRoutes: Routes = [
   { path: '', component: ZacebukWallComponent, canActivate: [AuthGuard] },
@@ -41,6 +44,7 @@ export const firebaseConfig = {
     ZacebukLoginComponent,
     ZacebukFooterComponent,
     ZacebukUsrProfileComponent,
+    AlertComponent
 
   ],
   imports: [
@@ -52,9 +56,12 @@ export const firebaseConfig = {
   providers: [PostdataService, HttpErrorHandler, MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
     // provider used to create fake backend
-    fakeBackendProvider
+    fakeBackendProvider,
+    FetchJsonDataService,
+    AuthenticationService,
+    AlertService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

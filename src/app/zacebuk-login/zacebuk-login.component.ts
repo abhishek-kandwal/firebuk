@@ -1,26 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AlertService, AuthenticationService } from '../_services';
+import { FetchJsonDataService } from '../fetch-json-data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-zacebuk-login',
-  templateUrl: './zacebuk-login.component.html',
-  styleUrls: ['./zacebuk-login.component.css']
+    selector: 'app-zacebuk-login',
+    templateUrl: './zacebuk-login.component.html',
+    styleUrls: ['./zacebuk-login.component.css']
 })
-export class ZacebukLoginComponent implements OnInit {
+export class ZacebukLoginComponent implements OnInit , OnDestroy {
     loginForm: FormGroup;
     loading = false;
     submitted = false;
     returnUrl: string;
+    userList = [];
+    userNameData = [];
+    userPassData = [];
+    subscription: Subscription;
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private fetchData: FetchJsonDataService
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
@@ -34,12 +41,25 @@ export class ZacebukLoginComponent implements OnInit {
             password: ['', Validators.required]
         });
 
+        this.subscription = this.fetchData.getJsonData().pipe().subscribe(val => {
+
+            const userKey = Object.keys(val);
+            userKey.map((ele, index) => {
+                this.userNameData[index] = val[ele].email;
+                this.userPassData[index] = val[ele].password;
+                this.userList.push({ username: this.userNameData[index], password: this.userPassData[index] });
+            });
+        });
+        this.fetchData.putData(this.userList);
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     }
+    ngOnDestroy() {
+        // this.subscription.unsubscribe();
+    }
 
     // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
+    get values() { return this.loginForm.controls; }
 
     onSubmit() {
         this.submitted = true;
@@ -50,7 +70,7 @@ export class ZacebukLoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
+        this.authenticationService.login(this.values.username.value, this.values.password.value)
             .pipe(first())
             .subscribe(
                 data => {

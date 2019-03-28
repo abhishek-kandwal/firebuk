@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { PostdataService } from '../post-data.service';
+import { AuthenticationService } from '../_services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-zacebuk-signup',
@@ -10,7 +12,15 @@ import { PostdataService } from '../post-data.service';
 export class ZacebukSignupComponent implements OnInit {
   employeeForm: FormGroup;
   users = [];
-  constructor(private fb: FormBuilder, private postData: PostdataService) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private postData: PostdataService,
+    private authenticationService: AuthenticationService) {
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+  }
+  }
 
   ngOnInit() {
     this.employeeForm = this.fb.group({
