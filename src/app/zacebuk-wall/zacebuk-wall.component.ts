@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PostDataFetchService } from '../post-data-fetch.service'
+import { FetchJsonDataService } from '../fetch-json-data.service';
+
 
 @Component({
   selector: 'app-zacebuk-wall',
@@ -8,12 +9,17 @@ import { PostDataFetchService } from '../post-data-fetch.service'
 })
 export class ZacebukWallComponent implements OnInit {
 
-  constructor(private _postData:PostDataFetchService) { }
+  constructor(private _postsData:FetchJsonDataService) { }
 
   public testData:any;
   ngOnInit() {
-    this._postData.getPost()
-    .subscribe(data=> console.log( data))
+    this._postsData.getJsonData()
+      .subscribe(data=>(console.log(data)))
   }
+  //to get json data. anyone who changes kindly change the function name.
+  // samplefn(){
+  // this._postsData.getJsonData()
+  //     .subscribe(data=>(console.log(data)))
+  // }
 
 }
