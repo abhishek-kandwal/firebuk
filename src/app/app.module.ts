@@ -1,9 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule } from '@angular/common/http';
-
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
 import { ZacebukHeaderComponent } from './zacebuk-header/zacebuk-header.component';
 import { ZacebukWallComponent } from './zacebuk-wall/zacebuk-wall.component';
@@ -29,10 +26,8 @@ const appRoutes: Routes = [
     ZacebukSignupComponent,
     ZacebukLoginComponent,
     ZacebukFooterComponent,
-    HttpClientModule,
     ZacebukUsrProfileComponent,
   ],
-  
   imports: [
     BrowserModule,
     HttpClientModule,
