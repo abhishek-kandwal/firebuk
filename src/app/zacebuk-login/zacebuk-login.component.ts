@@ -19,6 +19,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
     userList = [];
     userNameData = [];
     userPassData = [];
+    userIdData = [];
     subscription: Subscription;
 
     constructor(
@@ -46,7 +47,8 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
             userKey.map((ele, index) => {
                 this.userNameData[index] = val[ele].email;
                 this.userPassData[index] = val[ele].password;
-                this.userList.push({ username: this.userNameData[index], password: this.userPassData[index] });
+                this.userIdData[index] = val[ele].id;
+                this.userList.push({ id: this.userIdData[index], username: this.userNameData[index], password: this.userPassData[index] });
             });
         });
         this.fetchData.putData(this.userList);

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { PostdataService } from '../post-data.service';
-import { AuthenticationService } from '../_services';
+import { AuthenticationService, UserService } from '../_services';
 import { Router } from '@angular/router';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-zacebuk-signup',
@@ -16,6 +17,7 @@ export class ZacebukSignupComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private postData: PostdataService,
+    private ids: UserService,
     private authenticationService: AuthenticationService) {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
@@ -41,11 +43,11 @@ export class ZacebukSignupComponent implements OnInit {
     let {fullName, email, password, phone, gender} = this.employeeForm.value;
     password = btoa(password);
     if (gender === 'male') {
-      const formRequest = {fullName, email, password, phone, gender};
+      const formRequest = {id: this.ids.getById(), fullName, email, password, phone, gender};
       this.postData.addUser(formRequest)
       .subscribe(user => this.users.push(user));
     } else {
-      const formRequest = {fullName, email, password, phone, gender};
+      const formRequest = {id: this.ids.getById(), fullName, email, password, phone, gender};
       this.postData.addUser(formRequest)
       .subscribe(user => this.users.push(user));
     }

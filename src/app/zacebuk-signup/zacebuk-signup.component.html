@@ -34,7 +34,9 @@
         
         <label class="col-sm-2 control-label" for="pass">Password</label>
         <div class="col-sm-8">
+            <show-hide-password size="lg" btnStyle="primary" [btnOutline]="false">
            <input id="password" formControlName="password" type="password" class="form-control" required>
+          </show-hide-password>
            <span class="help-block" *ngIf="employeeForm.get('password').errors &&
            ( employeeForm.get('password').touched ||employeeForm.get('password').dirty)">
            <span *ngIf="employeeForm.get('password').errors.required">
