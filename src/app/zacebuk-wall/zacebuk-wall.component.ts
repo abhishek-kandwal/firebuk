@@ -3,7 +3,6 @@ import { FetchJsonDataService } from '../fetch-json-data.service';
 import { PostdataService } from '../post-data.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CurrentUserService } from '../current-user.service';
 
 
 @Component({
@@ -15,7 +14,6 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   postForm: FormGroup;
   totalLikes: any;
   totalComments: any;
-  new_post = [];
   posts = [];
   postData: any;
   fetchPost = [];
@@ -30,29 +28,11 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   constructor(
     private post_form: FormBuilder,
     private post_data: PostdataService,
-    private postsData: FetchJsonDataService,
-    private currentuser: CurrentUserService
   ) { }
 
   ngOnInit() {
     this.postForm = this.post_form.group({
       new_post: ['']
-    });
-    this.subscription = this.postsData.getPost().subscribe(val => {
-      this.fetchPost.push(val);
-      this.postlength = Object.values(this.fetchPost).length;
-      console.log(this.fetchPost);
-      if (this.fetchPost.length === 0) {
-        this.fetchPost.map((ele, index) => {
-          this.commentLength = Object.keys(ele[index].Comments).length;
-          this.commentNoLength = Object.keys(ele[index].Comments).length;
-          this.commentKey = Object.keys(ele[index].Comments);
-          this.commentKey = Number(this.commentKey) + 1;
-          this.likeNoLength = Object.keys(ele[index].Likes).length;
-          this.likesKey = Number(this.likeNoLength) + 1;
-          this.likeValue = this.likeNoLength;
-        });
-      }
     });
   }
 
@@ -63,10 +43,9 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     return this.postForm.controls;
   }
   onSubmit(): void {
-    console.log(this.currentuser.data);
     const { new_post } = this.postForm.value;
     const like_no = ' ', time = ' ', post_Id = this.postlength + 1, liker_ID = ' ',
-    poster = this.currentuser.data.id, comment_content = ' ', commenter_ID = ' ', commentId = this.commentLength + 1;
+    poster = ' ', comment_content = ' ', commenter_ID = ' ', commentId = this.commentLength + 1;
     this.postData = {
       Post_content: new_post,
       Time: time,
@@ -90,17 +69,5 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       .subscribe(post => this.posts.push(post));
     this.postForm.reset();
 
-  }
-
-  likes() {
-    this.totalLikes = this.likeValue;
-    const postId = ( document.getElementById('this.postData.Post_ID') as HTMLInputElement).value;
-    // this.fetchPost.Post_ID[postId] = ++this.totalLikes;
-  }
-
-  comments() {
-    this.totalComments = this.postData.Comments.length;
-    const commentId = ( document.getElementById('this.postData.Comments.Comment_No.Commenter_ID') as HTMLInputElement).value;
-    this.postData.Likes.Like_no = ++this.totalLikes;
   }
 }

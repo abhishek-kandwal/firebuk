@@ -39,7 +39,6 @@ export class PostdataService {
   addPost(post: Posts): Observable<Posts> {
     return this.http.post<Posts>(this.pUrl , post, httpOptions)
     .pipe(
-      retry(5),
       catchError(this.handleError('addPost', post))
     );
   }
