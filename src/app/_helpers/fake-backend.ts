@@ -31,7 +31,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
                     const body = {
                         id: user.id,
                         username: user.username,
-                        email: user.email,
+                        email: user.username,
                         fullName: user.name,
                         gender: user.gender,
                         phone: user.phone

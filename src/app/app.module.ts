@@ -7,10 +7,9 @@ import { ZacebukWallComponent } from './zacebuk-wall/zacebuk-wall.component';
 import { ZacebukSignupComponent } from './zacebuk-signup/zacebuk-signup.component';
 import { ZacebukLoginComponent } from './zacebuk-login/zacebuk-login.component';
 import { ZacebukFooterComponent } from './zacebuk-footer/zacebuk-footer.component';
-
 import { Routes, RouterModule } from '@angular/router';
 import { ZacebukUsrProfileComponent } from './zacebuk-usr-profile/zacebuk-usr-profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PostdataService } from './post-data.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorHandler } from './http-error-handler.service';
@@ -21,9 +20,7 @@ import { AuthGuard } from './_guards';
 import { FetchJsonDataService } from './fetch-json-data.service';
 import { AlertComponent } from './_components';
 import { AuthenticationService, AlertService, UserService } from './_services';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-
+import { CurrentUserService } from './current-user.service';
 
 
 const appRoutes: Routes = [
@@ -58,6 +55,7 @@ export const firebaseConfig = {
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule, BrowserAnimationsModule,
     ShowHidePasswordModule,
@@ -71,7 +69,8 @@ export const firebaseConfig = {
     FetchJsonDataService,
     AuthenticationService,
     AlertService,
-    UserService
+    UserService,
+    CurrentUserService
   ],
   bootstrap: [AppComponent]
 })

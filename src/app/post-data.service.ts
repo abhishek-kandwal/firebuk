@@ -36,6 +36,13 @@ export class PostdataService {
       );
   }
 
+  updatePost(url,data){
+    //console.log("done");
+    return this.http.put(url,data,httpOptions);
+    
+    
+  }
+
   addPost(post: Posts): Observable<Posts> {
     return this.http.post<Posts>(this.pUrl , post, httpOptions)
     .pipe(
