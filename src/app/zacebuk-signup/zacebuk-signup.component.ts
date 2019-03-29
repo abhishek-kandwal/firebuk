@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { PostdataService } from '../post-data.service';
-import { AuthenticationService, UserService } from '../_services';
+import { AuthenticationService, UserService, AlertService } from '../_services';
 import { Router } from '@angular/router';
-import { identifierModuleUrl } from '@angular/compiler';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-zacebuk-signup',
@@ -11,19 +10,20 @@ import { identifierModuleUrl } from '@angular/compiler';
   styleUrls: ['./zacebuk-signup.component.css']
 })
 export class ZacebukSignupComponent implements OnInit {
-  employeeForm: FormGroup;
-  users = [];
   constructor(
     private fb: FormBuilder,
+    private alertService: AlertService,
     private router: Router,
-    private postData: PostdataService,
-    private ids: UserService,
+    private userService: UserService,
     private authenticationService: AuthenticationService) {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
+    }
   }
-  }
-
+  employeeForm: FormGroup;
+  registerForm: FormGroup;
+  loading = false;
+  submitted = false;
   ngOnInit() {
     this.employeeForm = this.fb.group({
       // second arguements are sync validations, async are passed as third arguement(returns promises/observables)
@@ -33,25 +33,33 @@ export class ZacebukSignupComponent implements OnInit {
       phone: [''],
       gender: ['']
     });
-
   }
+
   get fieldValues() {
     return this.employeeForm.controls;
   }
-  onSubmit(): void {
-    console.log(this.employeeForm.value);
-    let {fullName, email, password, phone, gender} = this.employeeForm.value;
-    password = btoa(password);
-    if (gender === 'male') {
-      const formRequest = {id: this.ids.getById(), fullName, email, password, phone, gender};
-      this.postData.addUser(formRequest)
-      .subscribe(user => this.users.push(user));
-    } else {
-      const formRequest = {id: this.ids.getById(), fullName, email, password, phone, gender};
-      this.postData.addUser(formRequest)
-      .subscribe(user => this.users.push(user));
-    }
-    this.employeeForm.reset();
-  }
 
+  onSubmit(): void {
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.employeeForm.invalid) {
+      return;
+    }
+    this.loading = true;
+    let {fullName, email, password, phone, gender} = this.employeeForm.value;
+    const passwordHash = btoa(password);
+    password = passwordHash;
+    const formRequest = {fullName, email, password, phone, gender};
+    this.userService.register(formRequest)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.alertService.success('Registration successful', true);
+          this.router.navigate(['/app-zacebuk-login']);
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        });
+  }
 }
