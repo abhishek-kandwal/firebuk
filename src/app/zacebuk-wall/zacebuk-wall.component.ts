@@ -8,17 +8,25 @@ import { FetchJsonDataService } from '../fetch-json-data.service';
   styleUrls: ['./zacebuk-wall.component.css']
 })
 export class ZacebukWallComponent implements OnInit {
- postdata;
+ postdata: Object;
+ postKeys = [];
+ postContentKeys = [];
+ commentsKeys = [];
+ likesKeys = [];
   constructor(private _postsData: FetchJsonDataService) { }
-
-  public testData:any;
   ngOnInit() {
-    // this._postsData.getJsonData()
-    //   .subscribe(data => {
-
-    //     this.postdata = data;
-    //     console.log(this.postdata);
-    //     });
+    this._postsData.getPost()
+      .subscribe(data => {
+        this.postKeys = Object.keys(data);
+        this.postdata = data;
+        this.postContentKeys = Object.keys(data[this.postKeys[0]]);
+        this.commentsKeys = Object.keys(data[this.postKeys[0]].Comments);
+        this.commentsKeys = Object.keys(data[this.postKeys[0]].Comments.testComment1);
+        console.log(this.commentsKeys);
+        console.log(this.postContentKeys);
+        console.log(this.postKeys);
+        console.log(this.postdata[this.postKeys[0]]);
+        });
   }
   // to get json data. anyone who changes kindly change the function name.
   // samplefn(){

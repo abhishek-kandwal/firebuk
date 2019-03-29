@@ -1,10 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-<<<<<<< HEAD
-import { HttpClientModule } from '@angular/common/http';
-=======
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
->>>>>>> 42805a0f963481a991eeb27fa7092f685e217719
 import { AppComponent } from './app.component';
 import { ZacebukHeaderComponent } from './zacebuk-header/zacebuk-header.component';
 import { ZacebukWallComponent } from './zacebuk-wall/zacebuk-wall.component';
@@ -24,6 +20,8 @@ import { AuthGuard } from './_guards';
 import { FetchJsonDataService } from './fetch-json-data.service';
 import { AlertComponent } from './_components';
 import { AuthenticationService, AlertService, UserService } from './_services';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 const appRoutes: Routes = [
@@ -50,18 +48,16 @@ export const firebaseConfig = {
     ZacebukLoginComponent,
     ZacebukFooterComponent,
     ZacebukUsrProfileComponent,
-<<<<<<< HEAD
-=======
     AlertComponent
 
->>>>>>> 42805a0f963481a991eeb27fa7092f685e217719
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule, BrowserAnimationsModule,
-    ShowHidePasswordModule
+    ShowHidePasswordModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [PostdataService, HttpErrorHandler, MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
