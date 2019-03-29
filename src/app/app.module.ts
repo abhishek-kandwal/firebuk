@@ -9,7 +9,7 @@ import { ZacebukLoginComponent } from './zacebuk-login/zacebuk-login.component';
 import { ZacebukFooterComponent } from './zacebuk-footer/zacebuk-footer.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ZacebukUsrProfileComponent } from './zacebuk-usr-profile/zacebuk-usr-profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PostdataService } from './post-data.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorHandler } from './http-error-handler.service';
@@ -55,6 +55,7 @@ export const firebaseConfig = {
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule, BrowserAnimationsModule,
     ShowHidePasswordModule
