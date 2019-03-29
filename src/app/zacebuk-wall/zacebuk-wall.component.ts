@@ -2,7 +2,10 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FetchJsonDataService } from '../fetch-json-data.service';
 import { PostdataService } from '../post-data.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { User } from '../_models';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,13 +15,18 @@ import { Subscription } from 'rxjs';
 })
 
 export class ZacebukWallComponent implements OnInit, OnDestroy {
+
   constructor(private _postsData: FetchJsonDataService,
-              private post_form: FormBuilder,
-              private post_data: PostdataService,
-              private postsData: FetchJsonDataService, ) { }
+    private post_form: FormBuilder,
+    private route: Router,
+    private post_data: PostdataService,
+    private postsData: FetchJsonDataService, ) {
+  }
+
   get fieldValues() {
     return this.postForm.controls;
   }
+  currentUser;
   postForm: FormGroup;
   totalLikes = [];
   totalComments: any;
@@ -35,6 +43,9 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   fetchPost = [];
   subscription: Subscription;
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log(this.currentUser);
+    //console.log(this.currentUser.fullName);
     this._postsData.getPost()
       .subscribe(data => {
         let temp;
@@ -72,14 +83,16 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     const { new_post } = this.postForm.value;
     // tslint:disable-next-line: one-variable-per-declaration
-    const time = ' ', post_Id = this.postid, liker_ID = ' ',
-      poster = ' ', comment_content = ' ', commenter_ID = ' ', commentId = ' ';
+    const time = new Date().toTimeString(), post_Id = this.postid, liker_ID = ' ',
+      poster = this.currentUser.fullName, comment_content = ' ', commenter_ID = ' ', commentId = ' ';
     this.postData = {
       Post_content: new_post,
       Time: time,
       Post_ID: post_Id,
       Poster_ID: poster,
-      Likes: ' ',
+      Likes: {
+
+      },
       Comments: {
         Comment_No: {
           Comment_ID: commentId,
@@ -90,9 +103,11 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     };
 
     this.post_data.addPost(this.postData)
-      .subscribe(post => this.posts.push(post));
+      .subscribe(post => {
+        this.posts.push(post);
+        window.location.reload();
+      });
     this.postForm.reset();
-
   }
 
   likes(event) {
@@ -105,7 +120,9 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
       const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
       // if (this.likeId === this.postid) {
-      this.post_data.updatePost(url, { Liker_Name: 'Dev' }).subscribe(() => { });
+
+
+      this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
       // }
     }
   }

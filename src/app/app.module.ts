@@ -14,7 +14,7 @@ import { PostdataService } from './post-data.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
-import { MessagingService } from './messaging.service'
+import { MessagingService } from './messaging.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fakeBackendProvider, ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { AuthGuard } from './_guards';
@@ -36,16 +36,6 @@ const appRoutes: Routes = [
   { path: 'app-zacebuk-signup', component: ZacebukSignupComponent },
   { path: 'app-zacebuk-profile', component: ZacebukUsrProfileComponent, canActivate: [AuthGuard] }
 ];
-
-export const firebaseConfig = {
-  apiKey: 'AIzaSyC97Es6nksal1bccXYMKdpfL6ujz0PXIJY',
-    authDomain: 'example-81cdf.firebaseapp.com',
-    databaseURL: 'https://example-81cdf.firebaseio.com',
-    projectId: 'example-81cdf',
-    storageBucket: 'example-81cdf.appspot.com',
-    messagingSenderId: '736016132542'
-
-};
 
 @NgModule({
   declarations: [
@@ -70,7 +60,6 @@ export const firebaseConfig = {
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
-
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [PostdataService, HttpErrorHandler, MessageService,
@@ -82,7 +71,7 @@ export const firebaseConfig = {
     AuthenticationService,
     AlertService,
     UserService,
-    CurrentUserService
+    CurrentUserService,
     MessagingService
   ],
   bootstrap: [AppComponent]
