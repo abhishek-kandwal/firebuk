@@ -14,6 +14,7 @@ import { PostdataService } from './post-data.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
+import { MessagingService } from './messaging.service'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fakeBackendProvider, ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { AuthGuard } from './_guards';
@@ -21,6 +22,12 @@ import { FetchJsonDataService } from './fetch-json-data.service';
 import { AlertComponent } from './_components';
 import { AuthenticationService, AlertService, UserService } from './_services';
 import { CurrentUserService } from './current-user.service';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { AngularFireModule } from '@angular/fire';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 const appRoutes: Routes = [
@@ -49,7 +56,7 @@ export const firebaseConfig = {
     ZacebukLoginComponent,
     ZacebukFooterComponent,
     ZacebukUsrProfileComponent,
-    AlertComponent
+    AlertComponent,
 
   ],
   imports: [
@@ -58,7 +65,13 @@ export const firebaseConfig = {
     FormsModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule, BrowserAnimationsModule,
-    ShowHidePasswordModule
+    ShowHidePasswordModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [PostdataService, HttpErrorHandler, MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
@@ -70,6 +83,7 @@ export const firebaseConfig = {
     AlertService,
     UserService,
     CurrentUserService
+    MessagingService
   ],
   bootstrap: [AppComponent]
 })

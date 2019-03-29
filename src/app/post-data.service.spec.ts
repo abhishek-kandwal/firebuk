@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { PostdataService } from './post-data.service';
 
-describe('PostDataService', () => {
+describe('PostdataService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
