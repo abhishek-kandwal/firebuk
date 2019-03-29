@@ -12,17 +12,18 @@ export class FetchJsonDataService {
   subscription: Subscription;
   constructor(private http: HttpClient) { }
 
-  apiUrl = 'https://example-81cdf.firebaseio.com/Users.json';
+  urlUser = 'https://example-81cdf.firebaseio.com/Users.json';
+  urlPost = 'https://example-81cdf.firebaseio.com/Posts.json';
 
-  getJsonData() {
-    return this.http.get(this.apiUrl);
+  getUser() {
+    return this.http.get(this.urlUser);
+  }
+
+  getPost() {
+    return this.http.get(this.urlPost);
   }
 
   putData(data) {
     this.userList = data;
-  }
-
-  postData(data) {
-    return this.http.post(this.apiUrl, data);
   }
 }

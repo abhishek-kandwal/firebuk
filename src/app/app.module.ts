@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { AppComponent } from './app.component';
 import { ZacebukHeaderComponent } from './zacebuk-header/zacebuk-header.component';
 import { ZacebukWallComponent } from './zacebuk-wall/zacebuk-wall.component';
@@ -24,7 +25,8 @@ import { AuthenticationService, AlertService, UserService } from './_services';
 const appRoutes: Routes = [
   { path: '', component: ZacebukWallComponent },
   { path: 'app-zacebuk-login', component: ZacebukLoginComponent },
-  { path: 'app-zacebuk-signup', component: ZacebukSignupComponent }
+  { path: 'app-zacebuk-signup', component: ZacebukSignupComponent },
+  { path: 'app-zacebuk-profile', component: ZacebukUsrProfileComponent, canActivate: [AuthGuard] }
 ];
 
 export const firebaseConfig = {
@@ -52,7 +54,8 @@ export const firebaseConfig = {
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    ReactiveFormsModule, BrowserAnimationsModule
+    ReactiveFormsModule, BrowserAnimationsModule,
+    ShowHidePasswordModule
   ],
   providers: [PostdataService, HttpErrorHandler, MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -18,9 +18,9 @@ const httpOptions = {
 })
 
 export class PostdataService {
-  Users: any;
+  Users: object;
   Posts:any;
-  url = 'https://example-81cdf.firebaseio.com/Users.json';  // URL to web api
+  url = 'https://example-81cdf.firebaseio.com/Users.json';  // URL to users
   pUrl = 'https://example-81cdf.firebaseio.com/Posts.json'; // URL to posts
   private handleError: HandleError;
   constructor(
@@ -36,7 +36,7 @@ export class PostdataService {
       );
   }
 
-  addPost(post: Posts): Observable<Posts>{
+  addPost(post: Posts): Observable<Posts> {
     return this.http.post<Posts>(this.pUrl , post, httpOptions)
     .pipe(
       catchError(this.handleError('addPost', post))

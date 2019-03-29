@@ -1,3 +1,9 @@
-<p>
-  zacebuk-usr-profile works!
-</p>
+<p>zacebuk-usr-profile works!</p>
+<h1>Hi {{currentUser.name}}!</h1>
+<p>You're logged in with Firebuk!!</p>
+<h3>Profile Details:</h3>
+<ul *ngFor="let user of data">
+    <li *ngFor="let key of keys">
+        {{key}}: {{user[key]}}
+    </li>
+</ul>

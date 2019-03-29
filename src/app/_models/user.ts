@@ -1,5 +1,7 @@
 export class User {
-    username: string;
+    email: string;
+    fullName: string;
+    gender: string;
+    phone: number;
     password: string;
-    token: string;
 }

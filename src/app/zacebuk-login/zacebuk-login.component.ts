@@ -19,6 +19,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
     userList = [];
     userNameData = [];
     userPassData = [];
+    userIdData = [];
     subscription: Subscription;
 
     constructor(
@@ -27,7 +28,6 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
         private router: Router,
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
-        private fetchData: FetchJsonDataService
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
@@ -40,17 +40,6 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
-
-        this.subscription = this.fetchData.getJsonData().pipe().subscribe(val => {
-
-            const userKey = Object.keys(val);
-            userKey.map((ele, index) => {
-                this.userNameData[index] = val[ele].email;
-                this.userPassData[index] = val[ele].password;
-                this.userList.push({ username: this.userNameData[index], password: this.userPassData[index] });
-            });
-        });
-        this.fetchData.putData(this.userList);
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     }
@@ -60,8 +49,8 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
 
     // convenience getter for easy access to form fields
     get values() { return this.loginForm.controls; }
-
     onSubmit() {
+        const passwordHash = btoa(this.values.password.value);
         this.submitted = true;
 
         // stop here if form is invalid
@@ -70,7 +59,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
         }
 
         this.loading = true;
-        this.authenticationService.login(this.values.username.value, this.values.password.value)
+        this.authenticationService.login(this.values.username.value, passwordHash )
             .pipe(first())
             .subscribe(
                 data => {
@@ -78,6 +67,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
                 },
                 error => {
                     this.alertService.error(error);
+                    console.log(error);
                     this.loading = false;
                 });
     }
