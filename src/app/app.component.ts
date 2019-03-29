@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FetchJsonDataService } from './fetch-json-data.service';
+import { User } from './_models';
+import { AuthenticationService } from './_services';
+import { CurrentUserService } from './current-user.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +19,13 @@ export class AppComponent implements OnInit, OnDestroy {
   userGenderData = [];
   userPassData = [];
   userIdData = [];
+  currentUser: User;
+  currentUserSubscription: Subscription;
+  users: User[] = [];
 
-  constructor(private fetchData: FetchJsonDataService) { }
+  constructor(private fetchData: FetchJsonDataService,
+              private authenticationService: AuthenticationService,
+              private setUser: CurrentUserService) { }
 
   ngOnInit() {
     this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
@@ -39,11 +47,17 @@ export class AppComponent implements OnInit, OnDestroy {
         });
       });
     });
+
+    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      this.setUser.sendUser(this.currentUser);
+    });
     this.fetchData.putData(this.userList);
     console.log(this.userList);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.currentUserSubscription.unsubscribe();
   }
 }
