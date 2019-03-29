@@ -1,30 +1,17 @@
 <!-- make post here -->
 <div class="row">
   <div class="col-sm-12 post_here">
-      <!-- <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-horizontal">
-
-          <div class= "form-group">
-              <label class="col-sm-2 control-label" for="posts">New Post</label>
-              <div class="col-sm-8">
-                <input id="post" formControlName="post" type="text" class="form-control" required>
-              </div>
-          </div>
-          <div class="button">
-              <button class="btn btn-primary" type="submit" [disabled]="!postForm.valid" style="align-content: center">Add Post</button>
-          </div>
-          </form> -->
-          <!-- form here -->
-          <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="">
+          <form [formGroup]="postForm" (ngSubmit)="onSubmit(button_type)" class="">
                 <div class="">
                   <div class="form-group">            
                     <label class="col-sm-2 control-label" for="fullName">New post</label>
                     <div class="col-sm-8">
-                      <input id="new_post" formControlName="new_post" type="text" placeholder="what's in your mind?" class="form-control" required>
+                      <input id="new_post" formControlName="new_post" type="text" placeholder="what's on your mind?" class="form-control" required>
                     </div>
                   </div>
             
                 <div class="">
-             <button class="btn btn-primary" type="submit" [disabled]="!employeeForm.valid" style="align-content: center">Sign up</button>
+             <button class="btn btn-primary" (click)="onSubmit('post')" type="submit" [disabled]="!employeeForm.valid" style="align-content: center">Post</button>
                 </div>
                   <!--button disabled until form is valid-->
                 </div>
@@ -70,6 +57,25 @@
             <span class="button_option_here">
                 <button class="btn btn-primary button_styles">COMMENTS:(21)</button>
             </span>
+            <!-- comment area starts -->
+            <div class="comments_area">
+                <form [formGroup]="comment_Form" (ngSubmit)="onSubmit(button_type)" class="">
+                    <div class="">
+                      <div class="form-group">            
+                        <label class="col-sm-2 control-label" for="fullName">New comment</label>
+                        <div class="col-sm-8">
+                          <input id="new_post" formControlName="new_comment" type="text" placeholder="comment here" class="form-control" required>
+                        </div>
+                      </div>
+                
+                    <div class="">
+                 <button class="btn btn-primary" (click)="onSubmit('comment')" type="submit" [disabled]="!employeeForm.valid" style="align-content: center">comment it! </button>
+                    </div>
+                      <!--button disabled until form is valid-->
+                    </div>
+                  </form>
+            </div>
+            <!-- comment area ends -->
           </div>
         </div>
       </div>
