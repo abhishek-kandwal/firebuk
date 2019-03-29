@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../_services';
 import { Router } from '@angular/router';
+import { FetchJsonDataService } from '../fetch-json-data.service';
 
 @Component({
   selector: 'app-zacebuk-header',
@@ -9,11 +10,16 @@ import { Router } from '@angular/router';
 })
 
 export class ZacebukHeaderComponent implements OnInit {
+
   user_logged:any;
   isloggedin:boolean=false;
+  
   constructor(private authenticationService: AuthenticationService,
-              private router: Router) { }
+              private router: Router,
+              private check:FetchJsonDataService
+            ) { }
   ngOnInit() {
+    this.check.isloggedin=this.user_logged ;
   }
   logout() {
     this.authenticationService.logout();
