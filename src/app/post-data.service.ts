@@ -3,7 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Users } from './user';
 import { Posts } from './posts';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
 const httpOptions = {
@@ -19,7 +19,7 @@ const httpOptions = {
 
 export class PostdataService {
   Users: object;
-  Posts:any;
+  Posts: object;
   url = 'https://example-81cdf.firebaseio.com/Users.json';  // URL to users
   pUrl = 'https://example-81cdf.firebaseio.com/Posts.json'; // URL to posts
   private handleError: HandleError;
@@ -46,6 +46,7 @@ export class PostdataService {
   addPost(post: Posts): Observable<Posts> {
     return this.http.post<Posts>(this.pUrl , post, httpOptions)
     .pipe(
+      retry(5),
       catchError(this.handleError('addPost', post))
     );
   }
