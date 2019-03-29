@@ -20,6 +20,7 @@ import { AuthGuard } from './_guards';
 import { FetchJsonDataService } from './fetch-json-data.service';
 import { AlertComponent } from './_components';
 import { AuthenticationService, AlertService, UserService } from './_services';
+import { CurrentUserService } from './current-user.service';
 
 
 const appRoutes: Routes = [
@@ -65,7 +66,8 @@ export const firebaseConfig = {
     FetchJsonDataService,
     AuthenticationService,
     AlertService,
-    UserService
+    UserService,
+    CurrentUserService
   ],
   bootstrap: [AppComponent]
 })

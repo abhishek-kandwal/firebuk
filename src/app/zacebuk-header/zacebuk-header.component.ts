@@ -7,15 +7,26 @@ import { Router } from '@angular/router';
   templateUrl: './zacebuk-header.component.html',
   styleUrls: ['./zacebuk-header.component.css']
 })
-export class ZacebukHeaderComponent implements OnInit {
 
+export class ZacebukHeaderComponent implements OnInit {
+  user_logged:any;
+  isloggedin:boolean=false;
   constructor(private authenticationService: AuthenticationService,
               private router: Router) { }
-
   ngOnInit() {
   }
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/app-zacebuk-login']);
+
+    // this below code is for the check the user is logged in or not
+    this.user_logged=localStorage.getItem('currentUser');
+    if(this.user_logged){
+      this.isloggedin=true;
+    }else{
+      this.isloggedin=false;
+    }
+    
+
 }
 }
