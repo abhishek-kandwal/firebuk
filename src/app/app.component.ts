@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FetchJsonDataService } from './fetch-json-data.service';
+import { MessagingService } from './messaging.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   userList = [];
@@ -16,10 +18,24 @@ export class AppComponent implements OnInit, OnDestroy {
   userGenderData = [];
   userPassData = [];
   userIdData = [];
+  message;
 
-  constructor(private fetchData: FetchJsonDataService) { }
+  constructor(private fetchData: FetchJsonDataService,
+    private messagingService: MessagingService) { }
+    sendPushNotification(){
+      const userId = '2222';
+      this.messagingService.requestPermission(userId);
+      this.messagingService.receiveMessage();
+      this.message = this.messagingService.currentMessage;
+  
+      this.messagingService.sendPushMessage("Web push notification", "HI, Firebase test messsage");
+    }
+  
+  
 
   ngOnInit() {
+    
+
     this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
       const userKey = Object.keys(val);
       userKey.map((ele, index) => {

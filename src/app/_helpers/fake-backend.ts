@@ -32,7 +32,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
                         id: user.id,
                         username: user.username,
                         email: user.email,
-                        name: user.name,
+                        fullName: user.name,
                         gender: user.gender,
                         phone: user.phone
                     };
