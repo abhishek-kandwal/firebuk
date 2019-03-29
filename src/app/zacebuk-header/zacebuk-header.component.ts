@@ -12,14 +12,16 @@ import { FetchJsonDataService } from '../fetch-json-data.service';
 export class ZacebukHeaderComponent implements OnInit {
 
   user_logged:any;
-  isloggedin:boolean=false;
-  
+  isloggedin:boolean;
+
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private check:FetchJsonDataService
             ) { }
   ngOnInit() {
-    this.check.isloggedin=this.user_logged ;
+    this.check.isloggedin.subscribe((val)=>{
+      this.isloggedin=val;
+    })
   }
   logout() {
     this.authenticationService.logout();
@@ -32,6 +34,7 @@ export class ZacebukHeaderComponent implements OnInit {
     }else{
       this.isloggedin=false;
     }
+    console.log('Logout',this.isloggedin);
     
 
 }

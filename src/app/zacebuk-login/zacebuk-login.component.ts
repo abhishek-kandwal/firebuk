@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
     templateUrl: './zacebuk-login.component.html',
     styleUrls: ['./zacebuk-login.component.css']
 })
-export class ZacebukLoginComponent implements OnInit , OnDestroy {
+export class ZacebukLoginComponent implements OnInit, OnDestroy {
     loginForm: FormGroup;
     loading = false;
     submitted = false;
@@ -21,6 +21,8 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
     userPassData = [];
     userIdData = [];
     subscription: Subscription;
+    user_logged:any;
+    isloggedin:boolean;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -28,6 +30,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
         private router: Router,
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
+        private check: FetchJsonDataService
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
@@ -36,6 +39,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
     }
 
     ngOnInit() {
+        
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
@@ -50,6 +54,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
     // convenience getter for easy access to form fields
     get values() { return this.loginForm.controls; }
     onSubmit() {
+
         const passwordHash = btoa(this.values.password.value);
         this.submitted = true;
 
@@ -57,13 +62,35 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
         if (this.loginForm.invalid) {
             return;
         }
+        // user loggin code
+       
+
+       
+        
+        //console.log('Login', this.isloggedin);
 
         this.loading = true;
-        this.authenticationService.login(this.values.username.value, passwordHash )
+        this.authenticationService.login(this.values.username.value, passwordHash)
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    //console.log(this.check.isloggedin)
+                    this.check.isloggedin.next(true);
+                    this.check.isloggedin.subscribe((val)=>{
+                        this.user_logged =val;
+                    });
+                    console.log(this.user_logged)
+                    // = this.check.isloggedin;
+
+                    if (this.user_logged) {
+                        this.isloggedin = true;
+                    } else {
+                        this.isloggedin = false;
+                    }
+                    console.log(this.isloggedin,"login");
+                    
+
+                 this.router.navigate([this.returnUrl]);
                 },
                 error => {
                     this.alertService.error(error);

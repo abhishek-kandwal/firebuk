@@ -27,6 +27,8 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   commentLength;
   likeValue: number;
   subscription: Subscription;
+  user_logged:any;
+  isloggedin:boolean;
  
 
   constructor(
@@ -38,8 +40,9 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
-
+    this.check.isloggedin.subscribe((val)=>{
+      this.isloggedin=val;
+    })
 
 
     this.postForm = this.post_form.group({

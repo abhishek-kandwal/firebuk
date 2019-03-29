@@ -44,11 +44,11 @@
             <!-- post options here -->
             <!-- buttons here -->
             <!-- like button -->
-            <span class="button_option_here">
+            <span class="button_option_here" *ngIf="isloggedin;">
               <button id="likes{{likeID}}" class="btn btn-primary button_styles" (click)="likes()"><i class="fa fa-heart" aria-hidden="true"></i>like</button>
             </span>
             <!-- comment button -->
-            <span class="button_option_here">
+            <span class="button_option_here" *ngIf="isloggedin;">
               <button id="comment{{commentID}}"class="btn btn-primary button_styles" (click)="comment()"><i class="fa fa-comments-o" aria-hidden="true"></i> comment</button>
             </span>
             <span class="button_option_here">
