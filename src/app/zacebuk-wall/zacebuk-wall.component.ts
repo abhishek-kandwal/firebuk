@@ -12,45 +12,47 @@ import { Subscription } from 'rxjs';
 })
 
 export class ZacebukWallComponent implements OnInit, OnDestroy {
-
+  constructor(private _postsData: FetchJsonDataService,
+              private post_form: FormBuilder,
+              private post_data: PostdataService,
+              private postsData: FetchJsonDataService, ) { }
+  get fieldValues() {
+    return this.postForm.controls;
+  }
   postForm: FormGroup;
-  totalLikes: any;
+  totalLikes = [];
   totalComments: any;
   likeId;
   new_post = [];
-  postid;
+  postid = 0;
   posts = [];
-
+  postsContent = [];
   // counter;
   postValue = [];
   postList = [];
-  constructor(private _postsData: FetchJsonDataService,
-    private post_form: FormBuilder,
-    private post_data: PostdataService,
-
-    private postsData: FetchJsonDataService,
-    private currentuser: CurrentUserService) { }
   counter;
+  postData: any;
+  fetchPost = [];
+  subscription: Subscription;
   ngOnInit() {
-    //  this.post_data.updatePost().subscribe(()=>{});
-
-
     this._postsData.getPost()
       .subscribe(data => {
         let temp;
         this.postList = Object.keys(data);
+        this.postValue = Object.values(data);
         this.postList.map((el, index) => {
-          console.log(this.postList[index]);
+          const temp1 = Object.values(this.postValue[index].Likes).length;
+          this.totalLikes.push(temp1);
           temp = data[el].Post_content;
           this.postid = this.postList.length;
-          this.postValue.push(temp);
-          console.log(this.postid);
-          console.log(this.postList);
-          console.log(this.postValue);
+          this.postsContent.push(temp);
 
         });
-
       });
+    this.totalLikes.map((val, ind) => {
+      document.getElementById(`totallikes${ind}`).innerHTML = `${this.totalLikes[val]}`;
+    });
+    console.log(this.totalLikes);
     this.postForm = this.post_form.group({
       new_post: ['']
     });
@@ -61,34 +63,23 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     this.subscription = this.postsData.getPost().subscribe(val => {
       this.fetchPost.push(val);
     });
+
+
   }
-  postData: any;
-  fetchPost = [];
-  subscription: Subscription;
-
-
-
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  get fieldValues() {
-    return this.postForm.controls;
-  }
   onSubmit(): void {
     const { new_post } = this.postForm.value;
-    const like_no = ' ', time = ' ', post_Id = this.postid++, liker_ID = ' ',
+    // tslint:disable-next-line: one-variable-per-declaration
+    const time = ' ', post_Id = this.postid, liker_ID = ' ',
       poster = ' ', comment_content = ' ', commenter_ID = ' ', commentId = ' ';
     this.postData = {
       Post_content: new_post,
       Time: time,
       Post_ID: post_Id,
       Poster_ID: poster,
-      Likes: {
-        Likes_No: {
-          Liker_Name: liker_ID
-        },
-      },
+      Likes: ' ',
       Comments: {
         Comment_No: {
           Comment_ID: commentId,
@@ -105,13 +96,17 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   }
 
   likes(event) {
-    // this.likeId = document.getElementById() as HTMLElement;
-    this.likeId = event.target.id;
-    console.log(this.postList[Number(this.likeId)]);
 
-    const url = 'https://example-81cdf.firebaseio.com/Posts/' + this.postList[this.likeId] + '/Likes.json';
-    if (this.likeId === this.postid) {
-      this.post_data.updatePost(url, { [this.likeId]: { Liker_Name: ' ' } }).subscribe(() => { });
+    this.likeId = event.target.id;
+    if (this.likeId) {
+      console.log('totallikes'.concat(this.likeId.slice(4)));
+      document.getElementById('totallikes'.concat(this.likeId.slice(4))).innerHTML = `${this.totalLikes[this.likeId.slice(4)]}`;
+      // console.log(this.postList[Number(this.likeId)]);  [this.likeId]:
+
+      const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
+      // if (this.likeId === this.postid) {
+      this.post_data.updatePost(url, { Liker_Name: 'Dev' }).subscribe(() => { });
+      // }
     }
   }
 }

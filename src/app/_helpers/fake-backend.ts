@@ -34,7 +34,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
                         email: user.username,
                         fullName: user.name,
                         gender: user.gender,
-                        phone: user.phone
+                        phone: user.phone,
                     };
 
                     return of(new HttpResponse({ status: 200, body }));
