@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FetchJsonDataService } from '../fetch-json-data.service';
 import { PostdataService } from '../post-data.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -11,50 +11,64 @@ import { CurrentUserService } from '../current-user.service';
   templateUrl: './zacebuk-wall.component.html',
   styleUrls: ['./zacebuk-wall.component.css']
 })
+
 export class ZacebukWallComponent implements OnInit, OnDestroy {
+ 
   postForm: FormGroup;
   totalLikes: any;
   totalComments: any;
+  likeId;
   new_post = [];
+  postid;
   posts = [];
-  postData: any;
-  fetchPost = [];
-  commentNoLength: number;
-  likeNoLength: number;
-  commentKey: number | string[];
-  likesKey: number;
-  postlength;
-  commentLength;
-  likeValue: number;
-  subscription: Subscription;
-  constructor(
+
+  //counter;
+  postValue=[];
+  postList =[];
+  constructor(private _postsData: FetchJsonDataService,    
     private post_form: FormBuilder,
     private post_data: PostdataService,
+   
     private postsData: FetchJsonDataService,
-    private currentuser: CurrentUserService
-  ) { }
-
+    private currentuser: CurrentUserService) { }
+  counter;
   ngOnInit() {
-    this.postForm = this.post_form.group({
-      new_post: ['']
-    });
-    this.subscription = this.postsData.getPost().subscribe(val => {
-      this.fetchPost.push(val);
-      this.postlength = Object.values(this.fetchPost).length;
-      console.log(this.fetchPost);
-      if (this.fetchPost.length === 0) {
-        this.fetchPost.map((ele, index) => {
-          this.commentLength = Object.keys(ele[index].Comments).length;
-          this.commentNoLength = Object.keys(ele[index].Comments).length;
-          this.commentKey = Object.keys(ele[index].Comments);
-          this.commentKey = Number(this.commentKey) + 1;
-          this.likeNoLength = Object.keys(ele[index].Likes).length;
-          this.likesKey = Number(this.likeNoLength) + 1;
-          this.likeValue = this.likeNoLength;
-        });
-      }
-    });
-  }
+    //  this.post_data.updatePost().subscribe(()=>{});
+    
+
+    this._postsData.getPost()
+    .subscribe(data => {
+      let temp;
+      this.postList = Object.keys(data);
+      this.postList.map((el,index)=>{
+        console.log(this.postList[index])
+        temp=data[el].Post_content;
+        this.postid = this.postList.length;
+        this.postValue.push(temp);
+        console.log(this.postid);
+        console.log(this.postList);
+        console.log(this.postValue);
+        
+      })
+            
+      });
+      this.postForm = this.post_form.group({
+        new_post: ['']
+      });
+
+      this.postForm = this.post_form.group({
+        new_post: ['']
+      });
+      this.subscription = this.postsData.getPost().subscribe(val => {
+        this.fetchPost.push(val);
+      });
+    }
+  postData: any;
+  fetchPost = [];
+  subscription: Subscription;
+
+
+
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -65,20 +79,20 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     console.log(this.currentuser.data);
     const { new_post } = this.postForm.value;
-    const like_no = ' ', time = ' ', post_Id = this.postlength + 1, liker_ID = ' ',
-    poster = this.currentuser.data.id, comment_content = ' ', commenter_ID = ' ', commentId = this.commentLength + 1;
+    const like_no = ' ', time = ' ', post_Id = this.postid++, liker_ID = ' ',
+    poster = ' ', comment_content = ' ', commenter_ID = ' ', commentId = ' ';
     this.postData = {
       Post_content: new_post,
       Time: time,
       Post_ID: post_Id,
       Poster_ID: poster,
       Likes: {
-        1: {
+        Likes_No: {
           Liker_Name: liker_ID
         },
       },
       Comments: {
-        1: {
+        Comment_No: {
           Comment_ID: commentId,
           Comment_Content: comment_content,
           Commenter_ID: commenter_ID
@@ -90,18 +104,17 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       .subscribe(post => this.posts.push(post));
     this.postForm.reset();
 
+    }
+    
+    likes(event) {
+      //this.likeId = document.getElementById() as HTMLElement;
+      this.likeId = event.target.id;
+      console.log(this.postList[Number(this.likeId)]);
+      
+      let url ='https://example-81cdf.firebaseio.com/Posts/'+this.postList[this.likeId]+'/Likes.json'
+      if(this.likeId === this.postid) {
+            this.post_data.updatePost(url,{[this.likeId] : {Liker_Name: ' '}}).subscribe(()=>{});
+      }
+    }
   }
 
-  likes() {
-    this.totalLikes = this.likeValue;
-    const postId = ( document.getElementById('this.postData.Post_ID') as HTMLInputElement).value;
-    // this.fetchPost.Post_ID[postId] = ++this.totalLikes;
-  }
-
-  comments() {
-    this.totalComments = this.postData.Comments.length;
-    const commentId = ( document.getElementById('this.postData.Comments.Comment_No.Commenter_ID') as HTMLInputElement).value;
-    this.postData.Likes.Like_no = ++this.totalLikes;
-  }
-
-}

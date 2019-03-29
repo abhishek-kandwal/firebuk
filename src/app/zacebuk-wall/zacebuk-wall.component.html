@@ -40,7 +40,7 @@
   <!-- all post code here -->
   <div >
     <!-- in this div we will use the *ngFor  -->
-    <div class="row" *ngFor='let el of postList;index as i' >
+    <div class="row" *ngFor='let el of postList;index as ind' >
       <div class="col-sm-12 ">
         <div class="card_box">
           <!-- post user name here -->
@@ -59,23 +59,44 @@
             <!-- buttons here -->
             <!-- like button -->
             <span class="button_option_here">
-              <button id="likes{{likeID}}" class="btn btn-primary button_styles" (click)="likes()"><i class="fa fa-heart" aria-hidden="true"></i>like</button>
+              
+              <button id = '{{ind}}' class="btn btn-primary button_styles " (click)="likes($event)"><i class="fa fa-heart" aria-hidden="true" ></i>like</button>
             </span>
-            <!-- comment button -->
+            <!-- comment button [id]="likeId[i]"  -->
             <span class="button_option_here">
-              <button id="comment{{commentID}}"class="btn btn-primary button_styles" (click)="comment()"><i class="fa fa-comments-o" aria-hidden="true"></i> comment</button>
-            </span>
-            <span class="button_option_here">
-              <button class="btn btn-primary button_styles"> LIKES:({{totalLikes}})</button>
+              <button class="btn btn-primary button_styles"><i class="fa fa-comments-o" aria-hidden="true"></i> comment</button>
             </span>
             <span class="button_option_here">
-                <button class="btn btn-primary button_styles">COMMENTS:({{totalComments}})</button>
+              <button class="btn btn-primary button_styles"> LIKES:({{likesCount}})</button>
             </span>
+            <span class="button_option_here">
+                <button class="btn btn-primary button_styles">COMMENTS:(21)</button>
+            </span>
+              <!-- comment area starts -->
+              <!-- <div class="comments_area">
+                <form [formGroup]="comment_Form" (ngSubmit)="onSubmit(button_type)" class="">
+                    <div class="">
+                      <div class="form-group">            
+                        <label class="col-sm-2 control-label" for="fullName">New comment</label>
+                        <div class="col-sm-8">
+                          <input id="new_post" formControlName="new_comment" type="text" placeholder="comment here" class="form-control" required>
+                        </div>
+                      </div>
+                
+                    <div class="">
+                 <button class="btn btn-primary" (click)="onSubmit('comment')" type="submit" [disabled]="!employeeForm.valid" style="align-content: center">comment it! </button>
+                    </div>
+                      button disabled until form is valid
+                     </div>
+                  </form> -->
+            <!-- </div>  -->
+            <!-- comment area ends -->
           </div>
         </div>
       </div>
     </div>
   </div>
   <!-- all post code here -->
+  
 
 </div>
