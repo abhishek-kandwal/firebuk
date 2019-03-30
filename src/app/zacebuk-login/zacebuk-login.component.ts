@@ -21,8 +21,8 @@ export class ZacebukLoginComponent implements OnInit, OnDestroy {
     userPassData = [];
     userIdData = [];
     subscription: Subscription;
-    user_logged:any;
-    isloggedin:boolean;
+    user_logged: any;
+    isloggedin: boolean;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -39,14 +39,14 @@ export class ZacebukLoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        
+
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-        
+
     }
     ngOnDestroy() {
         // this.subscription.unsubscribe();
@@ -64,10 +64,10 @@ export class ZacebukLoginComponent implements OnInit, OnDestroy {
             return;
         }
         // user loggin code
-       
 
-       
-        
+
+
+
         //console.log('Login', this.isloggedin);
 
         this.loading = true;
@@ -77,8 +77,8 @@ export class ZacebukLoginComponent implements OnInit, OnDestroy {
                 data => {
                     //console.log(this.check.isloggedin)
                     this.check.isloggedin.next(true);
-                    this.check.isloggedin.subscribe((val)=>{
-                        this.user_logged =val;
+                    this.check.isloggedin.subscribe((val) => {
+                        this.user_logged = val;
                     });
                     console.log(this.user_logged)
                     // = this.check.isloggedin;
@@ -88,10 +88,10 @@ export class ZacebukLoginComponent implements OnInit, OnDestroy {
                     } else {
                         this.isloggedin = false;
                     }
-                    console.log(this.isloggedin,"login");
-                    
+                    console.log(this.isloggedin, "login");
 
-                 this.router.navigate([this.returnUrl]);
+
+                    this.router.navigate([this.returnUrl]);
                 },
                 error => {
                     this.alertService.error(error);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Users } from './user';
 import { Posts } from './posts';
+import {Comments} from './comments';
 import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
@@ -20,6 +21,7 @@ const httpOptions = {
 export class PostdataService {
   Users: object;
   Posts: object;
+  Comments: object;
   url = 'https://example-81cdf.firebaseio.com/Users.json';  // URL to users
   pUrl = 'https://example-81cdf.firebaseio.com/Posts.json'; // URL to posts
   private handleError: HandleError;
@@ -53,6 +55,13 @@ export class PostdataService {
     return this.http.post<Posts>(this.pUrl, post, httpOptions)
       .pipe(
         catchError(this.handleError('addPost', post))
+      );
+  }
+
+  addComment(comment: Comments, url): Observable<Comments> {
+    return this.http.post<Posts>(url, comment, httpOptions)
+      .pipe(
+        catchError(this.handleError('addPost', comment))
       );
   }
 }
