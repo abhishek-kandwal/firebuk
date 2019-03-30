@@ -1,6 +1,6 @@
 <!-- make post here -->
 <div class="row" *ngIf="isloggedin;">
-  <div class="col-sm-12 post_here">
+  <div class="col-sm-12 ">
     <!-- <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-horizontal">
 
           <div class= "form-group">
@@ -101,10 +101,7 @@
                 <div class="old_comment_box">
                   <div class="">
                     <ul>
-                        <li *ngfor="let i of index" class="li_style">
-                           <i class="fa fa-comment" aria-hidden="true"></i> 
-                            {{commentsList[inde]}}
-                        </li>
+                         <li class="li_style"><i class="fa fa-comment" aria-hidden="true"></i> hello</li>
                     </ul>
                     
                     
@@ -123,18 +120,3 @@
   <!-- all post code here -->
 </div>
 
-<script type="text/javascript">
-  div_box:string;
-  function mouseover(div_id) {
-  this.div_box = div_id.slice(12);
-  this.div_box = 'comment'.concat(""+this.div_box);
-    document.getElementById(this.div_box).style.display = "block";
-    console.log('mouseoin',this.div_box);
-  }
-  function mouseout(div_id) {
-    this.div_box = div_id.slice(12);
-    this.div_box = 'comment'.concat(""+this.div_box);
-    document.getElementById(this.div_box).style.display = "none";
-    console.log('mouseout',this.div_box);
-  }
-</script>
