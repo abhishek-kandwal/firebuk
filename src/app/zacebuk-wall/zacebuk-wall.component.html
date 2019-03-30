@@ -62,16 +62,16 @@
             <!-- like button -->
             <span class="button_option_here">
 
-              <button id='like{{ind}}' class="btn btn-primary button_styles " (click)="likes($event) " ><i
-                  class="fa fa-heart" aria-hidden="true"></i>like</button>
+              <button id="like{{ind}}" class="btn btn-primary button_styles" (click)="likes($event)"><i
+                  class="fa fa-heart" aria-hidden="true"></i></button>
+            </span>
+            <span class="button_option_here">
+              <button class="btn btn-primary button_styles" id='totallikes{{ind}}'> {{totalLikes[ind]}} </button>
             </span>
             <!-- comment button [id]="likeId[i]"  -->
             <span class="button_option_here">
               <button class="btn btn-primary button_styles"><i class="fa fa-comments-o" aria-hidden="true"
                   id='comment{{ind}}'></i> comment</button>
-            </span>
-            <span class="button_option_here">
-              <button class="btn btn-primary button_styles" id='totallikes{{ind}}'> {{totalLikes[ind]}} </button>
             </span>
             <span class="button_option_here">
               <button class="btn btn-primary button_styles" id='totalcomment{{ind}}'>COMMENTS:(21)</button>

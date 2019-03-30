@@ -1,6 +1,7 @@
 .wall_style{
     margin-top: 50px;
-    overflow-wrap: scroll;
+    overflow: scroll;
+    margin-bottom: 25px;
 }
 
 .post_here{

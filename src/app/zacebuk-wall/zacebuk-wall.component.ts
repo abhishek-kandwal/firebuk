@@ -17,10 +17,10 @@ import { Router } from '@angular/router';
 export class ZacebukWallComponent implements OnInit, OnDestroy {
 
   constructor(private _postsData: FetchJsonDataService,
-              private post_form: FormBuilder,
-              private route: Router,
-              private post_data: PostdataService,
-              private postsData: FetchJsonDataService, ) {
+    private post_form: FormBuilder,
+    private route: Router,
+    private post_data: PostdataService,
+    private postsData: FetchJsonDataService, ) {
   }
 
   get fieldValues() {
@@ -47,7 +47,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     console.log(this.currentUser);
     // console.log(this.currentUser.fullName);
-    this._postsData.getPost()
+    this.subscription = this._postsData.getPost()
       .subscribe(data => {
         let temp;
         this.postList = Object.keys(data);
@@ -60,15 +60,43 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
             console.log('Read Error');
           }
           if (temp1 === undefined) {
-              this.totalLikes.push(0);
-            } else {
-              this.totalLikes.push(temp1);
+            this.totalLikes.push(0);
+          } else {
+            this.totalLikes.push(temp1);
           }
           temp = data[el].Post_content;
           this.postid = this.postList.length;
           this.postsContent.push(temp);
+
+
+          let url = `https://example-81cdf.firebaseio.com/Posts/${el}/Likes.json`;
+
+          //this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
+          // }
+          this.subscription = this.post_data.getlikes(url).subscribe(val => {
+            try {
+
+              let temp = [];
+              temp.push(Object.keys(val));
+              let temp1 = Object.values(val);
+              // console.log(temp1);
+              // console.log(this.currentUser.fullName);
+
+              temp1.map((val, ind) => {
+                if (val.Liker_Name === this.currentUser.fullName) {
+                  document.getElementById('like'.concat("" + index)).setAttribute("disabled", "true")
+                }
+              })
+            } catch (error) {
+              console.log('First like to the post.');
+            }
+
+          }
+          );
+
         });
       });
+
     this.totalLikes.map((val, ind) => {
       document.getElementById(`totallikes${ind}`).innerHTML = `${this.totalLikes[val]}`;
     });
@@ -84,28 +112,10 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       this.fetchPost.push(val);
     });
 
-    this.postList.map((val, ind) => {
-      const url = `https://example-81cdf.firebaseio.com/Posts/${val}/Likes.json`;
 
-      console.log('inpostlist')
-      this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
-      // }
-      this.post_data.getlikes(url).subscribe(val => {
-        try {
-          console.log('getlikes')
-          const temp = [];
-          temp.push(Object.keys(val));
-          const temp1 = Object.values(val);
-          console.log(temp1);
-        } catch (error) {
-          console.log('First like to the post.');
-        }
-        location.reload();
-      }
-      );
-    });
   }
   ngOnDestroy() {
+
     this.subscription.unsubscribe();
   }
   onSubmit(): void {
@@ -129,18 +139,20 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         }
       }
     };
-    this.post_data.addPost(this.postData)
+  
+    this.subscription = this.post_data.addPost(this.postData)
       .subscribe(post => {
         this.posts.push(post);
         window.location.reload();
       });
     this.postForm.reset();
+
   }
 
   // Likes Function
-  likes(event) {
-
-    this.likeId = event.target.id;
+  likes(event: { currentTarget: Element; }) {
+    this.likeId = (event.currentTarget as Element).id;
+    console.log(this.likeId);
     if (this.likeId) {
       console.log('totallikes'.concat(this.likeId.slice(4)));
       document.getElementById('totallikes'.concat(this.likeId.slice(4))).innerHTML = `${this.totalLikes[this.likeId.slice(4)]}`;
@@ -151,7 +163,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
       this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
       // }
-      this.post_data.getlikes(url).subscribe(val => {
+      this.subscription = this.post_data.getlikes(url).subscribe(val => {
         try {
           const temp = [];
           temp.push(Object.keys(val));
@@ -159,8 +171,8 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
           console.log(temp1);
         } catch (error) {
           console.log('First like to the post.');
+          location.reload();
         }
-        location.reload();
       }
       );
     }
