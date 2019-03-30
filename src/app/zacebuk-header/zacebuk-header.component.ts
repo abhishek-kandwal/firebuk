@@ -16,17 +16,7 @@ export class ZacebukHeaderComponent implements OnInit {
     private router: Router, private messagingService: MessagingService,
     private check:FetchJsonDataService) { }
   message;
-  // sendPushNotification() {
-    
 
-  //   this.messagingService.sendPushMessage('FIREBUK NOTIFICATIONS', 'Hey Everyone, Greetings from the team');
-  // }
-
-//   ngOnInit() {
-// ;
-
-//     this.messagingService.sendPushMessage('FIREBUK NOTIFICATIONS', 'Hey Everyone, Greetings from the team');
-//   }
   user_logged:any;
   isloggedin:boolean;
 
