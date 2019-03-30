@@ -1,37 +1,23 @@
 <!-- make post here -->
 <div class="row">
   <div class="col-sm-12 post_here">
-    <!-- <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-horizontal">
-
-          <div class= "form-group">
-              <label class="col-sm-2 control-label" for="posts">New Post</label>
-              <div class="col-sm-8">
-                <input id="post" formControlName="post" type="text" class="form-control" required>
-              </div>
-          </div>
-          <div class="button">
-              <button class="btn btn-primary" type="submit" [disabled]="!postForm.valid" style="align-content: center">Add Post</button>
-          </div>
-          </form> -->
-    <!-- form here -->
-    <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="">
-      <div class="">
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="fullName">New post</label>
-          <div class="col-sm-8">
-            <input id="new_post" formControlName="new_post" type="text" placeholder="what's in your mind?"
-              class="form-control" required>
-          </div>
-        </div>
-
-        <div class="">
-          <button class="btn btn-primary" type="submit" [disabled]="!postForm.valid"
-            style="align-content: center">Post</button>
-        </div>
-        <!--button disabled until form is valid-->
-      </div>
-    </form>
-    <!-- form ends -->
+      <!-- form starts -->
+          <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="">
+                <div class="">
+                  <div class="form-group">            
+                    <label class="col-sm-2 control-label" for="fullName">New post</label>
+                    <div class="col-sm-8">
+                      <input id="new_post" formControlName="new_post" type="text" placeholder="what's in your mind?" class="form-control" required>
+                    </div>
+                  </div>
+            
+                <div class="">
+             <button class="btn btn-primary" type="submit" [disabled]="!postForm.valid" style="align-content: center">Post</button>
+                </div>
+                  <!--button disabled until form is valid-->
+                </div>
+              </form>
+          <!-- form ends -->
   </div>
 
 </div>
@@ -40,66 +26,43 @@
 <div class="wall_style">
 
   <!-- all post code here -->
-  <div>
+  <div >
     <!-- in this div we will use the *ngFor  -->
-    <div class="row" *ngFor='let el of postList;index as ind'>
+    <div class="row">
       <div class="col-sm-12 ">
         <div class="card_box">
           <!-- post user name here -->
           <div class="user_name_area">
-
             <!-- <h4>{{postdata.Posts.testPost1.post_content}}</h4> -->
           </div>
           <!-- post area here -->
-          <div class="post_area_content" id='Post{{ind}}'>
-            <h4>{{postsContent[ind]}}</h4>
+          <div class="post_area_content">
+            <p>this is a post</p>
           </div>
 
           <div class="post_option_area">
-
+            
             <!-- post options here -->
             <!-- buttons here -->
             <!-- like button -->
             <span class="button_option_here">
-
-              <button id='like{{ind}}' class="btn btn-primary button_styles " (click)="likes($event) " ><i
-                  class="fa fa-heart" aria-hidden="true"></i>like</button>
+              <button class="btn btn-primary button_styles "><i class="fa fa-heart" aria-hidden="true"></i>like</button>
             </span>
-            <!-- comment button [id]="likeId[i]"  -->
+            <!-- comment button -->
             <span class="button_option_here">
-              <button class="btn btn-primary button_styles"><i class="fa fa-comments-o" aria-hidden="true"
-                  id='comment{{ind}}'></i> comment</button>
+              <button class="btn btn-primary button_styles"><i class="fa fa-comments-o" aria-hidden="true"></i> comment</button>
             </span>
             <span class="button_option_here">
-              <button class="btn btn-primary button_styles" id='totallikes{{ind}}'> {{totalLikes[ind]}} </button>
+              <button class="btn btn-primary button_styles"> LIKES:(21)</button>
             </span>
             <span class="button_option_here">
-              <button class="btn btn-primary button_styles" id='totalcomment{{ind}}'>COMMENTS:(21)</button>
+                <button class="btn btn-primary button_styles">COMMENTS:(21)</button>
             </span>
-            <!-- comment area starts -->
-            <!-- <div class="comments_area">
-              <form [formGroup]="comment_Form" (ngSubmit)="onSubmit(button_type)" class="">
-                <div class="">
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label" for="fullName">New comment</label>
-                    <div class="col-sm-8">
-                      <input id="new_post" formControlName="new_comment" type="text" placeholder="comment here"
-                        class="form-control" required>
-                    </div>
-                  </div>
-
-                  <div class="">
-                    <button class="btn btn-primary" (click)="onSubmit('comment')" type="submit"
-                      [disabled]="!employeeForm.valid" style="align-content: center">comment it! </button>
-                  </div>
-                </div>
-              </form>
-            </div> -->
-            <!-- comment area ends -->
           </div>
         </div>
       </div>
     </div>
   </div>
   <!-- all post code here -->
+
 </div>

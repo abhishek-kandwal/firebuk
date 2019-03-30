@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../_models';
-import { AuthenticationService} from '../_services';
+import { AuthenticationService, UserService } from '../_services';
+import { FetchJsonDataService } from '../fetch-json-data.service';
 import { Subscription } from 'rxjs';
 
 @Component({

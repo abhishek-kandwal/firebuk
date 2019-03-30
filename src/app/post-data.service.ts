@@ -8,7 +8,7 @@ import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json',
+    'Content-Type':  'application/json',
     Authorization: 'my-auth-token'
   })
 };
@@ -19,7 +19,7 @@ const httpOptions = {
 
 export class PostdataService {
   Users: object;
-  Posts: any;
+  Posts:any;
   url = 'https://example-81cdf.firebaseio.com/Users.json';  // URL to users
   pUrl = 'https://example-81cdf.firebaseio.com/Posts.json'; // URL to posts
   private handleError: HandleError;
@@ -36,23 +36,10 @@ export class PostdataService {
       );
   }
 
-  updatePost(url, data) {
-    // console.log("done");
-    return this.http.put(url, data, httpOptions);
-
-
-  }
-  pushlikes(url, data) {
-    return this.http.post(url, data);
-  }
-  getlikes(url) {
-    return this.http.get(url);
-  }
-
   addPost(post: Posts): Observable<Posts> {
-    return this.http.post<Posts>(this.pUrl, post, httpOptions)
-      .pipe(
-        catchError(this.handleError('addPost', post))
-      );
+    return this.http.post<Posts>(this.pUrl , post, httpOptions)
+    .pipe(
+      catchError(this.handleError('addPost', post))
+    );
   }
 }

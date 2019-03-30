@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FetchJsonDataService } from './fetch-json-data.service';
-import { User } from './_models';
-import { AuthenticationService } from './_services';
-import { CurrentUserService } from './current-user.service';
+import { MessagingService } from './messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -20,16 +18,23 @@ export class AppComponent implements OnInit, OnDestroy {
   userGenderData = [];
   userPassData = [];
   userIdData = [];
-  currentUser: User;
-  currentUserSubscription: Subscription;
-  users: User[] = [];
+  message;
 
   constructor(private fetchData: FetchJsonDataService,
-              private authenticationService: AuthenticationService,
-              private setUser: CurrentUserService) { }
+    private messagingService: MessagingService) { }
+    sendPushNotification(){
+      const userId = '2222';
+      this.messagingService.requestPermission(userId);
+      this.messagingService.receiveMessage();
+      this.message = this.messagingService.currentMessage;
+  
+      this.messagingService.sendPushMessage("FIREBUK NOTIFICATION", "Hey, Greetings from the team");
+    }
+  
+  
 
   ngOnInit() {
-
+    
 
     this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
       const userKey = Object.keys(val);
@@ -50,17 +55,11 @@ export class AppComponent implements OnInit, OnDestroy {
         });
       });
     });
-
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-      this.currentUser = user;
-      this.setUser.sendUser(this.currentUser);
-    });
     this.fetchData.putData(this.userList);
     console.log(this.userList);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    this.currentUserSubscription.unsubscribe();
   }
 }
