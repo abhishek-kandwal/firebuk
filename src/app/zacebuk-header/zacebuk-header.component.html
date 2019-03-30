@@ -13,5 +13,28 @@
        <li><a (click)="sendPushNotification()">Send Push Notification</a></li> 
       </ul>
     </div>
-  </nav>
-  <!-- header navbar code ends here -->
+    <ul class="nav navbar-nav">
+      <li class="active">
+        <a href="/">Home</a>
+      </li>
+      <div *ngIf="!isloggedin; then userloggerin else userloggedout"></div>
+      <ng-template #userloggerin>
+        <li>
+          <a href="/app-zacebuk-signup">Sign Up.!</a>
+        </li>
+        <li>
+          <a href="/app-zacebuk-login">Log In.!</a>
+        </li>
+      </ng-template>
+      <ng-template #userloggedout>
+        <li>
+          <a class="nav-item nav-link" (click)="logout()">Logout</a>
+        </li>
+        <li>
+          <a href="/app-zacebuk-profile">Profile</a>
+        </li>
+      </ng-template>
+    </ul>
+  </div>
+</nav>
+<!-- header navbar code ends here -->

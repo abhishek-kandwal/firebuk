@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FetchJsonDataService } from '../fetch-json-data.service';
 import { PostdataService } from '../post-data.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Subscription, Observable, BehaviorSubject } from 'rxjs';
-import { User } from '../_models';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { Subscription } from 'rxjs';
+import { CurrentUserService } from '../current-user.service';
 import { Router } from '@angular/router';
 
 
@@ -20,8 +19,10 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     private post_form: FormBuilder,
     private route: Router,
     private post_data: PostdataService,
-    private postsData: FetchJsonDataService, ) {
-  }
+    private postsData: FetchJsonDataService,
+    private currentuser: CurrentUserService,
+    private check: FetchJsonDataService
+  ) { }
 
   get fieldValues() {
     return this.postForm.controls;
@@ -35,6 +36,8 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   postid = 0;
   posts = [];
   postsContent = [];
+  user_logged: any;
+  isloggedin: boolean;
   // counter;
   postValue = [];
   postList = [];
@@ -44,6 +47,9 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   likedUserKey = [];
   ngOnInit() {
+    this.check.isloggedin.subscribe((val) => {
+      this.isloggedin = val;
+    });
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     console.log(this.currentUser);
     // console.log(this.currentUser.fullName);
@@ -84,9 +90,9 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
               temp1.map((val, ind) => {
                 if (val.Liker_Name === this.currentUser.fullName) {
-                  document.getElementById('like'.concat("" + index)).setAttribute("disabled", "true")
+                  document.getElementById('like'.concat("" + index)).setAttribute("disabled", "true");
                 }
-              })
+              });
             } catch (error) {
               console.log('First like to the post.');
             }
@@ -119,6 +125,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
   onSubmit(): void {
+    console.log(this.currentuser.data);
     const { new_post } = this.postForm.value;
     // tslint:disable-next-line: one-variable-per-declaration
     const time = new Date().toTimeString(), post_Id = this.postid, liker_ID = ' ',
@@ -139,7 +146,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         }
       }
     };
-  
+
     this.subscription = this.post_data.addPost(this.postData)
       .subscribe(post => {
         this.posts.push(post);
