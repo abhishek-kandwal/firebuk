@@ -63,7 +63,10 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [PostdataService, HttpErrorHandler, MessageService,
+  providers: [
+    PostdataService,
+    HttpErrorHandler,
+    MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     // provider used to create fake backend

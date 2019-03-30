@@ -1,19 +1,23 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import {HttpClient } from '@angular/common/http';
-import { Subscription, Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Subscription, Observable, Subject, BehaviorSubject, observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FetchJsonDataService {
-  isloggedin:BehaviorSubject<boolean> = new BehaviorSubject(!!(localStorage.getItem('currentUser')));
-  
+  isloggedin: BehaviorSubject<boolean> = new BehaviorSubject(!!(localStorage.getItem('currentUser')));
+
   userList = [];
+
   userNameData = [];
   userPassData = [];
+  Posts: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('Posts')));
   subscription: Subscription;
   constructor(private http: HttpClient) {
   // this.isloggedin.next()
+
+
    }
 
   urlUser = 'https://example-81cdf.firebaseio.com/Users.json';
@@ -24,6 +28,7 @@ export class FetchJsonDataService {
   }
 
   getPost() {
+
     return this.http.get(this.urlPost);
   }
 
@@ -31,4 +36,7 @@ export class FetchJsonDataService {
     this.userList = data;
   }
 
+  getlikes(url) {
+    return this.http.get(url);
+  }
 }

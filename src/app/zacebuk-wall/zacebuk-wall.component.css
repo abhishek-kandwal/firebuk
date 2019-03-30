@@ -1,7 +1,7 @@
 .wall_style{
     margin-top: 50px;
     overflow: scroll;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
 }
 
 .post_here{
@@ -31,6 +31,16 @@ border: 1px solid black;
     padding-top:5px;
 
 
+}
+
+.card_box:hover {
+    display: block;
+    margin-left: 61px;
+    margin-right: 61px;
+    transform: scale(1.1);
+    border: 1px solid black;
+    box-shadow: 5px;
+    background-color: white;
 }
 
 .post_option_area{
