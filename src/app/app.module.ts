@@ -48,6 +48,7 @@ const appRoutes: Routes = [
     ZacebukUsrProfileComponent,
     AlertComponent,
 
+
   ],
   imports: [
     BrowserModule,

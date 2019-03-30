@@ -23,7 +23,6 @@ export class AppComponent implements OnInit, OnDestroy {
   currentUser: User;
   currentUserSubscription: Subscription;
   users: User[] = [];
-
   constructor(private fetchData: FetchJsonDataService,
               private authenticationService: AuthenticationService,
               private setUser: CurrentUserService) { }
