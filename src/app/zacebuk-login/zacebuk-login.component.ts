@@ -41,6 +41,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
         });
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+        
     }
     ngOnDestroy() {
         // this.subscription.unsubscribe();

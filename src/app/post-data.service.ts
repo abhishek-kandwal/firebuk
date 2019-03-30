@@ -45,6 +45,9 @@ export class PostdataService {
   pushlikes(url, data) {
     return this.http.post(url, data);
   }
+  getlikes(url) {
+    return this.http.get(url);
+  }
 
   addPost(post: Posts): Observable<Posts> {
     return this.http.post<Posts>(this.pUrl, post, httpOptions)

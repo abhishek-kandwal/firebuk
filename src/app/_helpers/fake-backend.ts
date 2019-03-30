@@ -80,4 +80,5 @@ export let fakeBackendProvider = {
     provide: HTTP_INTERCEPTORS,
     useClass: FakeBackendInterceptor,
     multi: true
+    
 };

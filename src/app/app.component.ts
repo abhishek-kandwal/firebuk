@@ -4,7 +4,6 @@ import { FetchJsonDataService } from './fetch-json-data.service';
 import { User } from './_models';
 import { AuthenticationService } from './_services';
 import { CurrentUserService } from './current-user.service';
-import { MessagingService } from './messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -27,19 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private fetchData: FetchJsonDataService,
               private authenticationService: AuthenticationService,
-              private setUser: CurrentUserService,
-              private messagingService: MessagingService) { }
-  message;
-    sendPushNotification() {
-      const userId = '2222';
-      this.messagingService.requestPermission(userId);
-      this.messagingService.receiveMessage();
-      this.message = this.messagingService.currentMessage;
-
-      this.messagingService.sendPushMessage('Web push notification', 'HI, Firebase test messsage');
-    }
-
-
+              private setUser: CurrentUserService) { }
 
   ngOnInit() {
 

@@ -17,10 +17,10 @@ import { Router } from '@angular/router';
 export class ZacebukWallComponent implements OnInit, OnDestroy {
 
   constructor(private _postsData: FetchJsonDataService,
-    private post_form: FormBuilder,
-    private route: Router,
-    private post_data: PostdataService,
-    private postsData: FetchJsonDataService, ) {
+              private post_form: FormBuilder,
+              private route: Router,
+              private post_data: PostdataService,
+              private postsData: FetchJsonDataService, ) {
   }
 
   get fieldValues() {
@@ -42,22 +42,31 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   postData: any;
   fetchPost = [];
   subscription: Subscription;
+  likedUserKey = [];
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     console.log(this.currentUser);
-    //console.log(this.currentUser.fullName);
+    // console.log(this.currentUser.fullName);
     this._postsData.getPost()
       .subscribe(data => {
         let temp;
         this.postList = Object.keys(data);
         this.postValue = Object.values(data);
         this.postList.map((el, index) => {
-          const temp1 = Object.values(this.postValue[index].Likes).length;
-          this.totalLikes.push(temp1);
+          let temp1: number;
+          try {
+            temp1 = Object.values(this.postValue[index].Likes).length;
+          } catch (error) {
+            console.log('Read Error');
+          }
+          if (temp1 === undefined) {
+              this.totalLikes.push(0);
+            } else {
+              this.totalLikes.push(temp1);
+          }
           temp = data[el].Post_content;
           this.postid = this.postList.length;
           this.postsContent.push(temp);
-
         });
       });
     this.totalLikes.map((val, ind) => {
@@ -75,7 +84,26 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       this.fetchPost.push(val);
     });
 
+    this.postList.map((val, ind) => {
+      const url = `https://example-81cdf.firebaseio.com/Posts/${val}/Likes.json`;
 
+      console.log('inpostlist')
+      this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
+      // }
+      this.post_data.getlikes(url).subscribe(val => {
+        try {
+          console.log('getlikes')
+          const temp = [];
+          temp.push(Object.keys(val));
+          const temp1 = Object.values(val);
+          console.log(temp1);
+        } catch (error) {
+          console.log('First like to the post.');
+        }
+        location.reload();
+      }
+      );
+    });
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -101,7 +129,6 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         }
       }
     };
-
     this.post_data.addPost(this.postData)
       .subscribe(post => {
         this.posts.push(post);
@@ -110,20 +137,32 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     this.postForm.reset();
   }
 
+  // Likes Function
   likes(event) {
 
     this.likeId = event.target.id;
     if (this.likeId) {
       console.log('totallikes'.concat(this.likeId.slice(4)));
       document.getElementById('totallikes'.concat(this.likeId.slice(4))).innerHTML = `${this.totalLikes[this.likeId.slice(4)]}`;
-      // console.log(this.postList[Number(this.likeId)]);  [this.likeId]:
 
+      // document.getElementById(this.likeId).setAttribute("disabled", "true");
       const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
-      // if (this.likeId === this.postid) {
 
 
       this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
       // }
+      this.post_data.getlikes(url).subscribe(val => {
+        try {
+          const temp = [];
+          temp.push(Object.keys(val));
+          const temp1 = Object.values(val);
+          console.log(temp1);
+        } catch (error) {
+          console.log('First like to the post.');
+        }
+        location.reload();
+      }
+      );
     }
   }
 }
