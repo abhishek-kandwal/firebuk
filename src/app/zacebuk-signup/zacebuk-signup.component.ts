@@ -60,6 +60,8 @@ export class ZacebukSignupComponent implements OnInit {
         error => {
           this.alertService.error(error);
           this.loading = false;
+          console.log("user offline")
+          
         });
   }
 }

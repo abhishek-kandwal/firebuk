@@ -13,16 +13,17 @@ export class ZacebukHeaderComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
     private router: Router, private messagingService: MessagingService) { }
   message;
-  sendPushNotification() {
+  // sendPushNotification() {
+    
+
+  //   this.messagingService.sendPushMessage('FIREBUK NOTIFICATIONS', 'Hey Everyone, Greetings from the team');
+  // }
+
+  ngOnInit() {
     const userId = '22';
     this.messagingService.requestPermission(userId);
     this.messagingService.receiveMessage();
     this.message = this.messagingService.currentMessage;
-
-    this.messagingService.sendPushMessage('FIREBUK NOTIFICATIONS', 'Hey Everyone, Greetings from the team');
-  }
-
-  ngOnInit() {
   }
   logout() {
     this.authenticationService.logout();

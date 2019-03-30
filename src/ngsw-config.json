@@ -37,7 +37,7 @@
           "https://example-81cdf.firebaseio.com/Posts.json"
         ],
         "cacheConfig":{
-          "strategy":"freshness"
+          "strategy":"performance"
         }
       }
     ]

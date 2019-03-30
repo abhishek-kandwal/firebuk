@@ -51,13 +51,15 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
                 console.log(newUser);
                 // validation
                 const duplicateUser = users.filter(user => user.username === newUser.email).length;
-                if (duplicateUser) {
+                if (navigator.onLine) {
+                    console.log(navigator.onLine);
                     return throwError({ error: { message: 'Username "' + newUser.email + '" is already taken' } });
                 }
                 // save new user
                 newUser.id = users.length + 1;
                 this.addUser.addUser(newUser)
-                .subscribe(user => users.push(user));
+                .subscribe(user => {users.push(user)}
+                    );
                 // respond 200 OK
                 return of(new HttpResponse({ status: 200 }));
             }
