@@ -10,6 +10,11 @@
           "/index.html",
           "/*.css",
           "/*.js"
+        ],
+        "urls":[
+          "https://example-81cdf.firebaseio.com",
+          "https://example-81cdf.firebaseio.com/Users.json",
+          "https://example-81cdf.firebaseio.com/Posts.json"
         ]
       }
     }, {
@@ -22,6 +27,18 @@
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
       }
-    }
-  ]
+    }],
+    "dataGroups":[
+      {
+        "name": "firebase-json",
+        "urls": [
+          "https://example-81cdf.firebaseio.com",
+          "https://example-81cdf.firebaseio.com/Users.json",
+          "https://example-81cdf.firebaseio.com/Posts.json"
+        ],
+        "cacheConfig":{
+          "strategy":"freshness"
+        }
+      }
+    ]
 }
