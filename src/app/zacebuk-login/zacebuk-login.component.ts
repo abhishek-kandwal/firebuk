@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AlertService, AuthenticationService } from '../_services';
 import { Subscription } from 'rxjs';
+import { FetchJsonDataService } from '../fetch-json-data.service';
 
 @Component({
     selector: 'app-zacebuk-login',

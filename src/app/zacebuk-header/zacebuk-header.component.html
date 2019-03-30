@@ -1,17 +1,8 @@
 <!-- header navbar code starts here -->
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">firebuk</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
-        <li><a href="/app-zacebuk-signup">Sign Up.!</a></li>
-        <li><a href="/app-zacebuk-login">Log In.!</a></li>
-        <li><a class="nav-item nav-link" (click)="logout()">Logout</a></li>
-        <li><a href="/app-zacebuk-profile">Profile</a></li>
-       <li><a (click)="sendPushNotification()">Send Push Notification</a></li> 
-      </ul>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">firebuk</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active">
@@ -33,6 +24,9 @@
         <li>
           <a href="/app-zacebuk-profile">Profile</a>
         </li>
+        <li>
+          <a (click)="sendPushNotification()">Send Push Notification</a>
+        </li> 
       </ng-template>
     </ul>
   </div>
