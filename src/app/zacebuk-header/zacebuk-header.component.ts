@@ -17,12 +17,12 @@ export class ZacebukHeaderComponent implements OnInit {
     private check:FetchJsonDataService) { }
   message;
   sendPushNotification() {
-    const userId = '2222';
+    const userId = '22';
     this.messagingService.requestPermission(userId);
     this.messagingService.receiveMessage();
     this.message = this.messagingService.currentMessage;
 
-    this.messagingService.sendPushMessage('Web push notification', 'HI, Firebase test messsage');
+    this.messagingService.sendPushMessage('FIREBUK NOTIFICATIONS', 'Hey Everyone, Greetings from the team');
   }
   user_logged:any;
   isloggedin:boolean;
