@@ -55,3 +55,24 @@ border: 1px solid black;
 .comments_area{
     margin-bottom: 5px;
 }
+
+.commentForm{
+    margin-bottom: 5px;
+    height: auto;
+}
+
+
+
+.old_comment_box{
+    border: 1px solid black;
+    border-radius: 5px;
+    height: auto;
+    padding-left:10px;
+    padding-top:3px;  
+    background-color: thistle;
+}
+
+.li_style{
+    list-style: none; 
+    border-bottom: 1px solid rgb(245, 144, 85);
+}

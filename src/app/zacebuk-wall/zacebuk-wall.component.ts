@@ -13,18 +13,57 @@ import { Router } from '@angular/router';
   styleUrls: ['./zacebuk-wall.component.css']
 })
 
+
 export class ZacebukWallComponent implements OnInit, OnDestroy {
+ 
+  mouseEnter(event: { currentTarget: Element;}){
+    let eventid = (event.currentTarget as Element).id;
+    eventid= eventid.slice(6);
+    document.getElementById(eventid).style.display="block";
+  // let tempid = event;
 
+  console.log(eventid);
+
+ }
+ mouseLeave(event: { currentTarget: Element;}){
+  let eventid = (event.currentTarget as Element).id;
+  eventid= eventid.slice(6);
+  document.getElementById(eventid).style.display="none";
+  console.log(eventid);
+}
+  isCollapsed: boolean = true;
   constructor(private _postsData: FetchJsonDataService,
-              private post_form: FormBuilder,
-              private post_comment: FormBuilder,
-              private route: Router,
-              private post_data: PostdataService,
-              private postsData: FetchJsonDataService,
-              private currentuser: CurrentUserService,
-              private check: FetchJsonDataService
+    private post_form: FormBuilder,
+    private post_comment: FormBuilder,
+    private route: Router,
+    private post_data: PostdataService,
+    private postsData: FetchJsonDataService,
+    private currentuser: CurrentUserService,
+    private check: FetchJsonDataService
   ) { }
+  commentboxid;
+  temparray;
 
+
+
+
+  //comments_toggle(event){
+  // let tempid =event.target.id
+  //this.temparray= tempid.slice(4);
+
+  // document.getElementById("commentbox".concat(""+tempid)).setAttribute("display","none");
+  // this.temparray[tempid] = !this.isCollapsed;
+
+  //this.isCollapsed=!;
+  //}
+  // checktoggle(ind){
+  //   if(this.temparray==ind){
+  //     return true}
+  //     else{
+  //       return false
+  //     }
+
+  // }
   get fieldValues() {
     return this.postForm.controls;
   }
@@ -52,6 +91,10 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   likedUserKey = [];
   ngOnInit() {
+
+
+
+
     this.check.isloggedin.subscribe((val) => {
       this.isloggedin = val;
     });
@@ -127,6 +170,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
 
   }
+
   ngOnDestroy() {
 
     this.subscription.unsubscribe();
@@ -201,5 +245,5 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         this.comments.push(comment);
         window.location.reload();
       });
-   }
+  }
 }
