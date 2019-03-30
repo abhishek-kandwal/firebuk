@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AlertService, AuthenticationService } from '../_services';
-import { FetchJsonDataService } from '../fetch-json-data.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -42,6 +41,7 @@ export class ZacebukLoginComponent implements OnInit , OnDestroy {
         });
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+        
     }
     ngOnDestroy() {
         // this.subscription.unsubscribe();

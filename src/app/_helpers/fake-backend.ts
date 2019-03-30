@@ -31,10 +31,10 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
                     const body = {
                         id: user.id,
                         username: user.username,
-                        email: user.email,
+                        email: user.username,
                         fullName: user.name,
                         gender: user.gender,
-                        phone: user.phone
+                        phone: user.phone,
                     };
 
                     return of(new HttpResponse({ status: 200, body }));
@@ -80,4 +80,5 @@ export let fakeBackendProvider = {
     provide: HTTP_INTERCEPTORS,
     useClass: FakeBackendInterceptor,
     multi: true
+    
 };

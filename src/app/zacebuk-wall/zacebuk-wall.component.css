@@ -1,5 +1,6 @@
 .wall_style{
     margin-top: 50px;
+    overflow-wrap: scroll;
 }
 
 .post_here{
@@ -22,7 +23,7 @@ border: 1px solid black;
 }
 
 .post_area_content{
-    width: 100%;
+    width: 70%;
     height: auto;
     background-color:#fff;
     padding-left:10px;

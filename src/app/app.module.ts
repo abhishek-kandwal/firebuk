@@ -7,21 +7,21 @@ import { ZacebukWallComponent } from './zacebuk-wall/zacebuk-wall.component';
 import { ZacebukSignupComponent } from './zacebuk-signup/zacebuk-signup.component';
 import { ZacebukLoginComponent } from './zacebuk-login/zacebuk-login.component';
 import { ZacebukFooterComponent } from './zacebuk-footer/zacebuk-footer.component';
-import { ZacebukPostComponent} from './zacebuk-post/zacebuk-post.component' 
 import { Routes, RouterModule } from '@angular/router';
 import { ZacebukUsrProfileComponent } from './zacebuk-usr-profile/zacebuk-usr-profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PostdataService } from './post-data.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
-import { MessagingService } from './messaging.service'
+import { MessagingService } from './messaging.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fakeBackendProvider, ErrorInterceptor, JwtInterceptor } from './_helpers';
 import { AuthGuard } from './_guards';
 import { FetchJsonDataService } from './fetch-json-data.service';
 import { AlertComponent } from './_components';
 import { AuthenticationService, AlertService, UserService } from './_services';
+import { CurrentUserService } from './current-user.service';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
@@ -47,12 +47,12 @@ const appRoutes: Routes = [
     ZacebukFooterComponent,
     ZacebukUsrProfileComponent,
     AlertComponent,
-    ZacebukPostComponent
 
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule, BrowserAnimationsModule,
     ShowHidePasswordModule,
@@ -60,7 +60,6 @@ const appRoutes: Routes = [
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
-
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [PostdataService, HttpErrorHandler, MessageService,
@@ -72,6 +71,7 @@ const appRoutes: Routes = [
     AuthenticationService,
     AlertService,
     UserService,
+    CurrentUserService,
     MessagingService
   ],
   bootstrap: [AppComponent]
