@@ -1,122 +1,78 @@
-<!-- make post here -->
-<div class="row" *ngIf="isloggedin;">
-  <div class="col-sm-12 post_here">
-    <!-- <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+.wall_style{
+    margin-top: 50px;
+    overflow: scroll;
+    margin-bottom: 25px;
+}
 
-          <div class= "form-group">
-              <label class="col-sm-2 control-label" for="posts">New Post</label>
-              <div class="col-sm-8">
-                <input id="post" formControlName="post" type="text" class="form-control" required>
-              </div>
-          </div>
-          <div class="button">
-              <button class="btn btn-primary" type="submit" [disabled]="!postForm.valid" style="align-content: center">Add Post</button>
-          </div>
-          </form> -->
-    <!-- form here -->
-    <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="">
-      <div class="">
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="fullName">New post</label>
-          <div class="col-sm-8">
-            <input id="new_post" formControlName="new_post" type="text" placeholder="what's in your mind?" class="form-control" required>
-          </div>
-        </div>
+.post_here{
+    margin-top: 50px;
+}
+.card_box{
+margin-top: 10px;
+height: auto;
+background-color:#fff;
+border: 1px solid black;
+}
 
-        <div class="">
-          <button class="btn btn-primary" type="submit" [disabled]="!postForm.valid" style="align-content: center">Post</button>
-        </div>
-        <!--button disabled until form is valid-->
-      </div>
-    </form>
-    <!-- form ends -->
-  </div>
+.user_name_area{
+    width: 100%;
+    height: auto;
+    background-color: cadetblue;
+    padding-left:10px;
+    padding-top:5px;
+    padding-bottom:5px; 
+}
 
-</div>
-<!-- make post ends here -->
-<!-- different post card here -->
-<div class="wall_style">
+.post_area_content{
+    width: 70%;
+    height: auto;
+    background-color:#fff;
+    padding-left:10px;
+    padding-top:5px;
 
-  <!-- all post code here -->
-  <div>
-    <!-- in this div we will use the *ngFor  -->
-    <div class="row" *ngFor='let el of postList;index as ind'>
-      <div class="col-sm-12 ">
-        <div class="card_box">
-          <!-- post user name here -->
-          <div class="user_name_area">
 
-            <!-- <h4>{{postdata.Posts.testPost1.post_content}}</h4> -->
-          </div>
-          <!-- post area here -->
-          <div class="post_area_content" id='Post{{ind}}'>
-            <h4>{{postsContent[ind]}}</h4>
-          </div>
+}
 
-          <div class="post_option_area">
+.post_option_area{
+    height: auto;
+    color: black;
+}
 
-            <!-- post options here -->
-            <!-- buttons here -->
-            <!-- like button -->
-            <span class="button_option_here">
+.button_option_here{
+    
+    margin-left: 2px;
+    margin-bottom: 2px;
+}
 
-              <button id="like{{ind}}" class="btn btn-primary button_styles" (click)="likes($event)">
-                <i class="fa fa-heart" aria-hidden="true"></i>
-              </button>
-            </span>
-            <span class="button_option_here">
-              <button class="btn btn-primary button_styles" id='totallikes{{ind}}'> {{totalLikes[ind]}} </button>
-            </span>
-            <!-- comment button [id]="likeId[i]"  -->
-            <span class="button_option_here">
-              <button class="btn btn-primary button_styles commentToggle" (mouseenter) ="mouseEnter($event) "  (mouseleave) ="mouseLeave($event)"  id='totalcomment{{ind}}'>COMMENTS:(21)</button>
-            </span>
-            <!-- comment area starts -->
-            <div class="commentForm" *ngIf="isloggedin">
-              <form [formGroup]="commentForm" (ngSubmit)="comment($event)" class="" id='comment{{ind}}'>
-                <div class="">
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label" for="fullName">New comment</label>
-                    <div class="col-sm-8">
-                      <input id="new_post" formControlName="new_comment" type="text" placeholder="comment here" class="form-control" required>
-                    </div>
-                  </div>
+.button_styles{
+    height: 22px;
+    padding: 0;
+    margin: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+}
 
-                  <div class="">
-                    <button class="btn btn-primary" type="submit" style="align-content: center">comment it! </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <!-- comment area ends -->
-            <!-- pre-commented area starts-->
-            <div class="" *ngIf="isloggedin">
-              <div class="commented_area"  id="omment{{ind}}" style="display: none;" >
-                <div class="col-sm-12">
-                <h4>comments...</h4>
-                
-              </div>
-              <div class="col-sm-2"></div>
-              <div class="col-sm-10">
-                <div class="old_comment_box">
-                  <div class="">
-                    <ul>
-                         <li class="li_style"><i class="fa fa-comment" aria-hidden="true"></i> hello</li>
-                    </ul>
-                    
-                    
-                  </div>
-                </div>
-              </div>
- 
-              </div>
-            </div>
-            <!-- pre-commented area endss-->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- all post code here -->
-</div>
+.comments_area{
+    margin-bottom: 5px;
+}
 
+.commentForm{
+    margin-bottom: 5px;
+    height: auto;
+}
+
+
+
+.old_comment_box{
+    border: 1px solid black;
+    border-radius: 5px;
+    height: auto;
+    padding-left:10px;
+    padding-top:3px;  
+    background-color: thistle;
+}
+
+.li_style{
+    list-style: none; 
+    border-bottom: 1px solid rgb(245, 144, 85);
+}
