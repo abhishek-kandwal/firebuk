@@ -83,7 +83,7 @@
                   </div>
 
                   <div class="">
-                    <button class="btn btn-primary" type="submit" style="align-content: center">comment it! </button>
+                    <button class="btn btn-primary" [disabled]="!commentForm.valid" type="submit" style="align-content: center">comment it! </button>
                   </div>
                 </div>
               </form>
