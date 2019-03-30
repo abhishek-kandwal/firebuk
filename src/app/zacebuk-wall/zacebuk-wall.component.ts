@@ -16,12 +16,13 @@ import { Router } from '@angular/router';
 export class ZacebukWallComponent implements OnInit, OnDestroy {
 
   constructor(private _postsData: FetchJsonDataService,
-    private post_form: FormBuilder,
-    private route: Router,
-    private post_data: PostdataService,
-    private postsData: FetchJsonDataService,
-    private currentuser: CurrentUserService,
-    private check: FetchJsonDataService
+              private post_form: FormBuilder,
+              private post_comment: FormBuilder,
+              private route: Router,
+              private post_data: PostdataService,
+              private postsData: FetchJsonDataService,
+              private currentuser: CurrentUserService,
+              private check: FetchJsonDataService
   ) { }
 
   get fieldValues() {
@@ -29,12 +30,15 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   }
   currentUser;
   postForm: FormGroup;
+  commentForm: FormGroup;
   totalLikes = [];
   totalComments: any;
   likeId;
   new_post = [];
+  new_comment = [];
   postid = 0;
   posts = [];
+  comments = [];
   postsContent = [];
   user_logged: any;
   isloggedin: boolean;
@@ -43,6 +47,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   postList = [];
   counter;
   postData: any;
+  commentData: any;
   fetchPost = [];
   subscription: Subscription;
   likedUserKey = [];
@@ -75,22 +80,23 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
           this.postsContent.push(temp);
 
 
-          let url = `https://example-81cdf.firebaseio.com/Posts/${el}/Likes.json`;
+          const url = `https://example-81cdf.firebaseio.com/Posts/${el}/Likes.json`;
+          const cUrl = `https://example-81cdf.firebaseio.com/Posts/${el}/Comments.json`;
 
-          //this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
+          // this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
           // }
           this.subscription = this.post_data.getlikes(url).subscribe(val => {
             try {
 
-              let temp = [];
+              const temp = [];
               temp.push(Object.keys(val));
-              let temp1 = Object.values(val);
+              const temp1 = Object.values(val);
               // console.log(temp1);
               // console.log(this.currentUser.fullName);
 
               temp1.map((val, ind) => {
                 if (val.Liker_Name === this.currentUser.fullName) {
-                  document.getElementById('like'.concat("" + index)).setAttribute("disabled", "true");
+                  document.getElementById('like'.concat('' + index)).setAttribute('disabled', 'true');
                 }
               });
             } catch (error) {
@@ -111,9 +117,10 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       new_post: ['']
     });
 
-    this.postForm = this.post_form.group({
-      new_post: ['']
+    this.commentForm = this.post_comment.group({
+      new_comment: ['']
     });
+
     this.subscription = this.postsData.getPost().subscribe(val => {
       this.fetchPost.push(val);
     });
@@ -129,7 +136,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     const { new_post } = this.postForm.value;
     // tslint:disable-next-line: one-variable-per-declaration
     const time = new Date().toTimeString(), post_Id = this.postid, liker_ID = ' ',
-      poster = this.currentUser.fullName, comment_content = ' ', commenter_ID = ' ', commentId = ' ';
+      poster = this.currentUser.fullName;
     this.postData = {
       Post_content: new_post,
       Time: time,
@@ -137,13 +144,6 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       Poster_ID: poster,
       Likes: {
 
-      },
-      Comments: {
-        Comment_No: {
-          Comment_ID: commentId,
-          Comment_Content: comment_content,
-          Commenter_ID: commenter_ID
-        }
       }
     };
 
@@ -184,4 +184,22 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       );
     }
   }
+
+  comment(event: { currentTarget: Element; }) {
+    const commentId = (event.currentTarget as Element).id;
+    console.log(commentId);
+    const { new_comment } = this.commentForm.value;
+    this.commentData = {
+      Comment_Content: new_comment,
+      Time: new Date().toTimeString(),
+      Commenter_ID: this.currentUser.fullName
+    };
+    const curl = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(commentId.slice(7))]}/Comments.json`;
+
+    this.subscription = this.post_data.addComment(this.commentData, curl)
+      .subscribe(comment => {
+        this.comments.push(comment);
+        window.location.reload();
+      });
+   }
 }
