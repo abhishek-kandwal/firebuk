@@ -14,6 +14,7 @@ import { CurrentUserService } from './current-user.service';
 export class AppComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   userList = [];
+  postList = [];
   userNameData = [];
   userEmailData = [];
   userPhoneData = [];
@@ -56,10 +57,13 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     this.fetchData.putData(this.userList);
     console.log(this.userList);
+
+    this.subscription = this.fetchData.getPost().pipe().subscribe(post => {
+      localStorage.setItem('Posts', JSON.stringify(post));
+    });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
     this.currentUserSubscription.unsubscribe();
   }
 }

@@ -27,8 +27,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireModule } from '@angular/fire';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
+import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
   { path: '', component: ZacebukWallComponent },
@@ -63,7 +63,10 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [PostdataService, HttpErrorHandler, MessageService,
+  providers: [
+    PostdataService,
+    HttpErrorHandler,
+    MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     // provider used to create fake backend

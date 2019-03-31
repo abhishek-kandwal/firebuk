@@ -13,9 +13,11 @@ import { FetchJsonDataService } from '../fetch-json-data.service';
 export class ZacebukHeaderComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,
-    private router: Router, private messagingService: MessagingService,
-    private check:FetchJsonDataService) { }
+              private router: Router, private messagingService: MessagingService,
+              private check: FetchJsonDataService) { }
   message;
+  user_logged: any;
+  isloggedin: boolean;
   sendPushNotification() {
     const userId = '22';
     this.messagingService.requestPermission(userId);
@@ -24,25 +26,24 @@ export class ZacebukHeaderComponent implements OnInit {
 
     this.messagingService.sendPushMessage('FIREBUK NOTIFICATIONS', 'Hey Everyone, Greetings from the team');
   }
-  user_logged:any;
-  isloggedin:boolean;
 
   ngOnInit() {
-    this.check.isloggedin.subscribe((val)=>{
-      this.isloggedin=val;
-    })
+    this.check.isloggedin.subscribe((val) => {
+      this.isloggedin = val;
+    });
   }
   logout() {
     this.authenticationService.logout();
-    this.router.navigate(['/app-zacebuk-login']);
+    this.router.navigate(['/']);
+    location.reload();
 
     // this below code is for the check the user is logged in or not
-    this.user_logged=localStorage.getItem('currentUser');
-    if(this.user_logged){
-      this.isloggedin=true;
-    }else{
-      this.isloggedin=false;
+    this.user_logged = localStorage.getItem('currentUser');
+    if (this.user_logged) {
+      this.isloggedin = true;
+    } else {
+      this.isloggedin = false;
     }
-    console.log('Logout',this.isloggedin);
+    console.log('Logout', this.isloggedin);
 }
 }

@@ -1,6 +1,5 @@
 .wall_style{
     margin-top: 50px;
-    overflow-wrap: scroll;
     margin-bottom: 35px;
 }
 
@@ -33,6 +32,20 @@ border: 1px solid black;
 
 }
 
+.comment {
+    display: none;
+}
+ .card_box:hover .comment{
+     display: block;
+ }
+.card_box:hover {
+    display: block;
+    padding: 10px;
+    border: 1px solid black;
+    box-shadow: 5px;
+    background-color: white;
+}
+
 .post_option_area{
     height: auto;
     color: black;
@@ -54,4 +67,8 @@ border: 1px solid black;
 
 .comments_area{
     margin-bottom: 5px;
+}
+
+.modalpopup {
+    display: none;
 }
