@@ -20,10 +20,16 @@ export class ZacebukSignupComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
+
+  get fieldValues() {
+    return this.employeeForm.controls;
+  }
   employeeForm: FormGroup;
   registerForm: FormGroup;
   loading = false;
   submitted = false;
+  formRequest;
+  newFormReques;
   ngOnInit() {
     this.employeeForm = this.fb.group({
       // second arguements are sync validations, async are passed as third arguement(returns promises/observables)
@@ -34,12 +40,13 @@ export class ZacebukSignupComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(10)]],
       gender: ['', Validators.required]
     });
+    window.addEventListener('online', (event) => {
+      //location.reload();
+      this.newFormReques = JSON.parse(localStorage.getItem('newUserData'));
+      this.onSubmit();
+      localStorage.removeItem('newUserData');
+    });
   }
-
-  get fieldValues() {
-    return this.employeeForm.controls;
-  }
-
   onSubmit(): void {
     this.submitted = true;
     // stop here if form is invalid
@@ -50,8 +57,9 @@ export class ZacebukSignupComponent implements OnInit {
     let {fullName, email, password, phone, gender, token} = this.employeeForm.value;
     const passwordHash = btoa(password);
     password = passwordHash;
-    const formRequest = {fullName, email, password, phone, gender, token};
-    this.userService.register(formRequest)
+    this.formRequest = {fullName, email, password, phone, gender, token}
+    if (navigator.onLine) {
+      this.userService.register(this.formRequest || this.newFormReques)
       .pipe(first())
       .subscribe(
         data => {
@@ -61,6 +69,10 @@ export class ZacebukSignupComponent implements OnInit {
         error => {
           this.alertService.error(error);
           this.loading = false;
-        });
+      });
+    } else {
+      console.log('User offline');
+      localStorage.setItem('newUserData', JSON.stringify(this.formRequest));
+    }
   }
 }
