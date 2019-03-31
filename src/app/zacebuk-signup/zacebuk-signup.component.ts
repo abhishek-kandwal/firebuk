@@ -28,10 +28,11 @@ export class ZacebukSignupComponent implements OnInit {
     this.employeeForm = this.fb.group({
       // second arguements are sync validations, async are passed as third arguement(returns promises/observables)
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(80),
+      Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
       password: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
-      phone: [''],
-      gender: ['']
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(10)]],
+      gender: ['', Validators.required]
     });
   }
 
