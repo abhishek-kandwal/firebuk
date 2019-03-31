@@ -13,8 +13,8 @@ import { FetchJsonDataService } from '../fetch-json-data.service';
 export class ZacebukHeaderComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,
-    private router: Router, private messagingService: MessagingService,
-    private check:FetchJsonDataService) { }
+              private router: Router, private messagingService: MessagingService,
+              private check: FetchJsonDataService) { }
   message;
 
   user_logged:any;
@@ -25,21 +25,23 @@ export class ZacebukHeaderComponent implements OnInit {
     this.messagingService.requestPermission(userId);
     this.messagingService.receiveMessage();
     this.message = this.messagingService.currentMessage;
+    
     this.check.isloggedin.subscribe((val)=>{
       this.isloggedin=val;
     })
   }
   logout() {
     this.authenticationService.logout();
-    this.router.navigate(['/app-zacebuk-login']);
+    this.router.navigate(['/']);
+    location.reload();
 
     // this below code is for the check the user is logged in or not
-    this.user_logged=localStorage.getItem('currentUser');
-    if(this.user_logged){
-      this.isloggedin=true;
-    }else{
-      this.isloggedin=false;
+    this.user_logged = localStorage.getItem('currentUser');
+    if (this.user_logged) {
+      this.isloggedin = true;
+    } else {
+      this.isloggedin = false;
     }
-    console.log('Logout',this.isloggedin);
+    console.log('Logout', this.isloggedin);
 }
 }
