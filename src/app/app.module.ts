@@ -27,8 +27,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireModule } from '@angular/fire';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
+import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
   { path: '', component: ZacebukWallComponent },
