@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { CurrentUserService } from '../current-user.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../_services/alert.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -15,26 +14,12 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./zacebuk-wall.component.css']
 })
 
-export class ZacebukWallComponent implements OnDestroy, OnInit {
 
-  constructor(private _postsData: FetchJsonDataService,
-    private post_form: FormBuilder,
-    private post_comment: FormBuilder,
-    private route: Router,
-    private alertService: AlertService,
-    private fetchLikes: FetchJsonDataService,
-    private post_data: PostdataService,
-    private postsData: FetchJsonDataService,
-    private currentuser: CurrentUserService,
-    private check: FetchJsonDataService
-  ) { }
-
-  get fieldValues() {
-    return this.postForm.controls;
-  }
+export class ZacebukWallComponent implements OnInit, OnDestroy {
+  commentboxid;
+  temparray;
   likerlist: any[] = [];
   likerlist1: any[] = [];
-
   commenterlist: any[] = [];
   commenterlist1: any[] = [];
   commentValue = [];
@@ -61,6 +46,20 @@ export class ZacebukWallComponent implements OnDestroy, OnInit {
   subscription: Subscription;
   likedUserKey = [];
   posterId = [];
+  isCollapsed = true;
+
+  constructor(private _postsData: FetchJsonDataService,
+              private post_form: FormBuilder,
+              private post_comment: FormBuilder,
+              private route: Router,
+              private alertService: AlertService,
+              private fetchLikes: FetchJsonDataService,
+              private post_data: PostdataService,
+              private postsData: FetchJsonDataService,
+              private currentuser: CurrentUserService,
+              private check: FetchJsonDataService
+  ) { }
+
   ngOnInit() {
     this.check.isloggedin.subscribe((val) => {
       this.isloggedin = val;
@@ -115,6 +114,7 @@ export class ZacebukWallComponent implements OnDestroy, OnInit {
                     // console.log(val)
 
                     document.getElementById('like'.concat('' + index)).setAttribute('disabled', 'true');
+                    document.getElementById('like'.concat('' + index)).setAttribute('style', 'background-color:red');
                   }
                 });
               } catch (error) {
@@ -274,7 +274,7 @@ export class ZacebukWallComponent implements OnDestroy, OnInit {
     console.log(commentId);
     const { new_comment } = this.commentForm.value;
     console.log(new_comment);
-    
+
     if (new_comment !== '') {
       this.commentData = {
         Comment_Content: new_comment,

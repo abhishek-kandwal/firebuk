@@ -1,11 +1,10 @@
 .wall_style{
-    margin-top: 50px;
-    margin-bottom: 35px;
+
+    overflow: scroll;
+    margin-bottom: 25px;
 }
 
-.post_here{
-    margin-top: 50px;
-}
+
 .card_box{
 margin-top: 10px;
 height: auto;

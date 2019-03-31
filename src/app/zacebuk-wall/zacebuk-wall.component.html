@@ -22,7 +22,6 @@
       </form>
       <!-- form ends -->
     </div>
-
   </div>
   <!-- make post ends here -->
   <!-- different post card here -->
@@ -55,14 +54,19 @@
                     class="fa fa-heart" aria-hidden="true"></i></button>
               </span>
               <span class="button_option_here">
-                <button type="button" class="btn btn-primary button_styles" (click)="openModal($event)" data-toggle="modal"
-                  data-target="#exampleModalCenter" id='totallikes{{ind}}'> {{ totalLikes[ind] || 0 }}
+                <button type="button" class="btn btn-primary button_styles" (click)="openModal($event)"
+                  data-toggle="modal" data-target="#exampleModalCenter" id='totallikes{{ind}}'>
+                  {{ totalLikes[ind] || 0 }}
                 </button>
               </span>
               <!-- comment button [id]="likeId[i]"  -->
+              <span>
+                  &nbsp;&nbsp;
+                <i class="fa fa-comment btn btn-primary button_styles" aria-hidden="true"></i>
+              </span>
               <span class="button_option_here">
-                <button class="btn btn-primary button_styles"
-                  id='totalcomment{{ind}}' (click)="cOpenModal($event)">{{ totalComments[ind] || 0 }}</button>
+                <button class="btn btn-primary button_styles  commentToggle" id='totalcomment{{ind}}'
+                  (click)="cOpenModal($event)">{{ totalComments[ind] || 0 }}</button>
               </span>
               <span>
                 <div class="modalpopup" id="cmod{{ind}}">
@@ -72,7 +76,8 @@
                       <li class="fa fa-user">&nbsp;&nbsp;{{el}}</li>
                       &nbsp;&nbsp;{{commentValue[ind][indee]}}
                     </ul>
-                    <button type="button" id="modco{{ind}}" class="btn cancel" (click)="cCloseModal($event)">Close</button>
+                    <button type="button" id="modco{{ind}}" class="btn cancel"
+                      (click)="cCloseModal($event)">Close</button>
                   </form>
                 </div>
               </span>
@@ -81,12 +86,13 @@
                   <form class="form-container">
                     <h4>Liker List</h4>
                     <!-- <div *ngFor='let el of likerlist1 | async'>
-                      <div *ngFor='let post of el'>  {{post}}</div>
-                    </div> -->
+                          <div *ngFor='let post of el'>  {{post}}</div>
+                        </div> -->
                     <ul *ngFor='let el of likerlist1[ind]'>
                       <li class="fa fa-user">&nbsp;&nbsp;{{el}}</li>
                     </ul>
-                    <button type="button" id="modc{{ind}}" class="btn cancel" (click)="closeModal($event)">Close</button>
+                    <button type="button" id="modc{{ind}}" class="btn cancel"
+                      (click)="closeModal($event)">Close</button>
                   </form>
                 </div>
               </span>
@@ -101,9 +107,9 @@
                           class="form-control" required>
                       </div>
                     </div>
-
                     <div class="">
-                      <button class="btn btn-primary" type="submit" style="align-content: center">comment it! </button>
+                      <button class="btn btn-primary" [disabled]="!commentForm.valid" type="submit"
+                        style="align-content: center">comment it! </button>
                     </div>
                   </div>
                 </form>
