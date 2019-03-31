@@ -48,6 +48,9 @@ export class PostdataService {
     return this.http.post(url, data);
   }
   
+  // deleteLikes(url) {
+  //   return this.http.delete(url,httpOptions);
+  // }
   addPost(post: Posts): Observable<Posts> {
     return this.http.post<Posts>(this.pUrl, post, httpOptions)
       .pipe(

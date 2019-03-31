@@ -1,5 +1,5 @@
 <!-- make post here -->
-<div class="container">
+<div class="container post">
   <div class="row" *ngIf="isloggedin;">
     <div class="col-sm-12 post_here">
       <!-- form here -->
@@ -35,21 +35,19 @@
           <div class="card_box">
             <!-- post user name here -->
             <div class="user_name_area">
-              <h4>{{posterId[ind]}}</h4>
-              <!-- <h4>{{postdata.Posts.testPost1.post_content}}</h4> -->
+              <h5><strong>{{posterId[ind]}}</strong></h5>
             </div>
             <!-- post area here -->
             <div class="post_area_content" id='Post{{ind}}'>
               <h4>{{postsContent[ind]}}</h4>
             </div>
 
-            <div class="post_option_area">
+            <div class="post_option_area"><hr>
 
               <!-- post options here -->
               <!-- buttons here -->
               <!-- like button -->
               <span class="button_option_here">
-
                 <button id="like{{ind}}" class="btn btn-primary button_styles" (click)="likes($event)"><i
                     class="fa fa-heart" aria-hidden="true"></i></button>
               </span>
@@ -71,12 +69,12 @@
               <span>
                 <div class="modalpopup" id="cmod{{ind}}">
                   <form class="form-container">
-                    <h4>Comment List</h4>
+                    <h4 style="text-align: center;">Comment List</h4><hr>
                     <ul *ngFor='let el of commenterlist1[ind]; index as indee'>
                       <li class="fa fa-user">&nbsp;&nbsp;{{el}}</li>
                       &nbsp;&nbsp;{{commentValue[ind][indee]}}
                     </ul>
-                    <button type="button" id="modco{{ind}}" class="btn cancel"
+                    <button  type="button" id="modco{{ind}}" class="btn btn-danger "
                       (click)="cCloseModal($event)">Close</button>
                   </form>
                 </div>
@@ -84,14 +82,14 @@
               <span>
                 <div class="modalpopup" id="mod{{ind}}">
                   <form class="form-container">
-                    <h4>Liker List</h4>
+                    <h4 style="text-align: center;">Liker List</h4><hr>
                     <!-- <div *ngFor='let el of likerlist1 | async'>
                           <div *ngFor='let post of el'>  {{post}}</div>
                         </div> -->
                     <ul *ngFor='let el of likerlist1[ind]'>
                       <li class="fa fa-user">&nbsp;&nbsp;{{el}}</li>
                     </ul>
-                    <button type="button" id="modc{{ind}}" class="btn cancel"
+                    <button style="margin-left: 70%;" type="button" id="modc{{ind}}" class="btn btn-danger"
                       (click)="closeModal($event)">Close</button>
                   </form>
                 </div>
