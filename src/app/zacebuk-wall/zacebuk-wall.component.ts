@@ -47,17 +47,18 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   likedUserKey = [];
   posterId = [];
   isCollapsed = true;
+  delKeys = [];
 
   constructor(private _postsData: FetchJsonDataService,
-              private post_form: FormBuilder,
-              private post_comment: FormBuilder,
-              private route: Router,
-              private alertService: AlertService,
-              private fetchLikes: FetchJsonDataService,
-              private post_data: PostdataService,
-              private postsData: FetchJsonDataService,
-              private currentuser: CurrentUserService,
-              private check: FetchJsonDataService
+    private post_form: FormBuilder,
+    private post_comment: FormBuilder,
+    private route: Router,
+    private alertService: AlertService,
+    private fetchLikes: FetchJsonDataService,
+    private post_data: PostdataService,
+    private postsData: FetchJsonDataService,
+    private currentuser: CurrentUserService,
+    private check: FetchJsonDataService
   ) { }
 
   ngOnInit() {
@@ -112,8 +113,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
                   if (val.Liker_Name === this.currentUser.fullName) {
 
                     // console.log(val)
-
-                    document.getElementById('like'.concat('' + index)).setAttribute('disabled', 'true');
+                    // document.getElementById('like'.concat('' + index)).setAttribute('disabled', 'true');
                     document.getElementById('like'.concat('' + index)).setAttribute('style', 'background-color:red');
                   }
                 });
@@ -133,11 +133,15 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         temp1 = Object.values(val);
         temp1.map((ele, inde) => {
           const li = Object.values(ele.Likes);
+          console.log(li);
+          this.delKeys[inde] = Object.keys(ele.Likes);
           this.likerlist.push(li);
           const co = Object.values(ele.Comments);
           this.commenterlist.push(co);
         });
       });
+      console.log(this.delKeys);
+
       for (let i = 0; i < this.likerlist.length; i++) {
         const a = this.likerlist[i].length;
         const temp = [];
@@ -247,7 +251,14 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         console.log('totallikes'.concat(this.likeId.slice(4)));
         document.getElementById('totallikes'.concat(this.likeId.slice(4))).innerHTML = `${this.totalLikes[this.likeId.slice(4)]}`;
         // document.getElementById(this.likeId).setAttribute("disabled", "true");
+        let data = JSON.parse(localStorage.getItem('Posts'));
         const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
+        // if (data["-LbGV8ptbLBiSrIbGzSG"].Likes["-LbGVEgBhW_x6w2ADN5H"].Liker_Name === this.currentUser.fullName) {
+        // const delurl = `https://example-81cdf.firebaseio.com/Posts/-LbGV8ptbLBiSrIbGzSG/Likes/-LbHYey20yZ9NdFiJ9oI.json`
+        // this.post_data.deleteLikes(delurl);
+
+        // }
+
         this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
         // }
         this.subscription = this.fetchLikes.getlikes(url).subscribe(val => {
@@ -260,7 +271,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
             console.log('First like to the post.');
           }
           location.reload();
-          }
+        }
         );
       }
     } else {

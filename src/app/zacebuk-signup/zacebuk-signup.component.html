@@ -1,4 +1,4 @@
-<div class="">
+<div class="signup">
     <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-horizontal">
         <!--onSubmit is the callback function, emits an ngSubmit event to a callback function -->
         <div class="panel panel-primary">
@@ -56,6 +56,11 @@
                  <div *ngIf="fieldValues.email.invalid && (fieldValues.email.dirty || fieldValues.email.touched)" class="help-block">
                     <div *ngIf="fieldValues.email.errors.required">Email is required.</div>
                     <div *ngIf="fieldValues.email.errors.email">Email not valid.</div>
+                    <div *ngIf="fieldValues.email.errors.minlength">Minimum length 10 characters</div>
+                    <div *ngIf="fieldValues.email.errors.maxlength">maximum length 80 characters.</div>
+                    <div *ngIf="employeeForm.get('email').hasError('pattern')" class="help-block">  
+                        <span>Email pattern not valid.</span>  
+                    </div>
                 </div>
               </div>
             </div>
@@ -64,6 +69,18 @@
                 <label class="col-sm-2 control-label" for="phone">Mobile no.</label>
                 <div class="col-sm-8">
                    <input id="phone" formControlName="phone" type="text" class="form-control">
+                  <div *ngIf="employeeForm.get('phone').hasError('required')" class="help-block" >  
+                      <span>Please Enter Phone Number.</span>  
+                  </div>  
+                  <div *ngIf="employeeForm.get('phone').hasError('minlength')" class="help-block">  
+                    <span>Phone Number requied atleast 10 characters.</span>  
+                  </div>  
+                  <div *ngIf="employeeForm.get('phone').hasError('maxlength')" class="help-block">  
+                    <span>Phone Number requied only 10 characters.</span>  
+                  </div>  
+                  <div *ngIf="employeeForm.get('phone').hasError('pattern')" class="help-block">  
+                    <span>Only Numbers are allowed.</span>  
+                  </div>
                 </div>
             </div>
       
