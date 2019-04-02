@@ -6,7 +6,7 @@ import { Subscription, Observable, Subject, BehaviorSubject, observable } from '
   providedIn: 'root'
 })
 export class FetchJsonDataService {
-  isloggedin: BehaviorSubject<boolean> = new BehaviorSubject(!!(localStorage.getItem('currentUser')));
+  isloggedin: BehaviorSubject<boolean> = new BehaviorSubject(!!(localStorage.getItem('user')));
 
   userList = [];
 
@@ -14,11 +14,7 @@ export class FetchJsonDataService {
   userPassData = [];
   Posts: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('Posts')));
   subscription: Subscription;
-  constructor(private http: HttpClient) {
-  // this.isloggedin.next()
-
-
-   }
+  constructor(private http: HttpClient) {}
 
   urlUser = 'https://example-81cdf.firebaseio.com/Users.json';
   urlPost = 'https://example-81cdf.firebaseio.com/Posts.json';
@@ -28,7 +24,6 @@ export class FetchJsonDataService {
   }
 
   getPost() {
-
     return this.http.get(this.urlPost);
   }
 

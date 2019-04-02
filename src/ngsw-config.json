@@ -12,7 +12,7 @@
           "/*.js"
         ],
         "urls":[
-          "https://example-81cdf.firebaseio.com",
+          "https://example-81cdf.firebaseio.com/.json",
           "https://example-81cdf.firebaseio.com/Users.json",
           "https://example-81cdf.firebaseio.com/Posts.json"
         ]
@@ -32,7 +32,7 @@
       {
         "name": "firebase-json",
         "urls": [
-          "https://example-81cdf.firebaseio.com",
+          "https://example-81cdf.firebaseio.com/.json",
           "https://example-81cdf.firebaseio.com/Users.json",
           "https://example-81cdf.firebaseio.com/Posts.json"
         ],
