@@ -1,92 +1,70 @@
 <div class="signup">
-    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-horizontal">
-        <!--onSubmit is the callback function, emits an ngSubmit event to a callback function -->
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Sign up!</h3>
-          </div>
-      
-          <div class="panel-body">
-            <div class="form-group" [ngClass]="{'has-error' : employeeForm.get('fullName').errors &&
-           ( employeeForm.get('fullName').touched ||employeeForm.get('fullName').dirty)}" >
-           
-           <!--dirty when user changes value in UI, touched when a user has clicked on text area, errors when 
-          any validation failed-->
-      
-              <label class="col-sm-2 control-label" for="fullName">Full Name</label>
-              <div class="col-sm-8">
-                <input id="fullName" formControlName="fullName" type="text" class="form-control" required>
-                <span class="help-block" *ngIf="employeeForm.get('fullName').errors &&
-                ( employeeForm.get('fullName').touched ||employeeForm.get('fullName').dirty)">
-                <span *ngIf="employeeForm.get('fullName').errors.required">
-                  Full Name is required
-                </span>
-                <span *ngIf="employeeForm.get('fullName').errors.minlength || employeeForm.get('fullName').errors.maxlength">
-                    Full Name must be greater than 2 characters and less than 15 characters
-                </span>
-                </span>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+    <!--onSubmit is the callback function, emits an ngSubmit event to a callback function -->
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Sign up!</h3>
+      </div>
+
+      <div class="panel-body">
+        <div class="form-group">
+
+          <label class="col-sm-2 control-label" for="email">Email</label>
+          <div class="col-sm-8">
+            <input id="email" formControlName="email" type="text" class="form-control" required>
+            <div *ngIf="fieldValues.email.invalid && (fieldValues.email.dirty || fieldValues.email.touched)"
+              class="help-block">
+              <div *ngIf="fieldValues.email.errors.required">Email is required.</div>
+              <div *ngIf="fieldValues.email.errors.email">Email not valid.</div>
+              <div *ngIf="fieldValues.email.errors.minlength">Minimum length 10 characters</div>
+              <div *ngIf="fieldValues.email.errors.maxlength">maximum length 80 characters.</div>
+              <div *ngIf="employeeForm.get('email').hasError('pattern')" class="help-block">
+                <span>Email pattern not valid.</span>
               </div>
             </div>
-      
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="pass">Password</label>
-              <div class="col-sm-8">
-                <div>
-                    <show-hide-password size="md" btnStyle="primary" [btnOutline]="false" class="col-sm-12">
-                        <input class="col-sm-8" id="password" formControlName="password" type="password" required>
-                    </show-hide-password>
-                </div>
-                 <span class="help-block" *ngIf="employeeForm.get('password').errors &&
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="pass">Password</label>
+          <div class="col-sm-8">
+            <div>
+              <show-hide-password size="md" btnStyle="primary" [btnOutline]="false" class="col-sm-12">
+                <input class="col-sm-8" id="password" formControlName="password" type="password" required>
+              </show-hide-password>
+            </div>
+            <span class="help-block" *ngIf="employeeForm.get('password').errors &&
                  ( employeeForm.get('password').touched ||employeeForm.get('password').dirty)">
-                 <span *ngIf="employeeForm.get('password').errors.required">
-                   Password is required
-                 </span>
-                 <span *ngIf="employeeForm.get('password').errors.minlength || employeeForm.get('password').errors.maxlength">
-                     Password must be greater than 2 characters and less than 15 characters
-                 </span>
-                 </span>
-              </div>
-            </div>
-      
-            <div class="form-group">
-              
-              <label class="col-sm-2 control-label" for="email">Email</label>
-              <div class="col-sm-8">
-                 <input id="email" formControlName="email" type="text" class="form-control" required>
-                 <div *ngIf="fieldValues.email.invalid && (fieldValues.email.dirty || fieldValues.email.touched)" class="help-block">
-                    <div *ngIf="fieldValues.email.errors.required">Email is required.</div>
-                    <div *ngIf="fieldValues.email.errors.email">Email not valid.</div>
-                </div>
-              </div>
-            </div>
-      
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="phone">Mobile no.</label>
-                <div class="col-sm-8">
-                   <input id="phone" formControlName="phone" type="text" class="form-control">
-                </div>
-            </div>
-      
-            <div class="form-group">
-                <label class="col-md-2 control-label">Gender</label>
-                <div class="col-md-8">
-                  <label class="radio-inline">
-                    <input id="male" type="radio" value="male"
-                    formControlName="gender" required>Male
-                  </label>
-      
-                  <label class="radio-inline">
-                      <input id="female" type="radio" value="female"
-                      formControlName="gender" required>Female
-                  </label>
-                  
-                </div>
-              </div>
+              <span *ngIf="employeeForm.get('password').errors.required">
+                Password is required
+              </span>
+              <span
+                *ngIf="employeeForm.get('password').errors.minlength || employeeForm.get('password').errors.maxlength">
+                Password must be greater than 2 characters and less than 15 characters
+              </span>
+            </span>
           </div>
-          <div class="button">
-       <button class="btn btn-primary" type="submit" [disabled]="!employeeForm.valid" style="align-content: center">Sign up</button>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 control-label">Gender</label>
+          <div class="col-md-8">
+            <label class="radio-inline">
+              <input id="male" type="radio" value="male" formControlName="gender" required>Male
+            </label>
+
+            <label class="radio-inline">
+              <input id="female" type="radio" value="female" formControlName="gender" required>Female
+            </label>
+
           </div>
-            <!--button disabled until form is valid-->
-          </div>
-        </form>
+        </div>
+      </div>
+      <div class="button">
+        <button class="btn btn-primary" type="submit" [disabled]="!employeeForm.valid"
+          style="align-content: center">Sign up</button>
+      </div>
+      <!--button disabled until form is valid-->
+    </div>
+  </form>
 </div>

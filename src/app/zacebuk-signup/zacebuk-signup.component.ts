@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AuthenticationService, UserService, AlertService } from '../_services';
+import {AlertService } from '../_services';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
+import { User } from 'firebase';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-zacebuk-signup',
@@ -10,35 +14,44 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./zacebuk-signup.component.css']
 })
 export class ZacebukSignupComponent implements OnInit {
+  user: User;
   constructor(
     private fb: FormBuilder,
+    public  afAuth: AngularFireAuth,
     private alertService: AlertService,
     private router: Router,
-    private userService: UserService,
-    private authenticationService: AuthenticationService) {
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+    private authService: AuthService) {
+      this.afAuth.authState.subscribe(user => {
+        if (user) {
+          this.user = user;
+          this.router.navigate(['/']);
+        }
+      });
+  }
+  get fieldValues() {
+    return this.employeeForm.controls;
   }
   employeeForm: FormGroup;
   registerForm: FormGroup;
   loading = false;
   submitted = false;
+  formRequest;
+  newFormReques;
   ngOnInit() {
     this.employeeForm = this.fb.group({
       // second arguements are sync validations, async are passed as third arguement(returns promises/observables)
-      fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(80),
+      Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
       password: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
-      phone: [''],
-      gender: ['']
+      gender: ['', Validators.required]
+    });
+    window.addEventListener('online', (event) => {
+      // location.reload();
+      this.newFormReques = JSON.parse(localStorage.getItem('newUserData'));
+      this.onSubmit();
+      localStorage.removeItem('newUserData');
     });
   }
-
-  get fieldValues() {
-    return this.employeeForm.controls;
-  }
-
   onSubmit(): void {
     this.submitted = true;
     // stop here if form is invalid
@@ -46,20 +59,13 @@ export class ZacebukSignupComponent implements OnInit {
       return;
     }
     this.loading = true;
-    let {fullName, email, password, phone, gender, token} = this.employeeForm.value;
-    const passwordHash = btoa(password);
-    password = passwordHash;
-    const formRequest = {fullName, email, password, phone, gender, token};
-    this.userService.register(formRequest)
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Registration successful', true);
-          this.router.navigate(['/app-zacebuk-login']);
-        },
-        error => {
-          this.alertService.error(error);
-          this.loading = false;
-        });
+    let {email, password, gender} = this.employeeForm.value;
+    this.formRequest = {email, password};
+    if (navigator.onLine) {
+      this.authService.register(this.fieldValues.email.value, this.fieldValues.password.value)
+    } else {
+      this.alertService.error('Network Down');
+      localStorage.setItem('newUserData', JSON.stringify(this.formRequest));
+    }
   }
 }

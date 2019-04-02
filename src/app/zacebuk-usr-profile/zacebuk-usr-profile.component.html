@@ -1,3 +1,4 @@
+<!-- <div>
 <p>zacebuk-usr-profile works!</p>
 <h1>Hi {{currentUser.fullName}}!</h1>
 <p>You're logged in with Firebuk!!</p>
@@ -7,3 +8,98 @@
         {{key}}: {{user[key]}}
     </li>
 </ul>
+</div> -->
+
+
+<div class="panel panel-primary profile">
+    <div class="panel-heading">
+        <h3 class="panel-title">User information</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+                <img class="img-circle"
+                    src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
+                    alt="User Pic">
+            </div>
+            <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+                <img class="img-circle"
+                    src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50"
+                    alt="User Pic">
+            </div>
+            <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
+                <strong>{{user.displayName}} </strong><br>
+                <div *ngFor="let user of data">
+                    <dl *ngFor="let key of keys">
+                        <dt>{{key}}:</dt>
+                        <dd>{{user[key]}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
+                <strong>{{user.displayName}}</strong><br>
+                <table class="table table-user-information">
+                    <tbody>
+                        <div *ngFor="let user of data">
+                            <tr *ngFor="let key of keys">
+                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">{{key}}:
+                                </td>
+
+                                <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    {{user[key]}}</td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+            </div>
+            <div class="signup" id="updateDetails">
+                <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+                    <!--onSubmit is the callback function, emits an ngSubmit event to a callback function -->
+                    <div class="">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Update Details!</h3>
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="name">Fullname</label>
+                            <div class="col-sm-8">
+                                <input id="name" formControlName="name" type="text" class="form-control" required>
+                                <div *ngIf="fieldValues.name.invalid && (fieldValues.name.dirty || fieldValues.name.touched)"
+                                    class="help-block">
+                                    <div *ngIf="fieldValues.name.errors.required">Fullname is required.</div>
+                                    <div *ngIf="fieldValues.name.errors.minlength">Minimum characters 2.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="photo">Photo Url</label>
+                            <div class="col-sm-8">
+                                <input id="photo" formControlName="photo" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button [disabled]="loading" class="btn btn-primary">Update</button>
+                            <img *ngIf="loading"
+                                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <button class="btn btn-sm btn-primary" type="button" data-toggle="tooltip"
+            data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i></button>
+        <span class="pull-right">
+            <button class="btn btn-sm btn-warning" type="button" data-toggle="tooltip"
+                data-original-title="Edit this user"><i class="glyphicon glyphicon-edit"
+                    (click)="updateDetails()"></i></button>
+            <button class="btn btn-sm btn-danger" type="button" data-toggle="tooltip"
+                data-original-title="Remove this user"><i class="glyphicon glyphicon-remove"></i></button>
+        </span>
+    </div>
+</div>

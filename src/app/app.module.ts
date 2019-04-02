@@ -27,14 +27,15 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireModule } from '@angular/fire';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
+import { environment } from '../environments/environment';
+import { AuthService } from './auth/auth.service';
 
 const appRoutes: Routes = [
   { path: '', component: ZacebukWallComponent },
   { path: 'app-zacebuk-login', component: ZacebukLoginComponent },
   { path: 'app-zacebuk-signup', component: ZacebukSignupComponent },
-  { path: 'app-zacebuk-profile', component: ZacebukUsrProfileComponent, canActivate: [AuthGuard] }
+  { path: 'app-zacebuk-profile', component: ZacebukUsrProfileComponent},
 ];
 
 @NgModule({
@@ -46,7 +47,7 @@ const appRoutes: Routes = [
     ZacebukLoginComponent,
     ZacebukFooterComponent,
     ZacebukUsrProfileComponent,
-    AlertComponent,
+    AlertComponent
 
 
   ],
@@ -61,7 +62,7 @@ const appRoutes: Routes = [
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     PostdataService,
@@ -76,7 +77,8 @@ const appRoutes: Routes = [
     AlertService,
     UserService,
     CurrentUserService,
-    MessagingService
+    MessagingService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

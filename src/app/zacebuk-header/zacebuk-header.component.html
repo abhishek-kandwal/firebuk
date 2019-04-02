@@ -1,34 +1,42 @@
-<!-- header navbar code starts here -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">firebuk</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active">
-        <a href="/">Home</a>
-      </li>
-      <div *ngIf="!isloggedin; then userloggerin else userloggedout"></div>
-      <ng-template #userloggerin>
-        <li>
-          <a href="/app-zacebuk-signup">Sign Up.!</a>
-        </li>
-        <li>
-          <a href="/app-zacebuk-login">Log In.!</a>
-        </li>
-      </ng-template>
+<nav class="navbar top navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" [routerLink]="['/']"><i class="fa fa-free-code-camp" aria-hidden="true"></i> firebuk</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a [routerLink]="['/']"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+           
+          
+      <div *ngIf="isloggedin; then userloggedin else userloggedout"></div>
       <ng-template #userloggedout>
         <li>
-          <a class="nav-item nav-link" (click)="logout()">Logout</a>
+          <a [routerLink]="['/app-zacebuk-signup']"><i class="fa fa-upload" aria-hidden="true"></i> Sign Up.!</a>
         </li>
         <li>
-          <a href="/app-zacebuk-profile">Profile</a>
+          <a [routerLink]="['/app-zacebuk-login']"><i class="fa fa-sign-in" aria-hidden="true"></i> Log In.!</a>
+        </li>
+      </ng-template>
+      <ng-template #userloggedin>
+        <li>
+          <a class="nav-item nav-link" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
         </li>
         <li>
-          <a (click)="sendPushNotification()">Send Push Notification</a>
+          <a [routerLink]="['/app-zacebuk-profile']"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+        </li>
+        <li>
+          <a (click)="sendPushNotification()"><i class="fa fa-bell" aria-hidden="true"></i> Send Push Notification</a>
         </li> 
       </ng-template>
-    </ul>
-  </div>
-</nav>
-<!-- header navbar code ends here -->
+        </ul>
+      </div>
+    </div>
+  </nav>

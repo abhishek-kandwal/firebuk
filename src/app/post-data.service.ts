@@ -6,6 +6,7 @@ import {Comments} from './comments';
 import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -27,6 +28,7 @@ export class PostdataService {
   private handleError: HandleError;
   constructor(
     private http: HttpClient,
+    private route: Router,
     httpErrorHandler: HttpErrorHandler) {
     this.handleError = httpErrorHandler.createHandleError('');
   }
@@ -47,7 +49,12 @@ export class PostdataService {
   pushlikes(url, data) {
     return this.http.post(url, data);
   }
-  
+
+
+  deleteLikes(url) {
+    return this.http.delete(url, httpOptions);
+  }
+
   addPost(post: Posts): Observable<Posts> {
     return this.http.post<Posts>(this.pUrl, post, httpOptions)
       .pipe(
