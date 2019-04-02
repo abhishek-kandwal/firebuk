@@ -1,11 +1,52 @@
-<div>
-<p>zacebuk-usr-profile works!</p>
-<h1>Hi {{currentUser.fullName}}!</h1>
-<p>You're logged in with Firebuk!!</p>
-<h3>Profile Details:</h3>
-<ul *ngFor="let user of data">
-    <li *ngFor="let key of keys">
-        {{key}}: {{user[key]}}
-    </li>
-</ul>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">User information</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+                <img class="img-circle"
+                    src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
+                    alt="User Pic">
+            </div>
+            <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+                <img class="img-circle"
+                    src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50"
+                    alt="User Pic">
+            </div>
+            <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
+                <strong>{{currentUser.fullName}} </strong><br>
+                <div *ngFor="let user of data">
+                <dl *ngFor="let key of keys">
+                    <dt>{{key}}:</dt>
+                    <dd>{{user[key]}}</dd>
+                </dl>
+            </div>
+            </div>
+            <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
+                <strong>{{currentUser.fullName}}</strong><br>
+                <table class="table table-user-information">
+                    <tbody>
+                        <div *ngFor="let user of data">
+                        <tr *ngFor="let key of keys">
+                            <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">{{key}}:</td>
+                            
+                            <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">{{user[key]}}</td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <button class="btn btn-sm btn-primary" type="button" data-toggle="tooltip"
+            data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i></button>
+        <span class="pull-right">
+            <button class="btn btn-sm btn-warning" type="button" data-toggle="tooltip"
+                data-original-title="Edit this user"><i class="glyphicon glyphicon-edit"></i></button>
+            <button class="btn btn-sm btn-danger" type="button" data-toggle="tooltip"
+                data-original-title="Remove this user"><i class="glyphicon glyphicon-remove"></i></button>
+        </span>
+    </div>
 </div>
