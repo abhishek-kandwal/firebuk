@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { User } from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { FetchJsonDataService } from '../fetch-json-data.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class ZacebukSignupComponent implements OnInit {
     private fb: FormBuilder,
     public  afAuth: AngularFireAuth,
     private alertService: AlertService,
+    private fetch: FetchJsonDataService,
     private router: Router,
     private authService: AuthService) {
       this.afAuth.authState.subscribe(user => {
@@ -40,9 +42,11 @@ export class ZacebukSignupComponent implements OnInit {
   ngOnInit() {
     this.employeeForm = this.fb.group({
       // second arguements are sync validations, async are passed as third arguement(returns promises/observables)
-      email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(80),
-      Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+      fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(80),
+      Validators.pattern(/^[A-Za-z0-9._%+-]+@(?!testdomain.com)[A-Za-z0-9.-]+\.[A-Za-z]{1,3}$/)]],
       password: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
+      phone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('')]],
       gender: ['', Validators.required]
     });
     window.addEventListener('online', (event) => {
@@ -59,10 +63,15 @@ export class ZacebukSignupComponent implements OnInit {
       return;
     }
     this.loading = true;
-    let {email, password, gender} = this.employeeForm.value;
-    this.formRequest = {email, password};
+    let {fullName, phone, gender} = this.employeeForm.value;
+    this.formRequest = {fullName, phone, gender};
+
     if (navigator.onLine) {
       this.authService.register(this.fieldValues.email.value, this.fieldValues.password.value)
+      .then(() => {
+        this.fetch.putData(this.formRequest);
+        console.log(this.formRequest);
+      });
     } else {
       this.alertService.error('Network Down');
       localStorage.setItem('newUserData', JSON.stringify(this.formRequest));

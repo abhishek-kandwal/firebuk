@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { AlertService, AuthenticationService } from '../_services';
+import { AlertService } from '../_services';
 import { Subscription } from 'rxjs';
 import { FetchJsonDataService } from '../fetch-json-data.service';
 import { AuthService } from '../auth/auth.service';
@@ -29,7 +28,6 @@ export class ZacebukLoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService,
     private alertService: AlertService,
     private check: FetchJsonDataService,
     private authService: AuthService

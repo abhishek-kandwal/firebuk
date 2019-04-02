@@ -9,6 +9,7 @@ export class FetchJsonDataService {
   isloggedin: BehaviorSubject<boolean> = new BehaviorSubject(!!(localStorage.getItem('user')));
 
   userList = [];
+  userData = [];
 
   userNameData = [];
   userPassData = [];
@@ -29,6 +30,7 @@ export class FetchJsonDataService {
 
   putData(data) {
     this.userList = data;
+    this.userData = data;
   }
 
   getlikes(url) {

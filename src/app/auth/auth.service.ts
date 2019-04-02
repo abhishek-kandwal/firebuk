@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 import { AlertService } from '../_services';
+import { FetchJsonDataService } from '../fetch-json-data.service';
+import { PostdataService } from '../post-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,9 @@ import { AlertService } from '../_services';
 export class AuthService {
 
   user: User;
-  constructor(public  afAuth: AngularFireAuth, public  router: Router, private alert: AlertService) {
+  constructor(public  afAuth: AngularFireAuth, public  router: Router, private alert: AlertService,
+              private fetchUser: FetchJsonDataService,
+              private postUser: PostdataService ) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
@@ -34,6 +38,7 @@ export class AuthService {
       setTimeout(() => {
         this.alert.success('Registration Successful', true);
       });
+      this.postUser.addUser(this.fetchUser.userData);
     })
     .catch((error) => {
       const errorCode = error.code;

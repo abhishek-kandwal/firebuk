@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../_services';
 import { Router } from '@angular/router';
 import { MessagingService } from '../messaging.service';
 import { FetchJsonDataService } from '../fetch-json-data.service';
@@ -16,8 +15,7 @@ export class ZacebukHeaderComponent implements OnInit {
   user_logged: any;
   isloggedin: boolean;
 
-  constructor(private authenticationService: AuthenticationService,
-              private router: Router, private messagingService: MessagingService,
+  constructor(private router: Router, private messagingService: MessagingService,
               private check: FetchJsonDataService,
               private  authService: AuthService) { }
   

@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 import { AlertService } from '../_services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 @Component({
   selector: 'app-zacebuk-usr-profile',
@@ -16,17 +17,20 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
   data = [];
   loading = false;
   user: User;
+  picUrl;
   subscription: Subscription;
   updateForm: FormGroup;
   constructor(
     public afAuth: AngularFireAuth, public router: Router,  private fb: FormBuilder,
-    private alert: AlertService) {
+    private alert: AlertService, private afStorage: AngularFireStorage) {
   }
 
   ngOnInit() {
     this.subscription = this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
+        this.picUrl = this.user.displayName.slice(0, 4);
+        console.log(this.picUrl);
         this.data.push(this.user);
         this.keys = Object.keys(this.user);
       } else {
@@ -66,5 +70,9 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
       this.alert.error(error);
     });
     document.getElementById('updateDetails').style.display = 'none';
+  }
+
+  upload(event) {
+    this.afStorage.upload(this.user.displayName.slice(0, 4) + '.jpg', event.target.files[0]);
   }
 }

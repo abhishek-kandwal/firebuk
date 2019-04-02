@@ -30,6 +30,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { environment } from '../environments/environment';
 import { AuthService } from './auth/auth.service';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 const appRoutes: Routes = [
   { path: '', component: ZacebukWallComponent },
@@ -78,7 +79,8 @@ const appRoutes: Routes = [
     UserService,
     CurrentUserService,
     MessagingService,
-    AuthService
+    AuthService,
+    AngularFireStorage
   ],
   bootstrap: [AppComponent]
 })
