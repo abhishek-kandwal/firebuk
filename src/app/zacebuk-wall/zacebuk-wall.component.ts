@@ -5,8 +5,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CurrentUserService } from '../current-user.service';
 import { Router } from '@angular/router';
-import { AlertService } from '../_services/alert.service';
-
 
 @Component({
   selector: 'app-zacebuk-wall',
@@ -53,7 +51,6 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     private post_form: FormBuilder,
     private post_comment: FormBuilder,
     private route: Router,
-    private alertService: AlertService,
     private fetchLikes: FetchJsonDataService,
     private post_data: PostdataService,
     private postsData: FetchJsonDataService,
@@ -90,13 +87,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
             this.posterId.push(temp3);
             this.postid = this.postList.length;
             this.postsContent.push(temp);
-
-
-
-
-
             // console.log(this.likerlist);
-
             const url = `https://example-81cdf.firebaseio.com/Posts/${el}/Likes.json`;
             const cUrl = `https://example-81cdf.firebaseio.com/Posts/${el}/Comments.json`;
             this.subscription = this.fetchLikes.getlikes(url).subscribe(val => {
@@ -106,8 +97,6 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
                 temp.push(Object.keys(val));
                 const temp1 = Object.values(val);
                 //  console.log(temp1);
-
-
                 // temp1[].Liker_Name);
                 temp1.map((val, ind) => {
                   if (val.Liker_Name === this.currentUser.fullName) {
@@ -131,26 +120,62 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
       this.fetchLikes.Posts.subscribe((val) => {
         temp1 = Object.values(val);
+        console.log(temp1);
+
         temp1.map((ele, inde) => {
-          const li = Object.values(ele.Likes);
-          console.log(li);
-          this.delKeys[inde] = Object.keys(ele.Likes);
-          this.likerlist.push(li);
+
+          if (ele['Likes']) {
+            let li = Object.values(ele['Likes']);
+            console.log(li);
+            this.delKeys[inde] = Object.keys(ele.Likes)
+            this.likerlist[inde] = li;
+          } else {
+            this.likerlist[inde] = '';
+          }
+
+
+          // }catch(error){
+          //   console.log('first');
+
+          // }
+
+
+
+          // if(li){
+
+          // }else{
+          //   console.log('not defined');
+
+          //   this.likerlist.push(" ");
+          // }
+
           const co = Object.values(ele.Comments);
           this.commenterlist.push(co);
         });
       });
-      console.log(this.delKeys);
+      // console.log(this.delKeys);
+      console.log(this.likerlist);
 
       for (let i = 0; i < this.likerlist.length; i++) {
         const a = this.likerlist[i].length;
         const temp = [];
         for (let j = 0; j < a; j++) {
+
           temp[j] = this.likerlist[i][j].Liker_Name;
         }
-        this.likerlist1.push(temp);
+        this.likerlist1[i] = temp;
+        // if(temp){
+        //   
+        // }else{
+        //   this.likerlist1.push(' ');
+        // }
+
+        // console.log(temp);
+
       }
-      // console.log(this.commenterlist);
+
+      console.log(this.likerlist1);
+
       for (let i = 0; i < this.commenterlist.length; i++) {
         const a = this.commenterlist[i].length;
         const temp = [];
@@ -163,8 +188,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         this.commenterlist1.push(temp2);
         this.commentValue.push(temp);
       }
-      console.log('164', this.commenterlist1);
-      console.log('165', this.commentValue);
+
       this.totalLikes.map((val, ind) => {
         // console.log(`totallikes${ind}`);
         document.getElementById(`totallikes${ind}`).innerHTML = `${this.totalLikes[val]}`;
@@ -190,6 +214,10 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       console.log('Read Error');
 
     }
+
+    setTimeout(() => {
+      document.getElementById('message').style.display = 'none';
+    }, 2000);
   }
 
   openModal(event: { currentTarget: Element; }) {
@@ -236,10 +264,9 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     this.subscription = this.post_data.addPost(this.postData)
       .subscribe(post => {
         this.posts.push(post);
-        window.location.reload();
+        //window.location.reload();
       });
     this.postForm.reset();
-
   }
 
   // Likes Function
@@ -247,33 +274,48 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     if (this.isloggedin) {
       this.likeId = (event.currentTarget as Element).id;
       console.log(this.likeId);
+      let temp1d = this.likeId.slice(4);
       if (this.likeId) {
-        console.log('totallikes'.concat(this.likeId.slice(4)));
-        document.getElementById('totallikes'.concat(this.likeId.slice(4))).innerHTML = `${this.totalLikes[this.likeId.slice(4)]}`;
-        // document.getElementById(this.likeId).setAttribute("disabled", "true");
-        let data = JSON.parse(localStorage.getItem('Posts'));
         const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
-        // if (data["-LbGV8ptbLBiSrIbGzSG"].Likes["-LbGVEgBhW_x6w2ADN5H"].Liker_Name === this.currentUser.fullName) {
-        // const delurl = `https://example-81cdf.firebaseio.com/Posts/-LbGV8ptbLBiSrIbGzSG/Likes/-LbHYey20yZ9NdFiJ9oI.json`
-        // this.post_data.deleteLikes(delurl);
+        console.log(this.likerlist1);
 
-        // }
+        if (this.likerlist1[temp1d]) {
+          let likerindex = this.likerlist1[temp1d].indexOf(this.currentUser.fullName);
+          console.log(this.likerlist1[temp1d]);
 
-        this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
-        // }
-        this.subscription = this.fetchLikes.getlikes(url).subscribe(val => {
-          try {
-            const temp = [];
-            temp.push(Object.keys(val));
-            const temp1 = Object.values(val);
-            console.log(temp1);
-          } catch (error) {
-            console.log('First like to the post.');
+          if (likerindex > -1) {
+            let dislikekey = this.delKeys[temp1d][likerindex];
+            const delurl = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes/${dislikekey}.json`
+            console.log(delurl);
+            this.post_data.deleteLikes(delurl).subscribe(() => console.log('User Deleted'));
+
+            setTimeout(() => {
+              location.reload();
+            }, 2000)
+
+          } else {
+            // console.log('totallikes'.concat(this.likeId.slice(4)));
+            document.getElementById('totallikes'.concat(this.likeId.slice(4))).innerHTML = `${this.totalLikes[this.likeId.slice(4)]}`;
+            // document.getElementById(this.likeId).setAttribute("disabled", "true");
+            //  let data = JSON.parse(localStorage.getItem('Posts'));
+
+            this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
+            setTimeout(() => {
+              location.reload();
+            }, 2000);
           }
-          location.reload();
+        } else {
+          document.getElementById('totallikes'.concat(this.likeId.slice(4))).innerHTML = `${this.totalLikes[this.likeId.slice(4)]}`;
+
+          //  let data = JSON.parse(localStorage.getItem('Posts'));
+
+          this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
         }
-        );
       }
+
     } else {
       window.alert('Please Login');
     }

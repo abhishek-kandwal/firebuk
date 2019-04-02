@@ -11,3 +11,11 @@
     width: 200px;
     height: 200px;
   }
+
+  .profile {
+    margin-top: 5%;
+}
+
+#updateDetails {
+  display: none;
+}

@@ -24,13 +24,16 @@ export class AppComponent implements OnInit, OnDestroy {
   currentUser: User;
   currentUserSubscription: Subscription;
   users: User[] = [];
-  constructor(private fetchData: FetchJsonDataService,
+  constructor(private fetchData: FetchJsonDataService ,
               private authenticationService: AuthenticationService,
-              private setUser: CurrentUserService) { }
+              private setUser: CurrentUserService) { this.subscription = this.fetchData.getPost().pipe().subscribe(post => {
+                localStorage.setItem('Posts', JSON.stringify(post));
+              });
+            }
+
+  
 
   ngOnInit() {
-
-
     this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
       const userKey = Object.keys(val);
       userKey.map((ele, index) => {
@@ -57,10 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     this.fetchData.putData(this.userList);
     console.log(this.userList);
-
-    this.subscription = this.fetchData.getPost().pipe().subscribe(post => {
-      localStorage.setItem('Posts', JSON.stringify(post));
-    });
   }
 
   ngOnDestroy() {
