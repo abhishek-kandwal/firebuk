@@ -5,6 +5,7 @@ import { AlertService } from '../_services';
 import { Subscription } from 'rxjs';
 import { FetchJsonDataService } from '../fetch-json-data.service';
 import { AuthService } from '../auth/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-zacebuk-login',
@@ -28,10 +29,19 @@ export class ZacebukLoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private afAuth: AngularFireAuth,
     private alertService: AlertService,
     private check: FetchJsonDataService,
     private authService: AuthService
-  ) { }
+  ) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.router.navigate(['/']);
+      } else {
+        this.router.navigate(['/app-zacebuk-login']);
+      }
+   });
+  }
 
   ngOnInit() {
 
@@ -39,8 +49,6 @@ export class ZacebukLoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    // get return url from route parameters or default to '/'
-    //this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
   // convenience getter for easy access to form fields
   get values() { return this.loginForm.controls; }

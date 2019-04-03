@@ -16,6 +16,9 @@
               <span *ngIf="employeeForm.get('fullName').errors.required">
                 Full Name is required
               </span>
+              <span *ngIf="employeeForm.get('fullName').errors.pattern">
+                Blank & number not allowed
+              </span>
               <span
                 *ngIf="employeeForm.get('fullName').errors.minlength || employeeForm.get('fullName').errors.maxlength">
                 Full Name must be greater than 2 characters and less than 15 characters
@@ -53,7 +56,13 @@
               </span>
               <span
                 *ngIf="employeeForm.get('password').errors.minlength || employeeForm.get('password').errors.maxlength">
-                Password must be greater than 2 characters and less than 15 characters
+                Password must be greater than 6 characters and less than 15 characters
+              </span><br>
+              <span
+                *ngIf="employeeForm.get('password').errors.pattern">
+                Password should be at least 8 characters
+                long and should contain one number,one character and one special
+                character
               </span>
             </span>
           </div>

@@ -62,12 +62,15 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+
+    setTimeout(() => {
+      document.getElementById('message').style.display = 'none';
+    }, 5000);
     this.check.isloggedin.subscribe((val) => {
       this.isloggedin = val;
     });
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))[0];
     console.log(this.currentUser);
-    
     try {
       this.subscription = this._postsData.getPost()
         .subscribe(data => {
@@ -85,8 +88,8 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
             } catch (error) {
               console.log('Read Error');
             }
-            this.totalLikes.push(temp1);
-            this.totalComments.push(temp2);
+            this.totalLikes.push((temp1) || 0);
+            this.totalComments.push((temp2) || 0);
 
             temp = data[el].Post_content;
             const temp3 = data[el].Poster_ID;
@@ -145,23 +148,17 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
             co.map((valuee, indexee) => {
               cc[indexee] = valuee['Comment_Content'];
               cid[indexee] = valuee['Commenter_ID']
-            })
+            });
 
 
             this.commenterlist.push(cid);
             this.commentValue.push(cc);
           } else {
 
-            this.commenterlist.push(['false']);
-            this.commentValue.push(['false']);
-
+            this.commenterlist.push(0);
+            this.commentValue.push(0);
           }
-
-
         });
-
-
-
       });
       console.log(this.commenterlist);
       console.log(this.commentValue);
@@ -182,18 +179,8 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         this.likerlist1.push(temp);
 
       }
-
-
-
-
       console.log(this.commenterlist1);
       console.log(this.commentValue);
-
-
-
-
-
-
       this.totalLikes.map((val, ind) => {
         // console.log(`totallikes${ind}`);
         document.getElementById(`totallikes${ind}`).innerHTML = `${this.totalLikes[val]}`;
@@ -219,7 +206,6 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       console.log('Read Error');
 
     }
-
   }
 
 

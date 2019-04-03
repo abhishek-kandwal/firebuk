@@ -42,10 +42,12 @@ export class ZacebukSignupComponent implements OnInit {
   ngOnInit() {
     this.employeeForm = this.fb.group({
       // second arguements are sync validations, async are passed as third arguement(returns promises/observables)
-      fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
+      fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15),
+         Validators.pattern(/^[a-zA-Z]+/)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(80),
       Validators.pattern(/^[A-Za-z0-9._%+-]+@(?!testdomain.com)[A-Za-z0-9.-]+\.[A-Za-z]{1,3}$/)]],
-      password: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15),
+                    Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/)]],
       phone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('')]],
       gender: ['', Validators.required]
     });
