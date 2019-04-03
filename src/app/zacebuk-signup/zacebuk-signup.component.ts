@@ -47,7 +47,7 @@ export class ZacebukSignupComponent implements OnInit {
       Validators.pattern(/^[A-Za-z0-9._%+-]+@(?!testdomain.com)[A-Za-z0-9.-]+\.[A-Za-z]{1,3}$/)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15),
                     Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/)]],
-      phone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('')]],
+      phone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^[0-9]+/)]],
       gender: ['', Validators.required]
     });
     window.addEventListener('online', (event) => {

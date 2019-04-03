@@ -41,4 +41,11 @@ export class ZacebukHeaderComponent implements OnInit {
     console.log('Logout', this.isloggedin);
     this.router.navigate(['/app-zacebuk-login']);
   }
+
+  reload() {
+    this.router.navigate(['/']);
+    setTimeout(() => {
+      location.reload();
+    }, 0);
+  }
 }

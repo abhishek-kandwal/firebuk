@@ -6,7 +6,7 @@ import { Subscription, Observable, Subject, BehaviorSubject, observable } from '
   providedIn: 'root'
 })
 export class FetchJsonDataService {
-  isloggedin: BehaviorSubject<boolean> = new BehaviorSubject(!!(localStorage.getItem('user')));
+  isloggedin: BehaviorSubject<boolean> = new BehaviorSubject(!!(localStorage.getItem('currentUser')));
 
   userList = [];
   userData = [];

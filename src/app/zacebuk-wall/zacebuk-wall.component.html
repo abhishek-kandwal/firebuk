@@ -17,7 +17,7 @@
             <button class="btn btn-primary" type="submit" [disabled]="!postForm.valid"
               style="align-content: center">Post</button>
           </div>
-          <!--button disabled until form is valid-->
+
         </div>
       </form>
       <!-- form ends -->
@@ -60,7 +60,7 @@
              
               <span>
                   &nbsp;&nbsp;
-                <i class="fa fa-comment btn btn-primary button_styles" aria-hidden="true"></i>
+                <i class="fa fa-comment btn btn-primary button_styles" id="comment{{ind}}" aria-hidden="true" (click)="commentShowHide($event)"></i>
               </span>
               <span class="button_option_here">
                 <button class="btn btn-primary button_styles  commentToggle" id='totalcomment{{ind}}'
@@ -109,7 +109,7 @@
                 </div>
               </span>
               <!-- comment area starts -->
-              <div class="commentForm comment" *ngIf="isloggedin">
+              <div class="commentForm comment" id="commentBox{{ind}}" *ngIf="isloggedin">
                 <form [formGroup]="commentForm" (ngSubmit)="comment($event)" class="" id='comment{{ind}}'>
                   <div class="">
                     <div class="form-group">

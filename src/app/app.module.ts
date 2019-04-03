@@ -33,7 +33,7 @@ import { AuthService } from './auth/auth.service';
 import { AngularFireStorage } from 'angularfire2/storage';
 
 const appRoutes: Routes = [
-  { path: '', component: ZacebukWallComponent },
+  { path: '', component: ZacebukWallComponent},
   { path: 'app-zacebuk-login', component: ZacebukLoginComponent },
   { path: 'app-zacebuk-signup', component: ZacebukSignupComponent },
   { path: 'app-zacebuk-profile', component: ZacebukUsrProfileComponent},

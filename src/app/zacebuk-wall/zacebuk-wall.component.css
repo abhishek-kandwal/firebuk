@@ -34,9 +34,6 @@ border: 1px solid black;
 .comment {
     display: none;
 }
- .card_box:hover .comment{
-     display: block;
- }
 .card_box:hover {
     display: block;
     padding: 10px;
