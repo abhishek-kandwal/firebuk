@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CurrentUserService } from '../current-user.service';
 import { Router } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-zacebuk-wall',
@@ -16,6 +17,8 @@ import { Router } from '@angular/router';
 export class ZacebukWallComponent implements OnInit, OnDestroy {
   commentboxid;
   temparray;
+  isLiked: boolean[] = [];
+  likerlist3: any[] = [];;
   likerlist: any[] = [];
   likerlist1: any[] = [];
   commenterlist: any[] = [];
@@ -63,11 +66,11 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       this.isloggedin = val;
     });
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    // console.log(this.currentUser);
     try {
       this.subscription = this._postsData.getPost()
         .subscribe(data => {
           let temp;
+          let templikes;
           this.postList = Object.keys(data);
           this.postValue = Object.values(data);
           this.postList.map((el, index) => {
@@ -75,19 +78,20 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
             let temp2: number;
             try {
               temp1 = Object.values(this.postValue[index].Likes).length;
+              templikes = Object.values(this.postValue[index].Likes);
               temp2 = Object.values(this.postValue[index].Comments).length;
             } catch (error) {
               console.log('Read Error');
             }
             this.totalLikes.push(temp1);
             this.totalComments.push(temp2);
+
             temp = data[el].Post_content;
             const temp3 = data[el].Poster_ID;
 
             this.posterId.push(temp3);
             this.postid = this.postList.length;
             this.postsContent.push(temp);
-            // console.log(this.likerlist);
             const url = `https://example-81cdf.firebaseio.com/Posts/${el}/Likes.json`;
             const cUrl = `https://example-81cdf.firebaseio.com/Posts/${el}/Comments.json`;
             this.subscription = this.fetchLikes.getlikes(url).subscribe(val => {
@@ -96,14 +100,13 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
                 const temp = [];
                 temp.push(Object.keys(val));
                 const temp1 = Object.values(val);
-                //  console.log(temp1);
-                // temp1[].Liker_Name);
+
                 temp1.map((val, ind) => {
                   if (val.Liker_Name === this.currentUser.fullName) {
-
-                    // console.log(val)
-                    // document.getElementById('like'.concat('' + index)).setAttribute('disabled', 'true');
+                    this.isLiked[index] = true;
                     document.getElementById('like'.concat('' + index)).setAttribute('style', 'background-color:red');
+                  } else {
+                    this.isLiked[index] = false;
                   }
                 });
               } catch (error) {
@@ -116,78 +119,78 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
           });
         });
+
       let temp1;
 
-      this.fetchLikes.Posts.subscribe((val) => {
+      this.fetchLikes.getPost().subscribe((val) => {
         temp1 = Object.values(val);
-        console.log(temp1);
-
         temp1.map((ele, inde) => {
 
           if (ele['Likes']) {
-            let li = Object.values(ele['Likes']);
-            console.log(li);
-            this.delKeys[inde] = Object.keys(ele.Likes)
-            this.likerlist[inde] = li;
+            this.delKeys.push(Object.keys(ele.Likes));
+            this.likerlist.push(Object.values(ele.Likes));
           } else {
-            this.likerlist[inde] = '';
+            this.delKeys.push(['false']);
+            this.likerlist.push(['false']);
+            console.log('Likes not found');
+
+          }
+
+          if (ele['Comments']) {
+            let cc = [];
+            let cid = [];
+            let co = Object.values(ele.Comments);
+            co.map((valuee, indexee) => {
+              cc[indexee] = valuee['Comment_Content'];
+              cid[indexee] = valuee['Commenter_ID']
+            })
+
+
+            this.commenterlist.push(cid);
+            this.commentValue.push(cc);
+          } else {
+
+            this.commenterlist.push(['false']);
+            this.commentValue.push(['false']);
+
           }
 
 
-          // }catch(error){
-          //   console.log('first');
-
-          // }
-
-
-
-          // if(li){
-
-          // }else{
-          //   console.log('not defined');
-
-          //   this.likerlist.push(" ");
-          // }
-
-          const co = Object.values(ele.Comments);
-          this.commenterlist.push(co);
         });
-      });
-      // console.log(this.delKeys);
-      console.log(this.likerlist);
 
+
+
+      });
+      console.log(this.commenterlist);
+      console.log(this.commentValue);
       for (let i = 0; i < this.likerlist.length; i++) {
         const a = this.likerlist[i].length;
         const temp = [];
         for (let j = 0; j < a; j++) {
+          console.log(this.likerlist[i][j].Liker_Name);
 
-          temp[j] = this.likerlist[i][j].Liker_Name;
+          if (this.likerlist[i][j].Liker_Name) {
+            temp[j] = this.likerlist[i][j].Liker_Name;
+          }
+          else {
+            temp[j] = 'false';
+          }
+
         }
-        this.likerlist1[i] = temp;
-        // if(temp){
-        //   
-        // }else{
-        //   this.likerlist1.push(' ');
-        // }
-
-        // console.log(temp);
+        this.likerlist1.push(temp);
 
       }
 
-      console.log(this.likerlist1);
 
-      for (let i = 0; i < this.commenterlist.length; i++) {
-        const a = this.commenterlist[i].length;
-        const temp = [];
-        const temp2 = [];
-        for (let j = 0; j < a; j++) {
-          temp[j] = this.commenterlist[i][j].Comment_Content;
-          temp2[j] = this.commenterlist[i][j].Commenter_ID;
 
-        }
-        this.commenterlist1.push(temp2);
-        this.commentValue.push(temp);
-      }
+
+      console.log(this.commenterlist1);
+      console.log(this.commentValue);
+
+
+
+
+
 
       this.totalLikes.map((val, ind) => {
         // console.log(`totallikes${ind}`);
@@ -215,10 +218,8 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
     }
 
-    setTimeout(() => {
-      document.getElementById('message').style.display = 'none';
-    }, 2000);
   }
+
 
   openModal(event: { currentTarget: Element; }) {
     const modid = (event.currentTarget as Element).id;
@@ -251,7 +252,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     console.log(this.currentuser.data);
     const { new_post } = this.postForm.value;
-    // tslint:disable-next-line: one-variable-per-declaration
+
     const time = new Date().toTimeString(), post_Id = this.postid,
       poster = this.currentUser.fullName;
     this.postData = {
@@ -265,58 +266,54 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       .subscribe(post => {
         this.posts.push(post);
         //window.location.reload();
+        setTimeout(() => {
+          this.route.navigated = false;
+
+        }, 1000);
       });
     this.postForm.reset();
   }
 
   // Likes Function
   likes(event: { currentTarget: Element; }) {
+    this.ngOnInit();
     if (this.isloggedin) {
       this.likeId = (event.currentTarget as Element).id;
-      console.log(this.likeId);
+      //console.log(this.likeId);
       let temp1d = this.likeId.slice(4);
       if (this.likeId) {
-        const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
-        console.log(this.likerlist1);
 
-        if (this.likerlist1[temp1d]) {
+        if (this.isLiked[temp1d]) {
+          console.log(this.isLiked[temp1d]);
           let likerindex = this.likerlist1[temp1d].indexOf(this.currentUser.fullName);
-          console.log(this.likerlist1[temp1d]);
+          let dislikekey = this.delKeys[temp1d][likerindex];
+          const delurl = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes/${dislikekey}.json`
 
-          if (likerindex > -1) {
-            let dislikekey = this.delKeys[temp1d][likerindex];
-            const delurl = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes/${dislikekey}.json`
-            console.log(delurl);
-            this.post_data.deleteLikes(delurl).subscribe(() => console.log('User Deleted'));
+          this.post_data.deleteLikes(delurl).subscribe(() => {
 
-            setTimeout(() => {
-              location.reload();
-            }, 2000)
 
-          } else {
-            // console.log('totallikes'.concat(this.likeId.slice(4)));
-            document.getElementById('totallikes'.concat(this.likeId.slice(4))).innerHTML = `${this.totalLikes[this.likeId.slice(4)]}`;
-            // document.getElementById(this.likeId).setAttribute("disabled", "true");
-            //  let data = JSON.parse(localStorage.getItem('Posts'));
+            console.log('disliked');
 
-            this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
-            setTimeout(() => {
-              location.reload();
-            }, 2000);
-          }
-        } else {
-          document.getElementById('totallikes'.concat(this.likeId.slice(4))).innerHTML = `${this.totalLikes[this.likeId.slice(4)]}`;
-
-          //  let data = JSON.parse(localStorage.getItem('Posts'));
-
-          this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => { });
-          setTimeout(() => {
             location.reload();
-          }, 2000);
+
+          });
+        } else {
+          const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
+
+          this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => {
+
+
+            console.log('liked');
+
+            location.reload();
+
+          });
         }
       }
 
-    } else {
+    }
+
+    else {
       window.alert('Please Login');
     }
 
