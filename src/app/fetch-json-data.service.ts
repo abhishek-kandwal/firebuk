@@ -28,12 +28,16 @@ export class FetchJsonDataService {
     return this.http.get(this.urlPost);
   }
 
-  putData(data) {
+  putData(data: any[]) {
     this.userList = data;
-    this.userData = data;
   }
 
-  getlikes(url) {
+  put(data: any[]) {
+    this.userData = data;
+    console.log(this.userData);
+  }
+
+  getlikes(url: string) {
     return this.http.get(url);
   }
 }

@@ -6,6 +6,7 @@ import { User } from 'firebase';
 import { AlertService } from '../_services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireStorage } from 'angularfire2/storage';
+import { FetchJsonDataService } from '../fetch-json-data.service';
 
 @Component({
   selector: 'app-zacebuk-usr-profile',
@@ -19,29 +20,54 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
   user: User;
   picUrl;
   subscription: Subscription;
+  userList = [];
+  postList = [];
+  userNameData = [];
+  userEmailData = [];
+  userPhoneData = [];
+  userGenderData = [];
+  userPassData = [];
+  userIdData = [];
+  currentUserData = [];
+  dataUser = [];
+  currentUserSubscription: Subscription;
   updateForm: FormGroup;
   constructor(
-    public afAuth: AngularFireAuth, public router: Router,  private fb: FormBuilder,
-    private alert: AlertService, private afStorage: AngularFireStorage) {
+    public afAuth: AngularFireAuth, public router: Router, private fb: FormBuilder,
+    private alert: AlertService, private afStorage: AngularFireStorage,
+    private fetchUser: FetchJsonDataService) {
   }
 
   ngOnInit() {
     this.subscription = this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
-        this.picUrl = this.user.displayName.slice(0, 4);
-        console.log(this.picUrl);
+        this.picUrl = this.user.email;
         this.data.push(this.user);
         this.keys = Object.keys(this.user);
+        this.subscription = this.fetchUser.getUser().pipe().subscribe(val => {
+          const userKey = Object.keys(val);
+          userKey.map((ele, index) => {
+            this.userNameData[index] = val[ele].fullName;
+            this.userEmailData[index] = val[ele].email;
+            this.userPhoneData[index] = val[ele].phone;
+            this.userGenderData[index] = val[ele].gender;
+            if (this.user.email === val[ele].email) {
+                this.currentUserData.push({
+                  name: this.userNameData[index],
+                  phone: this.userPhoneData[index],
+                  gender: this.userGenderData[index]
+              });
+                console.log(this.currentUserData);
+            }
+          });
+        });
       } else {
         this.router.navigate(['/app-zacebuk-login']);
       }
     });
 
     this.updateForm = this.fb.group({
-      // second arguements are sync validations, async are passed as third arguement(returns promises/observables)
-      name: ['', [Validators.required, Validators.email, Validators.minLength(2), Validators.maxLength(80),
-      Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
       photo: ['']
     });
   }
@@ -62,17 +88,17 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
     this.loading = true;
     const user = this.afAuth.auth.currentUser;
     user.updateProfile({
-      displayName: this.fieldValues.name.value,
       photoURL: this.fieldValues.photo.value,
     }).then(() => {
       this.alert.success('Details Updated', true);
-    }).catch ((error) => {
+    }).catch((error) => {
       this.alert.error(error);
     });
     document.getElementById('updateDetails').style.display = 'none';
   }
 
   upload(event) {
-    this.afStorage.upload(this.user.displayName.slice(0, 4) + '.jpg', event.target.files[0]);
+    this.afStorage.upload(this.user.email + '.jpg', event.target.files[0]);
+    this.ngOnInit();
   }
 }

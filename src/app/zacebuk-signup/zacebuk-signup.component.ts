@@ -63,13 +63,13 @@ export class ZacebukSignupComponent implements OnInit {
       return;
     }
     this.loading = true;
-    let {fullName, phone, gender} = this.employeeForm.value;
-    this.formRequest = {fullName, phone, gender};
+    let {fullName, email, phone, gender} = this.employeeForm.value;
+    this.formRequest = {fullName, email, phone, gender};
 
     if (navigator.onLine) {
       this.authService.register(this.fieldValues.email.value, this.fieldValues.password.value)
       .then(() => {
-        this.fetch.putData(this.formRequest);
+        this.fetch.put(this.formRequest);
         console.log(this.formRequest);
       });
     } else {

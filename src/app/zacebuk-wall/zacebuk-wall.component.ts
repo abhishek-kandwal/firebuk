@@ -65,7 +65,9 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     this.check.isloggedin.subscribe((val) => {
       this.isloggedin = val;
     });
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))[0];
+    console.log(this.currentUser);
+    
     try {
       this.subscription = this._postsData.getPost()
         .subscribe(data => {

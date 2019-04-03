@@ -7,15 +7,15 @@
             <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
                 <img class="img-circle"
                     src="https://firebasestorage.googleapis.com/v0/b/example-81cdf.appspot.com/o/{{picUrl}}.jpg?alt=media"
-                    alt="User Pic" height="140px" width="130px">
+                    alt="Upload Pic" height="140px" width="130px">
             </div>
             <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
                 <img class="img-circle"
                     src="https://firebasestorage.googleapis.com/v0/b/example-81cdf.appspot.com/o/{{picUrl}}.jpg?alt=media"
-                    alt="User Pic" height="105px" width="100px">
+                    alt="Upload Pic" height="105px" width="100px">
             </div>
             <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
-                <strong>{{user.displayName}} </strong><br>
+                <strong>{{currentUserData[0].name}} </strong><br>
                 <div>
                     <dl>
                         <dt>UID:</dt>
@@ -23,16 +23,24 @@
                     </dl>
                     <dl>
                         <dt>Fullname:</dt>
-                        <dd>{{user.displayName}}</dd>
+                        <dd>{{currentUserData[0].name}}</dd>
                     </dl>
                     <dl>
                         <dt>Email:</dt>
                         <dd>{{user.email}}</dd>
                     </dl>
+                    <dl>
+                        <dt>Mobile No.:</dt>
+                        <dd>{{currentUserData[0].phone}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>Gender:</dt>
+                        <dd>{{currentUserData[0].gender}}</dd>
+                    </dl>
                 </div>
             </div>
             <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
-                <strong>{{user.displayName}}</strong><br>
+                <strong>{{currentUserData[0].name}}</strong><br>
                 <table class="table table-user-information">
                     <tbody>
                         <div>
@@ -44,11 +52,13 @@
                                     {{user.uid}}</td>
                             </tr>
                             <tr>
-                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">Fullname:
+                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    Fullname:
                                 </td>
 
                                 <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
-                                    {{user.displayName}}</td>
+                                    {{currentUserData[0].name}}
+                                </td>
                             </tr>
                             <tr>
                                 <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">Email:
@@ -56,6 +66,20 @@
 
                                 <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
                                     {{user.email}}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">Mobile No.:
+                                </td>
+
+                                <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    {{currentUserData[0].phone}}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">Gender:
+                                </td>
+
+                                <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    {{currentUserData[0].gender}}</td>
                             </tr>
                         </div>
                     </tbody>
@@ -72,18 +96,6 @@
                     </div>
 
                     <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="name">Fullname</label>
-                            <div class="col-sm-8">
-                                <input id="name" formControlName="name" type="text" class="form-control" required>
-                                <div *ngIf="fieldValues.name.invalid && (fieldValues.name.dirty || fieldValues.name.touched)"
-                                    class="help-block">
-                                    <div *ngIf="fieldValues.name.errors.required">Fullname is required.</div>
-                                    <div *ngIf="fieldValues.name.errors.minlength">Minimum characters 2.</div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="photo">Photo</label>
                             <div class="col-sm-8">
