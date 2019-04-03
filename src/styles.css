@@ -1,0 +1,13 @@
+.alert {
+    margin-bottom: -50px;
+    margin-top: 4%;
+}
+
+@font-face {
+    font-family: 'Product';
+    src: url('./assets/fonts/Product.ttf');
+ }
+
+ *{
+    font-family: Product;
+}

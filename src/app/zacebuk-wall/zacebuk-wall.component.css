@@ -1,0 +1,204 @@
+.wall_style{
+    margin-bottom: 35px;
+}
+
+.post {
+    margin-top: 5%;
+}
+.card_box{
+margin-top: 10px;
+height: auto;
+background-color:#fff;
+border: 1px solid black;
+}
+
+.user_name_area{
+    width: 100%;
+    height: auto;
+    background-color: cadetblue;
+    padding-left:10px;
+    padding-top:5px;
+    padding-bottom:5px; 
+}
+
+
+.post_area_content{
+    width: 70%;
+    height: auto;
+    background-color:#fff;
+    padding-left:10px;
+    padding-top:5px;
+
+
+}
+
+.comment {
+    display: block;
+}
+ .card_box:hover .comment{
+     display: block;
+ }
+/* .card_box:hover {
+    box-shadow: 5px;
+    background-color: blueviolet;
+}  */
+
+.post_option_area{
+    height: auto;
+    color: black;
+}
+
+.button_option_here{
+    
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.commentlist_area{
+    display:none;
+}
+
+.button_styles{
+    height: 22px;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.comments_area{
+    margin-bottom: 5px;
+}
+
+/* .modalpopup {
+    display: none;
+    background: darkgray;
+    widows: 100%;
+    padding: 5px;
+    margin-right: 70%;
+    margin-top: 5px;
+}
+.modalpopup button{
+    margin-left: 80%;
+    widows: 100%;
+} */
+
+.commentForm{
+    margin-bottom: 5px;
+    height: auto;
+    widows: 100%;
+}
+/* @media (max-width: 100px){
+
+    .modalpopup {
+    display: none;
+    background: darkgray;
+    padding: 5px;
+    margin-right: 0%;
+    margin-top: 0px; 
+    widows: 100%;
+
+}
+.modalpopup button{
+    margin-left: 0%;
+}
+
+}
+@media (max-width: 200px){
+
+    .modalpopup {
+    display: none;
+    background: darkgray;
+    padding: 5px;
+    margin-right: 0%;
+    margin-top: 0px; 
+    widows: 100%;
+}
+.modalpopup button{
+    margin-left: 10%;
+    
+}
+
+}
+@media (max-width: 360px){
+
+    .modalpopup {
+    display: none;
+    background: darkgray;
+    padding: 5px;
+    margin-right: 0%;
+    margin-top: 0px; 
+    widows: 100%;
+}
+.modalpopup button{
+    margin-left: 0%;
+}
+
+}
+@media (max-width: 500px){
+
+    .modalpopup {
+    display: none;
+    background: darkgray;
+    padding: 5px;
+    margin-right: 5%;
+    margin-top: 0px; 
+    widows: 100%;
+}
+.modalpopup button{
+    margin-left: 20%;
+}
+
+}
+
+@media (max-width: 600px){
+
+    .modalpopup {
+    display: none;
+    background-color: cornsilk;
+    padding: 5px;
+    margin-right: 20%;
+    margin-top: 0px; 
+    width: 100%;
+}
+
+}
+@media (max-width: 900px){
+
+    .modalpopup {
+    display: none;
+    background: darkgray;
+    padding: 5px;
+    margin-right: 60%;
+    margin-top: 3px; 
+    widows: 100%;
+}
+
+} */
+
+
+
+.old_comment_box{
+    border: 1px solid black;
+    border-radius: 5px;
+    height: auto;
+    padding-left:10px;
+    padding-top:3px;  
+    background-color: thistle;
+}
+
+.li_style{
+    list-style: none; 
+    border-bottom: 1px solid rgb(245, 144, 85);
+}
+
+.comments_list{
+    height: auto;
+    background-color: aqua;
+
+}
+
+.modalbox_style{
+    width: 100%;
+}

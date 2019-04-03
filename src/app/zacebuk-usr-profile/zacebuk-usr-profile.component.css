@@ -1,0 +1,25 @@
+.mat-checkbox-label {
+  text-transform: capitalize;
+}
+
+
+.bg {
+    background: black;
+}
+
+.popover-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .profile {
+    margin-top: 5%;
+}
+
+#updateDetails {
+  display: none;
+}
+
+.button{
+  margin-left: 15%;
+ }

@@ -1,0 +1,126 @@
+<div class="panel panel-primary profile">
+    <div class="panel-heading">
+        <h3 class="panel-title">User information</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+                <img class="img-circle"
+                    src="https://firebasestorage.googleapis.com/v0/b/example-81cdf.appspot.com/o/{{picUrl}}.jpg?alt=media"
+                    alt="Upload Pic" height="140px" width="130px">
+            </div>
+            <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+                <img class="img-circle"
+                    src="https://firebasestorage.googleapis.com/v0/b/example-81cdf.appspot.com/o/{{picUrl}}.jpg?alt=media"
+                    alt="Upload Pic" height="105px" width="100px">
+            </div>
+            <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
+                <strong>{{currentUserData[0].name}} </strong><br>
+                <div>
+                    <dl>
+                        <dt>UID:</dt>
+                        <dd>{{user.uid}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>Fullname:</dt>
+                        <dd>{{currentUserData[0].name}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>Email:</dt>
+                        <dd>{{user.email}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>Mobile No.:</dt>
+                        <dd>{{currentUserData[0].phone}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>Gender:</dt>
+                        <dd>{{currentUserData[0].gender}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
+                <strong>{{currentUserData[0].name}}</strong><br>
+                <table class="table table-user-information">
+                    <tbody>
+                        <div>
+                            <tr>
+                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">UID:
+                                </td>
+
+                                <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    {{user.uid}}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    Fullname:
+                                </td>
+
+                                <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    {{currentUserData[0].name}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">Email:
+                                </td>
+
+                                <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    {{user.email}}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">Mobile No.:
+                                </td>
+
+                                <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    {{currentUserData[0].phone}}</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sm-2" style="border-bottom:1px solid black;margin-bottom: 25px;">Gender:
+                                </td>
+
+                                <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
+                                    {{currentUserData[0].gender}}</td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+            </div>
+            <div class="signup" id="updateDetails">
+                <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+                    <!--onSubmit is the callback function, emits an ngSubmit event to a callback function -->
+                    <div class="">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Update Details!</h3>
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="photo">Photo</label>
+                            <div class="col-sm-8">
+                                <input type="file" (change)="upload($event)" accept=".png,.jpg" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button [disabled]="loading" class="btn btn-primary button">Update</button>
+                            <img *ngIf="loading"
+                                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <button class="btn btn-sm btn-primary" type="button" data-toggle="tooltip"
+            data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i></button>
+        <span class="pull-right">
+            <button class="btn btn-sm btn-warning" type="button" data-toggle="tooltip"
+                data-original-title="Edit this user"><i class="glyphicon glyphicon-edit"
+                    (click)="updateDetails()"></i></button>
+            <button class="btn btn-sm btn-danger" type="button" data-toggle="tooltip"
+                data-original-title="Remove this user"><i class="glyphicon glyphicon-remove"></i></button>
+        </span>
+    </div>
+</div>
