@@ -18,19 +18,19 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
 
   constructor(private _postsData: FetchJsonDataService,
-              private post_form: FormBuilder,
-              private post_comment: FormBuilder,
-              private route: Router,
-              private fetchLikes: FetchJsonDataService,
-              private post_data: PostdataService,
-              private postsData: FetchJsonDataService,
-              private currentuser: CurrentUserService,
-              private check: FetchJsonDataService
+    private post_form: FormBuilder,
+    private post_comment: FormBuilder,
+    private route: Router,
+    private fetchLikes: FetchJsonDataService,
+    private post_data: PostdataService,
+    private postsData: FetchJsonDataService,
+    private currentuser: CurrentUserService,
+    private check: FetchJsonDataService
   ) { }
   commentboxid;
   temparray;
   isLiked: boolean[] = [];
-  likerlist3: any[] = [];  likerlist: any[] = [];
+  likerlist3: any[] = []; likerlist: any[] = [];
   likerlist1: any[] = [];
   commenterlist: any[] = [];
   commenterlist1: any[] = [];
@@ -63,7 +63,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   commentFlag = false;
 
   ngOnInit() {
-    if ( document.getElementById('message')) {
+    if (document.getElementById('message')) {
       setTimeout(() => {
         document.getElementById('message').style.display = 'none';
       }, 5000);
@@ -322,14 +322,18 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
       });
   }
   commentShowHide(event: { currentTarget: Element; }) {
-    const commentBoxId = (event.currentTarget as Element).id;
-    const tempFlag = !this.commentFlag;
-    if (tempFlag) {
-      document.getElementById('commentBox'.concat('' + commentBoxId.slice(7))).style.display = 'block';
-      this.commentFlag = true;
+    if (this.isloggedin) {
+      const commentBoxId = (event.currentTarget as Element).id;
+      const tempFlag = !this.commentFlag;
+      if (tempFlag) {
+        document.getElementById('commentBox'.concat('' + commentBoxId.slice(7))).style.display = 'block';
+        this.commentFlag = true;
+      } else {
+        this.commentFlag = false;
+        document.getElementById('commentBox'.concat('' + commentBoxId.slice(7))).style.display = 'none';
+      }
     } else {
-      this.commentFlag = false;
-      document.getElementById('commentBox'.concat('' + commentBoxId.slice(7))).style.display = 'none';
+      alert('Please Login');
     }
   }
 }
