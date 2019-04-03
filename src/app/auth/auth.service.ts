@@ -17,13 +17,16 @@ export class AuthService {
   userNameData = [];
   userEmailData = [];
   userPhoneData = [];
+  user_logged: any;
+  isloggedin: boolean;
   userGenderData = [];
   subscription: Subscription;
   currentUserData = [];
   user: User;
   constructor(public afAuth: AngularFireAuth, public router: Router, private alert: AlertService,
-    private fetchUser: FetchJsonDataService,
-    private postUser: PostdataService) {
+              private fetchUser: FetchJsonDataService,
+              private postUser: PostdataService,
+              private check: FetchJsonDataService) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
@@ -56,6 +59,18 @@ export class AuthService {
   async login(email: string, password: string) {
     await this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
+        console.log(this.check.isloggedin);
+        this.check.isloggedin.next(true);
+        this.check.isloggedin.subscribe((val) => {
+          this.user_logged = val;
+        });
+        // = this.check.isloggedin;
+        if (this.user_logged) {
+          this.isloggedin = true;
+        } else {
+          this.isloggedin = false;
+        }
+        // this.router.navigate([this.returnUrl]);
         this.router.navigate(['/']);
       })
       .catch((error) => {
