@@ -57,7 +57,7 @@
                   {{ totalLikes[ind] || 0 }}
                 </button>
               </span>
-              <!-- comment button [id]="likeId[i]"  -->
+             
               <span>
                   &nbsp;&nbsp;
                 <i class="fa fa-comment btn btn-primary button_styles" aria-hidden="true"></i>
@@ -70,10 +70,20 @@
                 <div class="modalpopup" id="cmod{{ind}}">
                   <form class="form-container">
                     <h4 style="text-align: center;">Comment List</h4><hr>
-                    <ul *ngFor='let el of commenterlist1[ind]; index as indee'>
-                      <li class="fa fa-user">&nbsp;&nbsp;{{el}}</li>
-                      &nbsp;&nbsp;{{commentValue[ind][indee]}}
-                    </ul>
+                   
+                      <div *ngFor='let el of commenterlist[ind]; index as indee' >
+                        <ul><div  *ngIf=' el !=="false";else bl2 '>
+                            <li class="fa fa-user" >&nbsp;&nbsp;{{el}} </li>
+                            &nbsp;&nbsp;{{commentValue[ind][indee]}}
+                        </div>
+                        <ng-template #bl2>
+                            <li  >&nbsp;&nbsp;No Comments </li>
+                          
+                          </ng-template>
+                        </ul> 
+
+                      </div>
+                  
                     <button  type="button" id="modco{{ind}}" class="btn btn-danger "
                       (click)="cCloseModal($event)">Close</button>
                   </form>
@@ -83,12 +93,16 @@
                 <div class="modalpopup" id="mod{{ind}}">
                   <form class="form-container">
                     <h4 style="text-align: center;">Liker List</h4><hr>
-                    <!-- <div *ngFor='let el of likerlist1 | async'>
-                          <div *ngFor='let post of el'>  {{post}}</div>
-                        </div> -->
-                    <ul *ngFor='let el of likerlist1[ind]'>
-                      <li class="fa fa-user">&nbsp;&nbsp;{{el}}</li>
+                   
+                    <div *ngFor='let el of likerlist[ind]' >
+                      <div >
+                        <ul>
+                        
+                      <li class='nobullet' *ngIf='!(el.Liker_Name); else trr' >&nbsp;&nbsp;No Likes</li>
+                      <ng-template   #trr><li class="fa fa-user">&nbsp;&nbsp;{{el.Liker_Name}}</li></ng-template>
                     </ul>
+                    </div>
+                  </div>
                     <button style="margin-left: 70%;" type="button" id="modc{{ind}}" class="btn btn-danger"
                       (click)="closeModal($event)">Close</button>
                   </form>
