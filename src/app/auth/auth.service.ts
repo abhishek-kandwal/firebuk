@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
-import { of, Subscription} from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { AlertService } from '../_services';
 import { FetchJsonDataService } from '../fetch-json-data.service';
 import { PostdataService } from '../post-data.service';
@@ -22,8 +22,8 @@ export class AuthService {
   currentUserData = [];
   user: User;
   constructor(public afAuth: AngularFireAuth, public router: Router, private alert: AlertService,
-              private fetchUser: FetchJsonDataService,
-              private postUser: PostdataService) {
+    private fetchUser: FetchJsonDataService,
+    private postUser: PostdataService) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
@@ -36,12 +36,12 @@ export class AuthService {
             this.userPhoneData[index] = val[ele].phone;
             this.userGenderData[index] = val[ele].gender;
             if (this.user.email === val[ele].email) {
-                this.currentUserData.push({
-                  fullName: this.userNameData[index],
-                  phone: this.userPhoneData[index],
-                  gender: this.userGenderData[index]
+              this.currentUserData.push({
+                fullName: this.userNameData[index],
+                phone: this.userPhoneData[index],
+                gender: this.userGenderData[index]
               });
-                localStorage.setItem('currentUser', JSON.stringify(this.currentUserData));
+              localStorage.setItem('currentUser', JSON.stringify(this.currentUserData));
             }
           });
         });
@@ -54,8 +54,19 @@ export class AuthService {
 
 
   async login(email: string, password: string) {
-    const result = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-    this.router.navigate(['/']);
+    await this.afAuth.auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.router.navigate(['/']);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+          this.alert.error(errorMessage);
+        } else {
+          this.alert.error(errorMessage);
+        }
+      });
   }
 
   async register(email: string, password: string) {

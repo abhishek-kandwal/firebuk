@@ -60,15 +60,17 @@ export class ZacebukLoginComponent implements OnInit {
     // user loggin code
     //console.log('Login', this.isloggedin);
     this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
     this.authService.login(this.values.username.value, this.values.password.value);
-    //console.log(this.check.isloggedin)
+    console.log(this.check.isloggedin)
     this.check.isloggedin.next(true);
     this.check.isloggedin.subscribe((val) => {
       this.user_logged = val;
     });
     console.log(this.user_logged)
     // = this.check.isloggedin;
-
     if (this.user_logged) {
       this.isloggedin = true;
     } else {

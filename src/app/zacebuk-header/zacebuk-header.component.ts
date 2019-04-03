@@ -18,10 +18,6 @@ export class ZacebukHeaderComponent implements OnInit {
   constructor(private router: Router, private messagingService: MessagingService,
               private check: FetchJsonDataService,
               private  authService: AuthService) { }
-  
-  // sendPushNotification() {
-  //   this.messagingService.sendPushMessage('FIREBUK NOTIFICATIONS', 'Hey Everyone, Greetings from the team');
-  // }
 
   ngOnInit() {
     const userId = '22';
