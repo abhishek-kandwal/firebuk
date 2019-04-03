@@ -2,8 +2,16 @@
     text-align: center;
 }
 
-.button{
- margin-left: 580px;
+@media (max-width: 768px) {
+    .button{
+        margin-left: 180px;
+    }
+}
+
+@media (max-width: 2000px) {
+    .button{
+        margin-left: 580px;
+    }
 }
 
 .alert {

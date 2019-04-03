@@ -21,26 +21,29 @@ border: 1px solid black;
     padding-bottom:5px; 
 }
 
+
 .post_area_content{
     width: 70%;
     height: auto;
     background-color:#fff;
     padding-left:10px;
     padding-top:5px;
+    margin-left: 3px;
 
 
 }
 
-.comment {
-    display: none;
+@media (max-width: 375px) {
+    .right_mobile {
+        margin-left: 6%;
+    }
 }
-.card_box:hover {
-    display: block;
-    padding: 10px;
-    border: 1px solid black;
+
+ 
+/* .card_box:hover {
     box-shadow: 5px;
-    background-color: white;
-}
+    background-color: blueviolet;
+}  */
 
 .post_option_area{
     height: auto;
@@ -51,6 +54,10 @@ border: 1px solid black;
     
     margin-left: 5px;
     margin-bottom: 5px;
+}
+
+.commentlist_area{
+    display:none;
 }
 
 .button_styles{
@@ -66,102 +73,97 @@ border: 1px solid black;
     margin-bottom: 5px;
 }
 
-.modalpopup {
+/* .modalpopup {
     display: none;
     background: darkgray;
+    widows: 100%;
     padding: 5px;
     margin-right: 70%;
     margin-top: 5px;
 }
 .modalpopup button{
     margin-left: 80%;
-}
+    widows: 100%;
+} */
 
 .commentForm{
     margin-bottom: 5px;
     height: auto;
+    widows: 100%;
 }
-@media (max-width: 100px){
-
+/* @media (max-width: 100px){
     .modalpopup {
     display: none;
     background: darkgray;
     padding: 5px;
     margin-right: 0%;
     margin-top: 0px; 
-
+    widows: 100%;
 }
 .modalpopup button{
     margin-left: 0%;
 }
-
 }
 @media (max-width: 200px){
-
     .modalpopup {
     display: none;
     background: darkgray;
     padding: 5px;
     margin-right: 0%;
     margin-top: 0px; 
+    widows: 100%;
 }
 .modalpopup button{
     margin-left: 10%;
     
 }
-
 }
 @media (max-width: 360px){
-
     .modalpopup {
     display: none;
     background: darkgray;
     padding: 5px;
     margin-right: 0%;
     margin-top: 0px; 
+    widows: 100%;
 }
 .modalpopup button{
     margin-left: 0%;
 }
-
 }
 @media (max-width: 500px){
-
     .modalpopup {
     display: none;
     background: darkgray;
     padding: 5px;
     margin-right: 5%;
     margin-top: 0px; 
+    widows: 100%;
 }
 .modalpopup button{
     margin-left: 20%;
 }
-
 }
-
 @media (max-width: 600px){
-
     .modalpopup {
     display: none;
-    background: darkgray;
+    background-color: cornsilk;
     padding: 5px;
     margin-right: 20%;
     margin-top: 0px; 
+    width: 100%;
 }
-
 }
 @media (max-width: 900px){
-
     .modalpopup {
     display: none;
     background: darkgray;
     padding: 5px;
     margin-right: 60%;
     margin-top: 3px; 
+    widows: 100%;
 }
-
-}
+} */
 
 
 
@@ -177,4 +179,17 @@ border: 1px solid black;
 .li_style{
     list-style: none; 
     border-bottom: 1px solid rgb(245, 144, 85);
+}
+
+.comments_list{
+    height: auto;
+    background-color: aqua;
+
+}
+
+.comment {
+    display: none;
+}
+.modalbox_style{
+    width: 100%;
 }

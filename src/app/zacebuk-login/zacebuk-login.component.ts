@@ -64,6 +64,5 @@ export class ZacebukLoginComponent implements OnInit {
       this.loading = false;
     }, 2000);
     this.authService.login(this.values.username.value, this.values.password.value);
-    
   }
 }

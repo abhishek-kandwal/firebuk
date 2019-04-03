@@ -9,12 +9,12 @@
                     src="https://firebasestorage.googleapis.com/v0/b/example-81cdf.appspot.com/o/{{picUrl}}.jpg?alt=media"
                     alt="Upload Pic" height="140px" width="135px">
             </div>
-            <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+            <div class="col-xs-2 col-sm-12 hidden-md hidden-lg">
                 <img class="img-circle"
                     src="https://firebasestorage.googleapis.com/v0/b/example-81cdf.appspot.com/o/{{picUrl}}.jpg?alt=media"
                     alt="Upload Pic" height="105px" width="100px">
             </div>
-            <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
+            <div class="col-xs-10 usrprofile col-sm-12 hidden-md hidden-lg">
                 <strong>{{currentUserData[0].name}} </strong><br>
                 <div>
                     <dl>
@@ -85,12 +85,12 @@
                     </tbody>
                 </table>
             </div>
-            <div class="signup" id="updateDetails">
+            <div class="" id="updateDetails">
                 <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="form-horizontal">
                     <!--onSubmit is the callback function, emits an ngSubmit event to a callback function -->
                     <div class="">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Update Details!</h3>
+                            <h3 class="panel-title update">Update Details!</h3>
                             <hr>
                         </div>
                     </div>

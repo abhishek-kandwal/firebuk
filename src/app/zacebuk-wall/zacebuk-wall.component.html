@@ -66,11 +66,32 @@
                 <button class="btn btn-primary button_styles  commentToggle" id='totalcomment{{ind}}'
                   (click)="cOpenModal($event)">{{ commentValue[ind].length || 0 }}</button>
               </span>
+              <!-- comment area starts -->
+              <div class="commentForm comment" id="commentBox{{ind}}" *ngIf="isloggedin">
+                <form [formGroup]="commentForm" (ngSubmit)="comment($event)" class="" id='comment{{ind}}'>
+                  <div class="">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label" for="fullName">New comment</label>
+                      <div class="col-sm-8">
+                        <input id="new_post{{ind}}" formControlName="new_comment" type="text" placeholder="comment here"
+                          class="form-control" required>
+                      </div>
+                    </div>
+                    <div class="">
+                      <button class="btn btn-primary right_mobile" [disabled]="!commentForm.valid" type="submit"
+                        style="align-content: center">comment it! </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- comment area ends -->
+              <!-- COMMENT  & LIKE LIST START HERE-->
               <span>
-                <div class="modalpopup" id="cmod{{ind}}">
-                  <form class="form-container">
-                    <h4 style="text-align: center;">Comment List</h4><hr>
-                   
+                <div class="commentlist_area" id="cmod{{ind}}">
+                  <form class="">
+                    <h4 style="float:left;margin-left:5%;" >Comment List</h4><hr>
+                    <button style="float:right;" style="margin-left: 70%;" type="button" id="modco{{ind}}" class="btn btn-danger "
+                    (click)="cCloseModal($event)"><i class="fa fa-times" aria-hidden="true"></i></button>
                       <div *ngFor='let el of commenterlist[ind]; index as indee' >
                         <ul><div  *ngIf=' el !=="false";else bl2 '>
                             <li class="fa fa-user" >&nbsp;&nbsp;{{el}} </li>
@@ -84,16 +105,18 @@
 
                       </div>
                   
-                    <button  type="button" id="modco{{ind}}" class="btn btn-danger "
-                      (click)="cCloseModal($event)">Close</button>
+
                   </form>
                 </div>
               </span>
               <span>
-                <div class="modalpopup" id="mod{{ind}}">
-                  <form class="form-container">
-                    <h4 style="text-align: center;">Liker List</h4><hr>
-                   
+                <div class="commentlist_area" id="mod{{ind}}">
+                  <form class="">
+                    <h4 style="float:left;margin-left: 5%;">Liker List</h4><hr>
+                    
+                    <button style="float:right;" style="margin-left: 73.2%;" type="button" id="modc{{ind}}" class="btn btn-danger"
+                    (click)="closeModal($event)"><i class="fa fa-times" aria-hidden="true"></i></button>
+
                     <div *ngFor='let el of likerlist[ind]' >
                       <div >
                         <ul>
@@ -103,30 +126,12 @@
                     </ul>
                     </div>
                   </div>
-                    <button style="margin-left: 70%;" type="button" id="modc{{ind}}" class="btn btn-danger"
-                      (click)="closeModal($event)">Close</button>
+
                   </form>
                 </div>
               </span>
-              <!-- comment area starts -->
-              <div class="commentForm comment" id="commentBox{{ind}}" *ngIf="isloggedin">
-                <form [formGroup]="commentForm" (ngSubmit)="comment($event)" class="" id='comment{{ind}}'>
-                  <div class="">
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label" for="fullName">New comment</label>
-                      <div class="col-sm-8">
-                        <input id="new_post{{ind}}" formControlName="new_comment" type="text" placeholder="comment here"
-                          class="form-control" required>
-                      </div>
-                    </div>
-                    <div class="">
-                      <button class="btn btn-primary" [disabled]="!commentForm.valid" type="submit"
-                        style="align-content: center">comment it! </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <!-- comment area ends -->
+              <!-- COMMENT  & LIKE LIST END HERE-->
+              
             </div>
           </div>
         </div>

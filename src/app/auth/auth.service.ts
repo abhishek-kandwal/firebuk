@@ -16,9 +16,9 @@ export class AuthService {
   users = this.fetchUser.userData || [];
   userNameData = [];
   userEmailData = [];
-  userPhoneData = [];
   user_logged: any;
   isloggedin: boolean;
+  userPhoneData = [];
   userGenderData = [];
   subscription: Subscription;
   currentUserData = [];
@@ -64,13 +64,12 @@ export class AuthService {
         this.check.isloggedin.subscribe((val) => {
           this.user_logged = val;
         });
-        // = this.check.isloggedin;
+        console.log(this.user_logged);
         if (this.user_logged) {
           this.isloggedin = true;
         } else {
           this.isloggedin = false;
         }
-        // this.router.navigate([this.returnUrl]);
         this.router.navigate(['/']);
       })
       .catch((error) => {
