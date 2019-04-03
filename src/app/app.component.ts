@@ -34,8 +34,9 @@ export class AppComponent implements OnInit, OnDestroy {
   
 
   ngOnInit() {
-    this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
-      const userKey = Object.keys(val);
+   this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
+      if(val){
+        const userKey = Object.keys(val);
       userKey.map((ele, index) => {
         this.userIdData[index] = val[ele].id;
         this.userNameData[index] = val[ele].fullName;
@@ -52,6 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
           gender: this.userGenderData[index]
         });
       });
+      }
     });
 
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
