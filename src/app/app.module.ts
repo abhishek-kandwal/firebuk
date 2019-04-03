@@ -21,6 +21,8 @@ import { FetchJsonDataService } from './fetch-json-data.service';
 import { AlertComponent } from './_components';
 import { AuthenticationService, AlertService, UserService } from './_services';
 import { CurrentUserService } from './current-user.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from 'src/environments/environment.prod';
 
 
 const appRoutes: Routes = [
@@ -49,8 +51,6 @@ export const firebaseConfig = {
     ZacebukFooterComponent,
     ZacebukUsrProfileComponent,
     AlertComponent
-
-
   ],
   imports: [
     BrowserModule,

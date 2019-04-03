@@ -35,6 +35,7 @@ export class ZacebukSignupComponent implements OnInit {
     });
   }
 
+
   get fieldValues() {
     return this.employeeForm.controls;
   }
@@ -46,10 +47,10 @@ export class ZacebukSignupComponent implements OnInit {
       return;
     }
     this.loading = true;
-    let {fullName, email, password, phone, gender} = this.employeeForm.value;
+    let {fullName, email, password, phone, gender, token} = this.employeeForm.value;
     const passwordHash = btoa(password);
     password = passwordHash;
-    const formRequest = {fullName, email, password, phone, gender};
+    const formRequest = {fullName, email, password, phone, gender , token};
     this.userService.register(formRequest)
       .pipe(first())
       .subscribe(
