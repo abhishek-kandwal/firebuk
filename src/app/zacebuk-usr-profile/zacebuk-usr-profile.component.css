@@ -7,6 +7,31 @@
     background: black;
 }
 
+
+@media (max-width: 475px){
+  .usrprofile {
+  margin-top: 10%;
+  margin-left: 15%;
+}
+.update {
+  margin-top: 80px;
+}
+}
+
+@media (max-width: 500px){
+  .usrprofile {
+  margin-top: 10%;
+  margin-left: 15%;
+}
+}
+
+@media (max-width: 517px){
+  .usrprofile {
+  margin-top: 10%;
+  margin-left: 15%;
+}
+}
+
 .popover-image {
     width: 200px;
     height: 200px;

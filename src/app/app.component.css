@@ -2,3 +2,21 @@
     padding-left: 0px;
     padding-right: 0px;
 }
+
+@media (max-width: 375px) {
+    .full_body {
+        margin-top: 15%;
+    }
+}
+
+@media (max-width: 411px) {
+    .full_body {
+        margin-top: 10%;
+    }
+}
+
+@media (max-width: 414px) {
+    .full_body {
+        margin-top: 10%;
+    }
+}
