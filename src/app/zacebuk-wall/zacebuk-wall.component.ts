@@ -253,10 +253,8 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     this.subscription = this.post_data.addPost(this.postData)
       .subscribe(post => {
         this.posts.push(post);
-        //window.location.reload();
         setTimeout(() => {
-          this.route.navigated = false;
-
+          this.ngOnInit();
         }, 1000);
       });
     this.postForm.reset();

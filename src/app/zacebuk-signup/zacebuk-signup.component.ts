@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import {AlertService } from '../_services';
 import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { User } from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
