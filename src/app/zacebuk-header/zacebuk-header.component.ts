@@ -19,10 +19,10 @@ export class ZacebukHeaderComponent implements OnInit {
               private check: FetchJsonDataService,
               private  authService: AuthService) { }
   
-  // sendPushNotification() {
+  sendPushNotification() {
 
-  //   this.messagingService.sendPushMessage('FIREBUK NOTIFICATIONS', 'Hey Everyone, Greetings from the team');
-  // }
+    this.messagingService.sendPushMessage('FIREBUK NOTIFICATIONS', 'Hey Everyone, Greetings from the team');
+  }
 
   ngOnInit() {
     const userId = '22';

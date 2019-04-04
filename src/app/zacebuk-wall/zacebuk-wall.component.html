@@ -57,7 +57,6 @@
                   {{ totalLikes[ind] || 0 }}
                 </button>
               </span>
-             
               <span>
                   &nbsp;&nbsp;
                 <i class="fa fa-comment btn btn-primary button_styles" id="comment{{ind}}" aria-hidden="true" (click)="commentShowHide($event)"></i>
@@ -89,9 +88,7 @@
               <span>
                 <div class="commentlist_area" id="cmod{{ind}}">
                   <form class="">
-                    <h4 style="float:left;margin-left:5%;" >Comment List</h4><hr>
-                    <button style="float:right;" style="margin-left: 70%;" type="button" id="modco{{ind}}" class="btn btn-danger "
-                    (click)="cCloseModal($event)"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <h4 style="float:left;margin-left:5%;" >Comment List</h4><br><hr>
                       <div *ngFor='let el of commenterlist[ind]; index as indee' >
                         <ul><div  *ngIf=' el !=="false";else bl2 '>
                             <li class="fa fa-user" >&nbsp;&nbsp;{{el}} </li>
@@ -99,24 +96,16 @@
                         </div>
                         <ng-template #bl2>
                             <li  >&nbsp;&nbsp;No Comments </li>
-                          
                           </ng-template>
-                        </ul> 
-
+                        </ul>
                       </div>
-                  
-
                   </form>
                 </div>
               </span>
               <span>
                 <div class="commentlist_area" id="mod{{ind}}">
                   <form class="">
-                    <h4 style="float:left;margin-left: 5%;">Liker List</h4><hr>
-                    
-                    <button style="float:right;" style="margin-left: 73.2%;" type="button" id="modc{{ind}}" class="btn btn-danger"
-                    (click)="closeModal($event)"><i class="fa fa-times" aria-hidden="true"></i></button>
-
+                    <h4 style="float:left;margin-left: 5%;">Liker List</h4><br><hr>
                     <div *ngFor='let el of likerlist[ind]' >
                       <div >
                         <ul>
@@ -131,7 +120,6 @@
                 </div>
               </span>
               <!-- COMMENT  & LIKE LIST END HERE-->
-              
             </div>
           </div>
         </div>

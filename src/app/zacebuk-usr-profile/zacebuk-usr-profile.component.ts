@@ -32,6 +32,7 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
   dataUser = [];
   currentUserSubscription: Subscription;
   updateForm: FormGroup;
+  commentFlag: any;
   constructor(
     public afAuth: AngularFireAuth, public router: Router, private fb: FormBuilder,
     private alert: AlertService, private afStorage: AngularFireStorage,
@@ -81,7 +82,14 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
   }
 
   updateDetails() {
-    document.getElementById('updateDetails').style.display = 'block';
+    const tempFlag = !this.commentFlag;
+    if (tempFlag) {
+      document.getElementById('updateDetails').style.display = 'block';
+      this.commentFlag = true;
+    } else {
+      this.commentFlag = false;
+      document.getElementById('updateDetails').style.display = 'none';
+    }
   }
 
   onSubmit() {
@@ -94,11 +102,12 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
     }).catch((error) => {
       this.alert.error(error);
     });
-    document.getElementById('updateDetails').style.display = 'none';
   }
 
   upload(event) {
-    this.afStorage.upload(this.user.email + '.jpg', event.target.files[0]);
-    this.ngOnInit();
+    this.afStorage.upload(this.user.email + '.jpg', event.target.files[0])
+    .then(() => {
+      location.reload();
+    });
   }
 }

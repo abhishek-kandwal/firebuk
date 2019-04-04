@@ -53,6 +53,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   postList = [];
   counter;
   postData: any;
+  modid;
   commentData: any;
   fetchPost = [];
   subscription: Subscription;
@@ -196,29 +197,28 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     }
   }
 
-
   openModal(event: { currentTarget: Element; }) {
-    const modid = (event.currentTarget as Element).id;
-    // console.log(modid);
-    document.getElementById('mod'.concat(modid.slice(10))).style.display = 'block';
-  }
-
-  closeModal(event: { currentTarget: Element; }) {
-    const modid = (event.currentTarget as Element).id;
-    // console.log(modid);
-    document.getElementById('mod'.concat(modid.slice(4))).style.display = 'none';
+    this.modid = (event.currentTarget as Element).id;
+    const tempFlag = !this.commentFlag;
+    if (tempFlag) {
+      document.getElementById('mod'.concat(this.modid.slice(10))).style.display = 'block';
+      this.commentFlag = true;
+    } else {
+      this.commentFlag = false;
+      document.getElementById('mod'.concat(this.modid.slice(10))).style.display = 'none';
+    }
   }
 
   cOpenModal(event: { currentTarget: Element; }) {
-    const modid = (event.currentTarget as Element).id;
-    // console.log(modid);
-    document.getElementById('cmod'.concat(modid.slice(12))).style.display = 'block';
-  }
-
-  cCloseModal(event: { currentTarget: Element; }) {
-    const modid = (event.currentTarget as Element).id;
-    // console.log(modid);
-    document.getElementById('cmod'.concat(modid.slice(5))).style.display = 'none';
+    this.modid = (event.currentTarget as Element).id;
+    const tempFlag = !this.commentFlag;
+    if (tempFlag) {
+      document.getElementById('cmod'.concat(this.modid.slice(12))).style.display = 'block';
+      this.commentFlag = true;
+    } else {
+      this.commentFlag = false;
+      document.getElementById('cmod'.concat(this.modid.slice(12))).style.display = 'none';
+    }
   }
 
   ngOnDestroy() {
