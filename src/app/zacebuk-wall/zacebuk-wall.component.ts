@@ -296,7 +296,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
 
             console.log('liked');
-            this.ngOnInit();
+        
             location.reload();
 
           });
