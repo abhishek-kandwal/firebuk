@@ -26,7 +26,8 @@ export class AppComponent implements OnInit, OnDestroy {
   users: User[] = [];
   constructor(private fetchData: FetchJsonDataService ,
               private authenticationService: AuthenticationService,
-              private setUser: CurrentUserService) { this.subscription = this.fetchData.getPost().pipe().subscribe(post => {
+              private setUser: CurrentUserService) 
+              { this.subscription = this.fetchData.getPost().pipe().subscribe(post => {
                 localStorage.setItem('Posts', JSON.stringify(post));
               });
             }
