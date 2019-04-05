@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { FetchJsonDataService } from '../fetch-json-data.service';
 import { PostdataService } from '../post-data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -23,19 +23,13 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     private post_form: FormBuilder,
     private post_comment: FormBuilder,
     private route: Router,
-    private AppComponent : AppComponent,
+    private AppComponent: AppComponent,
     private fetchLikes: FetchJsonDataService,
     private post_data: PostdataService,
     private postsData: FetchJsonDataService,
     private currentuser: CurrentUserService,
     private check: FetchJsonDataService,
-  ) { if (document.getElementById('message')) {
-    this.ngOnInit();
-    setTimeout(() => {
-      location.reload();
-      document.getElementById('message').style.display = 'none';
-    }, 2000);
-  }}
+  ) { }
   commentboxid;
   temparray;
   isLiked: boolean[] = [];
@@ -73,7 +67,12 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   commentFlag = false;
 
   ngOnInit() {
- 
+
+    setTimeout(() => {
+      if (document.getElementById('message')) {
+        document.getElementById('message').style.display = 'none';
+      }
+    }, 7000);
     this.check.isloggedin.subscribe((val) => {
       this.isloggedin = val;
     });
@@ -234,7 +233,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     this.subscription = this.post_data.addPost(this.postData)
       .subscribe(post => {
         location.reload();
-       //   let noUse = new AppComponent( this.fetchData, this.authenticationService, this.setUser);
+        //   let noUse = new AppComponent( this.fetchData, this.authenticationService, this.setUser);
       });
     this.postForm.reset();
   }
@@ -275,7 +274,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
           this.post_data.deleteLikes(delurl).subscribe(() => {
             //this.ngOnInit();
             console.log('disliked');
-           location.reload();
+            location.reload();
           });
         } else {
           const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
@@ -284,7 +283,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
 
             console.log('liked');
-        
+
             location.reload();
 
           });
