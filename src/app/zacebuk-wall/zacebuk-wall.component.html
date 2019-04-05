@@ -61,7 +61,7 @@
                   &nbsp;&nbsp;
                 <i class="fa fa-comment btn btn-primary button_styles" id="comment{{ind}}" aria-hidden="true" (click)="commentShowHide($event)"></i>
               </span>
-              <span class="button_option_here">
+              <span class="button_option_here" *ngIf ="(commentValue[ind])">
                 <button class="btn btn-primary button_styles  commentToggle" id='totalcomment{{ind}}'
                   (click)="cOpenModal($event)" *ngIf="commentValue[ind]">{{ commentValue[ind].length || 0 }}</button>
               </span>

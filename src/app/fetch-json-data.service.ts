@@ -25,6 +25,7 @@ export class FetchJsonDataService {
   }
 
   getPost() {
+    
     return this.http.get(this.urlPost);
   }
 
