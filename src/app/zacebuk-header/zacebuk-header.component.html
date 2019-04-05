@@ -1,4 +1,4 @@
-<nav class="navbar top navbar-inverse" *ngIf ="currentUserData">
+<nav class="navbar top navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -30,7 +30,7 @@
           <a class="nav-item nav-link" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
         </li>
         <li>
-          <a [routerLink]="['/app-zacebuk-profile']"><img class="img-circle"
+          <a  *ngIf ="currentUserData" [routerLink]="['/app-zacebuk-profile']"><img class="img-circle"
             src="https://firebasestorage.googleapis.com/v0/b/example-81cdf.appspot.com/o/{{picUrl}}.jpg?alt=media"
             alt="Upload Pic" height="20px" width="20px"> Hi! {{currentUserData[0].fullName}}</a>
         </li>
