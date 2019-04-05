@@ -30,7 +30,9 @@
           <a class="nav-item nav-link" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
         </li>
         <li>
-          <a [routerLink]="['/app-zacebuk-profile']"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+          <a [routerLink]="['/app-zacebuk-profile']"><img class="img-circle"
+            src="https://firebasestorage.googleapis.com/v0/b/example-81cdf.appspot.com/o/{{picUrl}}.jpg?alt=media"
+            alt="Upload Pic" height="20px" width="20px"> Hi! {{currentUserData[0].fullName}}</a>
         </li>
         <li>
           <a (click)="sendPushNotification()"><i class="fa fa-bell" aria-hidden="true"></i> Send Push Notification</a>

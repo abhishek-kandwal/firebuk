@@ -37,37 +37,36 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
     public afAuth: AngularFireAuth, public router: Router, private fb: FormBuilder,
     private alert: AlertService, private afStorage: AngularFireStorage,
     private fetchUser: FetchJsonDataService) {
+      this.subscription = this.afAuth.authState.subscribe(user => {
+        if (user) {
+          this.user = user;
+          this.picUrl = this.user.email;
+          this.data.push(this.user);
+          this.keys = Object.keys(this.user);
+          this.subscription = this.fetchUser.getUser().pipe().subscribe(val => {
+            const userKey = Object.keys(val);
+            userKey.map((ele, index) => {
+              this.userNameData[index] = val[ele].fullName;
+              this.userEmailData[index] = val[ele].email;
+              this.userPhoneData[index] = val[ele].phone;
+              this.userGenderData[index] = val[ele].gender;
+              if (this.user.email === val[ele].email) {
+                  this.currentUserData.push({
+                    name: this.userNameData[index],
+                    phone: this.userPhoneData[index],
+                    gender: this.userGenderData[index]
+                });
+                  console.log(this.currentUserData);
+              }
+            });
+          });
+        } else {
+          this.router.navigate(['/app-zacebuk-login']);
+        }
+      });
   }
 
   ngOnInit() {
-    this.subscription = this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.user = user;
-        this.picUrl = this.user.email;
-        this.data.push(this.user);
-        this.keys = Object.keys(this.user);
-        this.subscription = this.fetchUser.getUser().pipe().subscribe(val => {
-          const userKey = Object.keys(val);
-          userKey.map((ele, index) => {
-            this.userNameData[index] = val[ele].fullName;
-            this.userEmailData[index] = val[ele].email;
-            this.userPhoneData[index] = val[ele].phone;
-            this.userGenderData[index] = val[ele].gender;
-            if (this.user.email === val[ele].email) {
-                this.currentUserData.push({
-                  name: this.userNameData[index],
-                  phone: this.userPhoneData[index],
-                  gender: this.userGenderData[index]
-              });
-                console.log(this.currentUserData);
-            }
-          });
-        });
-      } else {
-        this.router.navigate(['/app-zacebuk-login']);
-      }
-    });
-
     this.updateForm = this.fb.group({
       photo: ['']
     });
@@ -108,6 +107,11 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
     this.afStorage.upload(this.user.email + '.jpg', event.target.files[0])
     .then(() => {
       location.reload();
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage  = error.message;
+      this.alert.error(errorMessage);
     });
   }
 }
