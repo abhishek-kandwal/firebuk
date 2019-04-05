@@ -73,97 +73,32 @@ border: 1px solid black;
     margin-bottom: 5px;
 }
 
-/* .modalpopup {
-    display: none;
-    background: darkgray;
-    widows: 100%;
-    padding: 5px;
-    margin-right: 70%;
-    margin-top: 5px;
-}
-.modalpopup button{
-    margin-left: 80%;
-    widows: 100%;
-} */
-
 .commentForm{
     margin-bottom: 5px;
     height: auto;
     widows: 100%;
 }
-/* @media (max-width: 100px){
-    .modalpopup {
-    display: none;
-    background: darkgray;
-    padding: 5px;
-    margin-right: 0%;
-    margin-top: 0px; 
-    widows: 100%;
+
+@media (max-width: 415px){
+    .post {
+        margin-top: 5%;
+    }
 }
-.modalpopup button{
-    margin-left: 0%;
+@media (max-width: 425px){
+    .post {
+        margin-top: 5%;
+    }
 }
+@media (max-width: 535px){
+    .post {
+        margin-top: 5%;
+    }
 }
-@media (max-width: 200px){
-    .modalpopup {
-    display: none;
-    background: darkgray;
-    padding: 5px;
-    margin-right: 0%;
-    margin-top: 0px; 
-    widows: 100%;
+@media (max-width: 645px){
+    .post {
+        margin-top: 5%;
+    }
 }
-.modalpopup button{
-    margin-left: 10%;
-    
-}
-}
-@media (max-width: 360px){
-    .modalpopup {
-    display: none;
-    background: darkgray;
-    padding: 5px;
-    margin-right: 0%;
-    margin-top: 0px; 
-    widows: 100%;
-}
-.modalpopup button{
-    margin-left: 0%;
-}
-}
-@media (max-width: 500px){
-    .modalpopup {
-    display: none;
-    background: darkgray;
-    padding: 5px;
-    margin-right: 5%;
-    margin-top: 0px; 
-    widows: 100%;
-}
-.modalpopup button{
-    margin-left: 20%;
-}
-}
-@media (max-width: 600px){
-    .modalpopup {
-    display: none;
-    background-color: cornsilk;
-    padding: 5px;
-    margin-right: 20%;
-    margin-top: 0px; 
-    width: 100%;
-}
-}
-@media (max-width: 900px){
-    .modalpopup {
-    display: none;
-    background: darkgray;
-    padding: 5px;
-    margin-right: 60%;
-    margin-top: 3px; 
-    widows: 100%;
-}
-} */
 
 
 
