@@ -221,7 +221,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     console.log(this.currentuser.data);
     const { new_post } = this.postForm.value;
-    const time = new Date(), post_Id = this.postid,
+    const time = new Date().toString(), post_Id = this.postid,
       poster = this.currentUser.fullName;
     this.postData = {
       Post_content: new_post,
