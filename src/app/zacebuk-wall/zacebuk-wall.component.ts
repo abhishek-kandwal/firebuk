@@ -5,7 +5,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CurrentUserService } from '../current-user.service';
 import { Router } from '@angular/router';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { AppComponent } from '../app.component';
+import { AuthenticationService } from '../_services';
+
 
 @Component({
   selector: 'app-zacebuk-wall',
@@ -21,11 +23,15 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     private post_form: FormBuilder,
     private post_comment: FormBuilder,
     private route: Router,
+    private AppComponent : AppComponent,
     private fetchLikes: FetchJsonDataService,
     private post_data: PostdataService,
     private postsData: FetchJsonDataService,
     private currentuser: CurrentUserService,
-    private check: FetchJsonDataService
+    private check: FetchJsonDataService,
+    private fetchData: FetchJsonDataService ,
+    private authenticationService: AuthenticationService,
+    private setUser: CurrentUserService
   ) { }
   commentboxid;
   temparray;
@@ -239,8 +245,8 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
     this.subscription = this.post_data.addPost(this.postData)
       .subscribe(post => {
-        this.posts.push(post);
-        window.location.reload();
+        location.reload();
+       //   let noUse = new AppComponent( this.fetchData, this.authenticationService, this.setUser);
       });
     this.postForm.reset();
   }
@@ -279,8 +285,9 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
           const dislikekey = this.delKeys[temp1d][likerindex];
           const delurl = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes/${dislikekey}.json`;
           this.post_data.deleteLikes(delurl).subscribe(() => {
+            //this.ngOnInit();
             console.log('disliked');
-            location.reload();
+           location.reload();
           });
         } else {
           const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
@@ -289,7 +296,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
 
 
             console.log('liked');
-
+        
             location.reload();
 
           });
