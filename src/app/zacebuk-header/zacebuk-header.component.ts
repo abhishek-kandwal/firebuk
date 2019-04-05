@@ -47,7 +47,6 @@ export class ZacebukHeaderComponent implements OnInit {
     this.message = this.messagingService.currentMessage;
     this.check.isloggedin.subscribe((val) => {
       this.isloggedin = val;
-      console.log(this.isloggedin);
     });
   }
   logout() {
@@ -55,7 +54,6 @@ export class ZacebukHeaderComponent implements OnInit {
     // this below code is for the check the user is logged in or not
     this.user_logged = localStorage.getItem('user');
     this.isloggedin = false;
-    console.log('Logout', this.isloggedin);
     this.router.navigate(['/app-zacebuk-login']);
   }
 

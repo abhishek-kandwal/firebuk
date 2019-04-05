@@ -43,23 +43,7 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
           this.picUrl = this.user.email;
           this.data.push(this.user);
           this.keys = Object.keys(this.user);
-          this.subscription = this.fetchUser.getUser().pipe().subscribe(val => {
-            const userKey = Object.keys(val);
-            userKey.map((ele, index) => {
-              this.userNameData[index] = val[ele].fullName;
-              this.userEmailData[index] = val[ele].email;
-              this.userPhoneData[index] = val[ele].phone;
-              this.userGenderData[index] = val[ele].gender;
-              if (this.user.email === val[ele].email) {
-                  this.currentUserData.push({
-                    name: this.userNameData[index],
-                    phone: this.userPhoneData[index],
-                    gender: this.userGenderData[index]
-                });
-                  console.log(this.currentUserData);
-              }
-            });
-          });
+          this.currentUserData = JSON.parse(localStorage.getItem('currentUser'));
         } else {
           this.router.navigate(['/app-zacebuk-login']);
         }

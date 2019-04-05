@@ -29,10 +29,13 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
     private postsData: FetchJsonDataService,
     private currentuser: CurrentUserService,
     private check: FetchJsonDataService,
-    private fetchData: FetchJsonDataService ,
-    private authenticationService: AuthenticationService,
-    private setUser: CurrentUserService
-  ) { }
+  ) { if (document.getElementById('message')) {
+    this.ngOnInit();
+    setTimeout(() => {
+      location.reload();
+      document.getElementById('message').style.display = 'none';
+    }, 2000);
+  }}
   commentboxid;
   temparray;
   isLiked: boolean[] = [];
@@ -70,19 +73,13 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   commentFlag = false;
 
   ngOnInit() {
-    if (document.getElementById('message')) {
-      setTimeout(() => {
-        document.getElementById('message').style.display = 'none';
-      }, 5000);
-    }
-
+ 
     this.check.isloggedin.subscribe((val) => {
       this.isloggedin = val;
     });
     if (localStorage.getItem('currentUser')) {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser'))[0];
     }
-    console.log(this.currentUser);
     try {
       this.subscription = this._postsData.getPost()
         .subscribe(data => {
@@ -107,6 +104,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
             this.posterId.push(temp3);
             this.postid = this.postList.length;
             this.postsContent.push(temp);
+            this.postsContent = this.postsContent;
             const url = `https://example-81cdf.firebaseio.com/Posts/${el}/Likes.json`;
             const cUrl = `https://example-81cdf.firebaseio.com/Posts/${el}/Comments.json`;
             this.subscription = this.fetchLikes.getlikes(url).subscribe(val => {
@@ -160,22 +158,14 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
               cc[indexee] = valuee['Comment_Content'];
               cid[indexee] = valuee['Commenter_ID'];
             });
-
-
             this.commenterlist.push(cid);
             this.commentValue.push(cc);
           } else {
-
             this.commenterlist.push(0);
             this.commentValue.push(0);
           }
         });
       });
-      console.log(this.commenterlist);
-      console.log(this.commentValue);
-
-      console.log(this.commenterlist1);
-      console.log(this.commentValue);
       this.totalLikes.map((val, ind) => {
         // console.log(`totallikes${ind}`);
         document.getElementById(`totallikes${ind}`).innerHTML = `${this.totalLikes[val]}`;
@@ -185,7 +175,6 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         // console.log(`totallikes${ind}`);
         document.getElementById(`totalcomments${ind}`).innerHTML = `${this.totalComments[val]}`;
       });
-      console.log(this.totalLikes);
       this.postForm = this.post_form.group({
         new_post: ['']
       });
@@ -228,7 +217,6 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
     this.subscription.unsubscribe();
   }
   onSubmit(): void {

@@ -50,7 +50,6 @@ export class MessagingService {
   requestPermission(userId) {
     this.angularFireMessaging.requestToken.subscribe(
       (token) => {
-        console.log(token);
         this.updateToken(userId, token);
       },
       (err) => {
@@ -92,7 +91,7 @@ export class MessagingService {
           .set('Content-Type', 'application/json'),
      })
      .subscribe((response: Response) => {
-        console.log(response);
+        // console.log(response);
       },
       (error: Response) => {
         console.log(error);

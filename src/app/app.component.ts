@@ -24,36 +24,36 @@ export class AppComponent implements OnInit, OnDestroy {
   currentUser: User;
   currentUserSubscription: Subscription;
   users: User[] = [];
-  constructor(private fetchData: FetchJsonDataService ,
+  constructor(private fetchData: FetchJsonDataService,
               private authenticationService: AuthenticationService,
-              private setUser: CurrentUserService) 
-              { this.subscription = this.fetchData.getPost().pipe().subscribe(post => {
-                localStorage.setItem('Posts', JSON.stringify(post));
-              });
-            }
+              private setUser: CurrentUserService) {
+  this.subscription = this.fetchData.getPost().pipe().subscribe(post => {
+    localStorage.setItem('Posts', JSON.stringify(post));
+  });
+  }
 
-  
+
 
   ngOnInit() {
-   this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
-      if(val){
+    this.subscription = this.fetchData.getUser().pipe().subscribe(val => {
+      if (val) {
         const userKey = Object.keys(val);
-      userKey.map((ele, index) => {
-        this.userIdData[index] = val[ele].id;
-        this.userNameData[index] = val[ele].fullName;
-        this.userEmailData[index] = val[ele].email;
-        this.userPhoneData[index] = val[ele].phone;
-        this.userGenderData[index] = val[ele].gender;
-        this.userPassData[index] = val[ele].password;
-        this.userList.push({
-          id: this.userIdData[index],
-          name: this.userNameData[index],
-          username: this.userEmailData[index],
-          password: this.userPassData[index],
-          phone: this.userPhoneData[index],
-          gender: this.userGenderData[index]
+        userKey.map((ele, index) => {
+          this.userIdData[index] = val[ele].id;
+          this.userNameData[index] = val[ele].fullName;
+          this.userEmailData[index] = val[ele].email;
+          this.userPhoneData[index] = val[ele].phone;
+          this.userGenderData[index] = val[ele].gender;
+          this.userPassData[index] = val[ele].password;
+          this.userList.push({
+            id: this.userIdData[index],
+            name: this.userNameData[index],
+            username: this.userEmailData[index],
+            password: this.userPassData[index],
+            phone: this.userPhoneData[index],
+            gender: this.userGenderData[index]
+          });
         });
-      });
       }
     });
 
@@ -62,7 +62,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.setUser.sendUser(this.currentUser);
     });
     this.fetchData.putData(this.userList);
-    console.log(this.userList);
   }
 
   ngOnDestroy() {

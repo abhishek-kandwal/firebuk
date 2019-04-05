@@ -14,8 +14,8 @@
                     src="https://firebasestorage.googleapis.com/v0/b/example-81cdf.appspot.com/o/{{picUrl}}.jpg?alt=media"
                     alt="Upload Pic" height="105px" width="100px">
             </div>
-            <div class="col-xs-10 usrprofile col-sm-12 hidden-md hidden-lg">
-                <strong>{{currentUserData[0].name}} </strong><br>
+            <div *ngIf="currentUserData" class="col-xs-10 usrprofile col-sm-12 hidden-md hidden-lg">
+                <strong>{{currentUserData[0].fullName}} </strong><br>
                 <div>
                     <dl>
                         <dt>UID:</dt>
@@ -23,7 +23,7 @@
                     </dl>
                     <dl>
                         <dt>Fullname:</dt>
-                        <dd>{{currentUserData[0].name}}</dd>
+                        <dd>{{currentUserData[0].fullName}}</dd>
                     </dl>
                     <dl>
                         <dt>Email:</dt>
@@ -39,8 +39,8 @@
                     </dl>
                 </div>
             </div>
-            <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
-                <strong>{{currentUserData[0].name}}</strong><br>
+            <div *ngIf="currentUserData" class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
+                <strong>{{currentUserData[0].fullName}}</strong><br>
                 <table class="table table-user-information">
                     <tbody>
                         <div>
@@ -57,7 +57,7 @@
                                 </td>
 
                                 <td class="col-sm-10" style="border-bottom:1px solid black;margin-bottom: 25px;">
-                                    {{currentUserData[0].name}}
+                                    {{currentUserData[0].fullName}}
                                 </td>
                             </tr>
                             <tr>

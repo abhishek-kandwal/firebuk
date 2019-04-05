@@ -10,7 +10,7 @@ export class FetchJsonDataService {
 
   userList = [];
   userData = [];
-
+  postList = [];
   userNameData = [];
   userPassData = [];
   Posts: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('Posts')));
