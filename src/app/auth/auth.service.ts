@@ -33,7 +33,7 @@ export class AuthService {
         localStorage.setItem('user', JSON.stringify(this.user));
         this.subscription = this.fetchUser.getUser().pipe().subscribe(val => {
           const userKey = Object.keys(val);
-          userKey.map((ele, index) => {
+          userKey.forEach((ele, index) => {
             this.userNameData[index] = val[ele].fullName;
             this.userEmailData[index] = val[ele].email;
             this.userPhoneData[index] = val[ele].phone;

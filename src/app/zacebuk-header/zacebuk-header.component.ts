@@ -27,6 +27,7 @@ export class ZacebukHeaderComponent implements OnInit {
               private  authService: AuthService,
               private afAuth: AngularFireAuth) {
                 this.subscription = this.afAuth.authState.subscribe(user => {
+                  console.log(user)
                   if (user) {
                     this.user = user;
                     this.picUrl = this.user.email;
@@ -46,6 +47,7 @@ export class ZacebukHeaderComponent implements OnInit {
     this.messagingService.receiveMessage();
     this.message = this.messagingService.currentMessage;
     this.check.isloggedin.subscribe((val) => {
+      console.log(val)
       this.isloggedin = val;
     });
   }

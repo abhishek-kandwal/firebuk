@@ -1,13 +1,12 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import {HttpClient } from '@angular/common/http';
-import { Subscription, Observable, Subject, BehaviorSubject, observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FetchJsonDataService {
   isloggedin: BehaviorSubject<boolean> = new BehaviorSubject(!!(localStorage.getItem('currentUser')));
-
   userList = [];
   userData = [];
   postList = [];
@@ -17,15 +16,15 @@ export class FetchJsonDataService {
   subscription: Subscription;
   constructor(private http: HttpClient) {}
 
-  urlUser = 'https://example-81cdf.firebaseio.com/Users.json';
-  urlPost = 'https://example-81cdf.firebaseio.com/Posts.json';
+  urlUser = 'https://firebuk-62b62-default-rtdb.firebaseio.com/Users.json';
+  urlPost = 'https://firebuk-62b62-default-rtdb.firebaseio.com/Posts.json';
 
   getUser() {
     return this.http.get(this.urlUser);
   }
 
   getPost() {
-    
+
     return this.http.get(this.urlPost);
   }
 

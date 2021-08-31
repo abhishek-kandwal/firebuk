@@ -104,8 +104,8 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
             this.postid = this.postList.length;
             this.postsContent.push(temp);
             this.postsContent = this.postsContent;
-            const url = `https://example-81cdf.firebaseio.com/Posts/${el}/Likes.json`;
-            const cUrl = `https://example-81cdf.firebaseio.com/Posts/${el}/Comments.json`;
+            const url = `https://firebuk-62b62-default-rtdb.firebaseio.com/Posts/${el}/Likes.json`;
+            const cUrl = `https://firebuk-62b62-default-rtdb.firebaseio.com/Posts/${el}/Comments.json`;
             this.subscription = this.fetchLikes.getlikes(url).subscribe(val => {
               try {
                 const temp = [];
@@ -270,14 +270,14 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
           console.log(this.likerlist3);
           const likerindex = this.likerlist1[temp1d].indexOf(this.currentUser.fullName);
           const dislikekey = this.delKeys[temp1d][likerindex];
-          const delurl = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes/${dislikekey}.json`;
+          const delurl = `https://firebuk-62b62-default-rtdb.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes/${dislikekey}.json`;
           this.post_data.deleteLikes(delurl).subscribe(() => {
             //this.ngOnInit();
             console.log('disliked');
             location.reload();
           });
         } else {
-          const url = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
+          const url = `https://firebuk-62b62-default-rtdb.firebaseio.com/Posts/${this.postList[Number(this.likeId.slice(4))]}/Likes.json`;
 
           this.post_data.pushlikes(url, { Liker_Name: this.currentUser.fullName }).subscribe(() => {
 
@@ -308,7 +308,7 @@ export class ZacebukWallComponent implements OnInit, OnDestroy {
         Commenter_ID: this.currentUser.fullName
       };
     }
-    const curl = `https://example-81cdf.firebaseio.com/Posts/${this.postList[Number(commentId.slice(7))]}/Comments.json`;
+    const curl = `https://firebuk-62b62-default-rtdb.firebaseio.com/Posts/${this.postList[Number(commentId.slice(7))]}/Comments.json`;
     this.subscription = this.post_data.addComment(this.commentData, curl)
       .subscribe(comment => {
         this.comments.push(comment);

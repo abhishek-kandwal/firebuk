@@ -23,8 +23,8 @@ export class PostdataService {
   Users: object;
   Posts: object;
   Comments: object;
-  url = 'https://example-81cdf.firebaseio.com/Users.json';  // URL to users
-  pUrl = 'https://example-81cdf.firebaseio.com/Posts.json'; // URL to posts
+  url = 'https://firebuk-62b62-default-rtdb.firebaseio.com/Users.json';  // URL to users
+  pUrl = 'https://firebuk-62b62-default-rtdb.firebaseio.com/Posts.json'; // URL to posts
   private handleError: HandleError;
   constructor(
     private http: HttpClient,
@@ -34,6 +34,7 @@ export class PostdataService {
   }
 
   addUser(user: Users): Observable<Users> {
+    console.log(user)
     return this.http.post<Users>(this.url, user, httpOptions)
       .pipe(
         catchError(this.handleError('addUser', user))
@@ -41,7 +42,6 @@ export class PostdataService {
   }
 
   updatePost(url, data) {
-    // console.log("done");
     return this.http.put(url, data, httpOptions);
 
 
