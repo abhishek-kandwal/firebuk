@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyCeqT_xv146KD5411MEgSL1JFndLFnxzIw",
-    authDomain: "firebuk-f02ac.firebaseapp.com",
-    projectId: "firebuk-f02ac",
-    storageBucket: "firebuk-f02ac.appspot.com",
-    messagingSenderId: "542788705554",
-    appId: "1:542788705554:web:a1cb2a7762bf9523f9e7cb",
-    measurementId: "G-NPYT5FB1CE",
+    apiKey: "AIzaSyCXUavSYjVDMjiIlRFCX-pB4CyFVM-ls7k",
+    authDomain: "firebuk-62b62.firebaseapp.com",
+    databaseURL: "https://firebuk-62b62-default-rtdb.firebaseio.com",
+    projectId: "firebuk-62b62",
+    storageBucket: "firebuk-62b62.appspot.com",
+    messagingSenderId: "25301785587",
+    appId: "1:25301785587:web:34664b258e69bd9e815086"
   },
 };

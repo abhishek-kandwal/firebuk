@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "firebuk-62b62"
+  },
+  "targets": {
+    "firebuk-62b62": {
+      "hosting": {
+        "main": [
+          "zacebuk"
+        ],
+        "other": [
+          "firebuk-62b62"
+        ]
+      }
+    }
+  }
+}

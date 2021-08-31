@@ -28,7 +28,7 @@ export class ZacebukUsrProfileComponent implements OnInit, OnDestroy {
   userGenderData = [];
   userPassData = [];
   userIdData = [];
-  currentUserData = [];
+  currentUserData;
   dataUser = [];
   currentUserSubscription: Subscription;
   updateForm: FormGroup;
